@@ -1,0 +1,19 @@
+[#include "${templatePath}_inc/_macro.html"/]
+[#include "/_inc/layout.html"/]
+[#macro importScript]
+<script>
+</script>
+[/#macro]
+[@layout page="home"]
+<div class="newIndex-page pageMinWidth">
+
+    <div class="newIndex-page-box pageMinWidth">
+        <div class="newIndex-page-left" style="width: 100%">
+            [@includeX template="${templatePath}_block/block-header-slide.html"/]
+            [#list blocks as block]
+            [@includeX template="${templatePath}_block/${block.layout.templatePath}" defaultTemplate="/web/pages/block-default.html"/]
+            [/#list]
+        </div>
+    </div>
+</div>
+[/@layout]

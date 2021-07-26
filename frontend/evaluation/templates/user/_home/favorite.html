@@ -1,0 +1,24 @@
+<div role="tabpanel" class="tab-pane active">
+    <div class="address-content application">
+        <div class="sub-title" style="border-bottom: none;">My Favorite</div>
+        <div class="table-responsive order-table data-favorite-table">
+            [#include "${templatePath}/user/_data/favoriteListData.html" /]
+        </div>
+    </div>
+</div>
+<div class="modal fade system-window" id="favorite-del" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Remove Favorite items</h4>
+            </div>
+            <div class="modal-body">Are you sure to remove this item? , whether to continue?</div>
+            <div class="modal-footer">
+                <input type="hidden" id="favorite_id">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary deleteFavorite" id="favorite_del_btn" data-id="">Remove</button>
+            </div>
+        </div>
+    </div>
+</div>

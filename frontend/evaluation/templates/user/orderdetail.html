@@ -1,0 +1,402 @@
+[#include "/_inc/user/_inc/layout.html"/]
+[#macro importCss]
+<link href="${static('user/css/account.css')}" rel="stylesheet" type="text/css"/>
+<link rel="stylesheet" href="${static('user/css/base.css')}">
+<link rel="stylesheet" href="${static('user/css/pagination.css')}">
+<style>
+    .account-content .m-b30{
+        margin-bottom: 30px!important;
+    }
+    .modal-backdrop{
+        z-index: 99;
+    }
+</style>
+[/#macro]
+
+[#macro importScript]
+<script>
+    // $(function () {
+    //
+    //     $("#refundBtn").on('click', function () {
+    //
+    //         if($("#refundCardNo").val().trim() === ''){
+    //             $.Theme.Tips.error($.i18n.prop('refundCard'))
+    //             return false;
+    //         }
+    //
+    //         if($("#refundContent").val().trim() === ''){
+    //             $.Theme.Tips.error($.i18n.prop('reasonRefund'))
+    //             return  false;
+    //         }
+    //
+    //         $.ajax({
+    //             url: window.webDomain + '/client/order/refund',
+    //             data: $("#refundForm").serialize(),
+    //             type: 'post',
+    //             dataType: 'json',
+    //             success: function (data) {
+    //                 if(data.success){
+    //                     $.Theme.Tips.success($.i18n.prop('refundSuccess'))
+    //                 } else {
+    //                     $.Theme.Tips.error(data.message);
+    //                 }
+    //             }
+    //         })
+    //         $("#closeBtn").click();
+    //     });
+    //
+    //     $("#signBtn").click(function () {
+    //         $.ajax({
+    //             url: window.webDomain + '/client/order/sign/' + $("#orderId").val(),
+    //             data: null,
+    //             type: 'get',
+    //             dataType: 'json',
+    //             success: function (data) {
+    //                 if (data.success) {
+    //                     $.Theme.Tips.success($.i18n.prop('signSuccess'));
+    //                     setTimeout(function () {
+    //                         window.location.reload();
+    //                     }, 1000)
+    //                 } else {
+    //                     $.Theme.Tips.error(data.message)
+    //                 }
+    //             }
+    //         })
+    //     })
+    //
+    // });
+    //
+    // function linkProductDetail(productSeoUrl) {
+    //     if (productSeoUrl !== '') {
+    //         window.open(productSeoUrl);
+    //     }
+    // }
+    //
+    // $(function () {
+    //     loadingLogisticsDetail()
+    // })
+    //
+    // function loadingLogisticsDetail(){
+    //     $.ajax({
+    //         url: window.webDomain + '/client/logistics/list/' + $("#orderId").val(),
+    //         data: null,
+    //         type: 'get',
+    //         dataType: 'json',
+    //         success: function (data) {
+    //             $('#Logistics_detail').tmpl(data).appendTo('#logistics-info');
+    //         }
+    //     })
+    // }
+
+
+    var orderDetail = function () {
+
+        this.events = {
+            refundBtn: function() {
+                if($("#refundCardNo").val().trim() === ''){
+                    $.Theme.Tips.error("Refund card number cannot be empty")
+                    return false;
+                }
+
+                if($("#refundContent").val().trim() === ''){
+                    $.Theme.Tips.error("Refund reason cannot be empty")
+                    return  false;
+                }
+                $.ajax({
+                    url: window.webDomain + '/client/order/refund',
+                    data: $("#refundForm").serialize(),
+                    type: 'post',
+                    dataType: 'json',
+                    success: function (data) {
+                        if(data.success){
+                            $.Theme.Tips.success('Successful application!')
+                        } else {
+                            $.Theme.Tips.error(data.message);
+                        }
+                    }
+                })
+                $("#closeBtn").click();
+            },
+            signBtn: function() {
+                $.ajax({
+                    url: window.webDomain + '/client/order/sign/' + $("#orderId").val(),
+                    data: null,
+                    type: 'get',
+                    dataType: 'json',
+                    success: function (data) {
+                        if (data.success) {
+                            $.Theme.Tips.success('Comment successful!');
+                            setTimeout(function () {
+                                window.location.reload();
+                            }, 1000)
+                        } else {
+                            $.Theme.Tips.error(data.message)
+                        }
+                    }
+                })
+            }
+        }
+
+        this.loadingLogisticsDetail = function () {
+            $.ajax({
+                url: window.webDomain + '/client/logistics/list/' + $("#orderId").val(),
+                data: null,
+                type: 'get',
+                dataType: 'json',
+                success: function (data) {
+                    $('#Logistics_detail').tmpl(data).appendTo('#logistics-info');
+                }
+            })
+        }
+
+        this.bind = function () {
+            var that = this;
+            $('.mzt-order_main').on('click', '#refundBtn,#signBtn', function () {
+                that.events[$(this).attr('id')].call(this, that);
+            })
+        }
+
+        this.init = function () {
+            this.bind();
+            this.loadingLogisticsDetail();
+        };
+        this.init();
+    }
+
+    new orderDetail();
+
+
+</script>
+<script type="text/html" id="Logistics_detail">
+    {{each(index,item) data}}
+        {{if data.length - 1 === index}}
+        <div class="logistics-row delivery">
+            <i class="iconfont mzt-icon icon-arrow-right-circle-line"></i>
+            <div class="logistics-state">
+                <p>{{= item.exten.status}}</p>
+                <time>{{= item.exten.addTime}}</time>
+            </div>
+            <div class="logistics-track">
+                {{if item.salesOrderStatus == '已发货'}}
+                <p>
+                    <span>Logistics company</span>：{{if item.transportsChannelName == ''}}
+                    <span>Not yet</span> {{else}}{{= item.transportsChannelName}} {{/if}}&nbsp;
+                    <span>Logistics order No</span>：{{if item.transportsNo == ''}}
+                    <span>Not yet</span> {{else}}{{= item.transportsNo}} {{/if}}</p>
+                    {{else item.salesOrderStatus == '已签收'}}
+                <p>
+                    <span>Logistics company</span>：{{if item.transportsChannelName == ''}}
+                    <span>Not yet</span> {{else}}{{= item.transportsChannelName}} {{/if}}&nbsp;
+                    <span>Logistics order No</span>：{{if item.transportsNo == ''}}
+                    <span>Not yet</span> {{else}}{{= item.transportsNo}} {{/if}}</p>
+                <p>
+                    <span>Signer</span>：{{if item.addUserName == ''}}
+                    <span>Not yet</span> {{else}}{{= item.addUserName}} {{/if}}</p>
+                {{/if}}
+            </div>
+        </div>
+        {{else}}
+        <div class="logistics-row">
+            <i class="iconfont mzt-icon icon-arrow-right-circle-line"></i>
+            <div class="logistics-state">
+                <p>{{= item.exten.status}}</p>
+                <time>{{= item.exten.addTime}}</time>
+            </div>
+            <div class="logistics-track">
+                {{if item.salesOrderStatus == '已发货'}}
+                <p>
+                    <span>Logistics company</span>：{{if item.transportsChannelName == ''}}
+                    <span>Not yet</span>{{else}}{{= item.transportsChannelName}} {{/if}}&nbsp;
+                    <span>Logistics order No</span>：{{if item.transportsNo == ''}}
+                    <span>Not yet</span> {{else}}{{= item.transportsNo}} {{/if}}</p>
+                    {{else item.salesOrderStatus == '已签收'}}
+                <p>
+                    <span>Logistics company</span>：{{if item.transportsChannelName == ''}}
+                    <span>Not yet</span> {{else}}{{= item.transportsChannelName}} {{/if}}&nbsp;
+                    <span>Logistics order No</span>：{{if item.transportsNo == ''}}
+                    <span>Not yet</span>{{else}}{{= item.transportsNo}} {{/if}}</p>
+                <p>
+                    <span>Signer</span>：{{if item.addUserName == ''}}
+                    <span>Not yet</span> {{else}}{{= item.addUserName}} {{/if}}</p>
+                {{/if}}
+            </div>
+        </div>
+        {{/if}}
+    {{/each}}
+
+</script>
+
+[/#macro]
+[@layout]
+[#include "/_inc/header-index.html" /]
+<div class="mzt-order_main">
+    <div class="account-content">
+        <div class="mzt-container">
+            <div class="row m-b30">
+                <div class="title">Order Center</div>
+                <div class="order-details full">
+                    <div class="col-sm-4 no-padding">
+                        <div class="order-message full">
+                            <div class="sub-title">Order Information</div>
+                            <div class="order-info">
+                                <div class="order-txt">
+                                    <div class="col-sm-4 no-padding">Consignee Name:</div>
+                                    <div class="col-sm-8 no-padding">${order.ordSalesOrder.clientName}</div>
+                                </div>
+                                <div class="order-txt">
+                                    <div class="col-sm-4 no-padding">delivery Address:</div>
+                                    <div class="col-sm-8 no-padding">
+                                        ${order.address.countryName}${order.address.province}${order.address.city}${order.address.address}
+                                    </div>
+                                </div>
+                                <div class="order-txt">
+                                    <div class="col-sm-4 no-padding">Sales Order No:</div>
+                                    <div class="col-sm-8 no-padding">${order.ordSalesOrder.salesOrderNo}</div>
+                                </div>
+                                <div class="order-txt">
+                                    <div class="col-sm-4 no-padding">Buyer message:</div>
+                                    <div class="col-sm-8 no-padding">${order.ordSalesOrder.remark}</div>
+                                </div>
+                                <div class="order-txt">
+                                    <div class="col-sm-4 no-padding">Payment Type Name:</div>
+                                    <div class="col-sm-8 no-padding">${order.ordSalesOrder.paymentPlatformName}</div>
+                                </div>
+                                <div class="order-txt">
+                                    <div class="col-sm-4 no-padding">Pay the serial number:</div>
+                                    <div class="col-sm-8 no-padding">${order.ordSalesOrder.paymentStreamNo}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-8 no-padding">
+                        <div class="order-logistics">
+                            <div class="sub-title">Logistics status</div>
+                            <div class="logistics-info" id="logistics-info">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="order-details full">
+                    <div class="table-responsive order-table details-table">
+                        <table class="table">
+                            <tr>
+                                <th>Goods Information</th>
+                                <th>Unit Price</th>
+                                <th>Count</th>
+                                <th>Total Price</th>
+                                <th>Creation Time</th>
+                                <th>Status</th>
+                            </tr>
+                            [#list order.ordSalesOrderDetail as item]
+                            <tr>
+                                <td>
+                                    <div>
+                                        <a href="${item.exten.seoUrl}" target="_blank">
+                                            <img src="${item.productImageUrl}" alt="img-1.a9b1b2a3.png" style="max-width: 80px;margin-right: 10px;display: inline-block;">
+                                            <div class="desc" style="display: inline-block">
+                                                <p>${item.productName}</p>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </td>
+                                <td>￥${item.exten.productMallPrice}</td>
+                                <td>x${item.productNum}</td>
+                                <td>￥${item.exten.totalAmount}</td>
+                                <td>${dateToStr(item.addTime)}</td>
+                                <td class="mzt-order-btn">
+                                    <span>${order.ordSalesOrder.exten.orderStatus}</span>
+                                    <!-- 收到货才能有评价 -->
+                                    [#if order.ordSalesOrder.salesOrderStatus == '05']
+                                        <a href="${item.exten.seoUrl}" target="_blank">evaluate</a>
+                                    [/#if]
+                                    <!-- 待发货-03、已发货-04、已完成-05 状态申请退款 -->
+                                    [#if order.ordSalesOrder.salesOrderStatus == '03' || order.ordSalesOrder.salesOrderStatus == '04' || order.ordSalesOrder.salesOrderStatus == '05']
+                                        <a href="#reimburse" data-toggle="modal" data-target="#reimburse">Apply for refund</a>
+                                    [/#if]
+                                </td>
+                            </tr>
+                            [/#list]
+                        </table>
+                    </div>
+                </div>
+                <div class="order-evaluation full">
+                    <div class="evaluation-txt">
+                        <p>Current order status：${order.ordSalesOrder.exten.orderStatus}</p>
+                        <input type="hidden" id="orderId" value="${order.ordSalesOrder.id}">
+                        [#if order.ordSalesOrder.salesOrderStatus == '04']
+                        <button id="signBtn" type="button" class="btn btn-info">Sign For</button>
+                        [/#if]
+                    </div>
+                    [#if order.ordSalesOrder.salesOrderStatus == '99']
+                    <br>
+                    <div class="evaluation-txt">
+                        <p>Reasons for refund application：${order.refundRequest.refundReason}</p>
+                        <p>退款申请原因：${order.refundRequest.refundContent}</p>
+                        <p>Reasons for agreeing to refund：${order.refundRequest.refundAgreeContent}</p>
+                        <p>Refund review time：${dateToStr(item.auditTime)}</p>
+                        <p>Refund serial number：${order.refundRequest.refundStreamNo}</p>
+                    </div>
+                    [/#if]
+                    <div class="evaluation-ul">
+                        <div class="order-txt ">
+                            <div class="col-sm-7 no-padding">${order.ordSalesOrder.exten.totalNumber}piece goods，Total merchandise value:</div>
+                            <div class="col-sm-4 no-padding">￥${order.ordSalesOrder.exten.orderTotalAmount}</div>
+                        </div>
+                        <div class="order-txt">
+                            <div class="col-sm-7 no-padding">Discount：</div>
+                            <div class="col-sm-4 no-padding">-￥${order.ordSalesOrder.exten.orderDiscountAmount}</div>
+                        </div>
+                        <div class="order-txt">
+                            <div class="col-sm-7 no-padding">Freight：</div>
+                            <div class="col-sm-4 no-padding">￥${order.ordSalesOrder.totalTransportsFree}</div>
+                        </div>
+                        <div class="order-txt">
+                            <div class="col-sm-7 no-padding">Total：</div>
+                            <div class="col-sm-4 no-padding">￥${order.ordSalesOrder.exten.actualAmount +
+                                order.ordSalesOrder.totalTransportsFree + order.ordSalesOrder.exten.taxAmount}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade address-window" id="reimburse" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="address-title">application for drawback</div>
+                <div class="address-form">
+                    <form id="refundForm" action="#" method="post">
+                        <div class="address-row full">
+                            <div class="consignee col-sm-6">
+                                <div class="prompt">Refund the card number:</div>
+                                <input id="refundCardNo" style="margin-top: 0" name="refundCardNo" type="text" placeholder="Refund the card number"/>
+                            </div>
+                            <div class="consignee col-sm-6">
+                                <div class="prompt">Refund Reason:</div>
+                                <select name="refundReason">
+                                    <option value="不需要" selected>with no need for</option>
+                                    <option value="拍错">Take the wrong</option>
+                                    <option value="尺寸不对">Wrong Size</option>
+                                    <option value="颜色差异大">Big color difference</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="address-row consignee">
+                            <div class="prompt">Refund instructions:</div>
+                            <textarea id="refundContent" name="refundContent" rows="3" placeholder="Refund instructions"></textarea>
+                            <input type="hidden" name="salesOrderNo" value="${order.ordSalesOrder.salesOrderNo}">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" id="closeBtn" class="btn btn-default " data-dismiss="modal">Close</button>
+                            <button type="button" id="refundBtn" class="btn btn-primary">Application for drawback</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+[#include "/_inc/footer.html"/]
+[/@layout]

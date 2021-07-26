@@ -1,0 +1,51 @@
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+</div>
+<div class="modal-body adcpopup-content">
+    <div class="product-item">
+        <div class="title_one">Beauties, Your Product Has Been Successfully Added To Cart!</div>
+        <div class="title_two">Free Gifts For Every Order！</div>
+        <div class="product-qty"><span class="qut_num">${shoppingCart.totalProductNumber}</span>Item(s) In Your Cart</div>
+        <div class="top_miaos overflow">
+            <a href="" class="product-item-photo">
+                <img id="product-img" src="${shoppingCart.prductPicImageUrl}" alt="">
+            </a>
+            <div class="product-item-details">
+                <a class="product-item-name" href="">${shoppingCart.productName}</a>
+                <div class="addcart_right2 overflow">
+                    <div class="options">
+                        [#list shoppingCart.productSpec ? split("，") as spec]
+                            <div class="option-item">${spec}</div>
+                        [/#list]
+                    </div>
+                    <!--<a class="details_a" href="">Details</a>-->
+                </div>
+            </div>
+        </div>
+        <div class="price_tot">
+            <span>Cart Subtotal：</span>
+            <span class="price-sum_box">$${shoppingCart.exten.totalAmount}</span>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <a class="continue_but" href="/">Continue Shopping</a>
+    <a class="product-item-actions" href="/shoppingCart">View shopping cart</a>
+    <input type="hidden" id="cartId" value="${shoppingCart.id}">
+    <a class="checkout_but" onclick="checkoutCart()">Checkout</a>
+</div>
+<script>
+    // 结算
+    function checkoutCart() {
+        var SETEC_URL = window.GLOBAL_CONFIG.mainUrl + '/jumpSettlement/saveSettlement?cartId='+$('#cartId').val();
+        return fetch(SETEC_URL, {
+            method: 'post',
+        }).then(function(res) {
+            return res.json();
+        }).then(function(data) {
+            if(data.state == 200){
+                window.location.href = window.GLOBAL_CONFIG.mainUrl + '/jumpSettlement/'+data.data+'?step=information';
+            }
+        });
+    }
+</script>

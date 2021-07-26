@@ -1,0 +1,42 @@
+<div class="application" ref="orderTable">
+    <div class="sub-title">
+        <span style="flex: 1;" >My Orders</span>
+        <div action="#" class="flex">
+            <el-input placeholder="Order number" v-model="param.orderNo" clearable size="medium">
+                <el-button slot="append" icon="el-icon-search" @click="findOrderListData"></el-button>
+            </el-input>
+        </div>
+
+    </div>
+    <div class="order-nav full">
+        <ul role="tablist">
+            <li name="order_tab_list" :class="{active:param.status == 'all'}" @click="switchTab('all')">
+                <a data-toggle="tab">All</a>
+            </li>
+            <li name="order_tab_list" :class="{active:param.status == 'submit-order'}" @click="switchTab('submit-order')">
+                <a data-toggle="tab">Submit order</a> <!-- 亚马逊待审核 -->
+            </li>
+           <!-- <li name="order_tab_list" :class="{active:param.status == 3}" @click="switchTab(3)">
+                <a data-toggle="tab">Confirmed</a> &lt;!&ndash; 亚马逊信息审核通过 &ndash;&gt;
+            </li>
+            <li name="order_tab_list" :class="{active:param.status == 4}" @click="switchTab(4)">
+                <a data-toggle="tab">Confirmation failed</a> &lt;!&ndash; 亚马逊信息审核驳回 &ndash;&gt;
+            </li>-->
+            <li name="order_tab_list" :class="{active:param.status == 'submit-comments'}" @click="switchTab('submit-comments')">
+                <a data-toggle="tab">Submit comments</a> <!-- 返现待审核 -->
+            </li>
+            <!--<li name="order_tab_list" :class="{active:param.status == 6}" @click="switchTab(6)">
+                <a data-toggle="tab">Completed Orders</a>&lt;!&ndash; 返现审核通过 &ndash;&gt;
+            </li>
+            <li name="order_tab_list" :class="{active:param.status == 7}" @click="switchTab(7)">
+                <a data-toggle="tab">Cash back refusal</a>&lt;!&ndash; 返现审核驳回 &ndash;&gt;
+            </li>-->
+            <li name="order_tab_list"  :class="{active:param.status == 'closed'}" @click="switchTab('closed')">
+                <a data-toggle="tab">Closed Orders</a> <!-- 关闭 -->
+            </li>
+        </ul>
+    </div>
+    <div class="order-data-list" v-loading="tableLoading" v-lock>
+        [#include "${templatePath}/user/_data/orderListData.html" /]
+    </div>
+</div>

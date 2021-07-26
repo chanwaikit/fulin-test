@@ -1,0 +1,82 @@
+<div class="balancePage">
+    <div class="cash-first">
+        <ul class="cash-first-ul">
+            <li class="cash-first-li common-li-style">My Account</li>
+            <li class="cash-second-li common-li-style common-text common-border-bottom">
+                <span class="first-span">Total cash back</span>
+                <span class="second-span">$${totalCashBack}</span>
+            </li>
+            <li class="cash-third-li common-li-style common-text common-border-bottom">
+                <span class="first-span">Commission balance</span>
+                <span class="second-span change-color">$${commissionBalance}</span>
+            </li>
+            <li class="cash-four-li common-li-style common-text common-border-bottom">
+                <span class="first-span">Pending</span>
+                <span class="second-span">$${pendingCashBack}</span>
+            </li>
+            [#if commissionBalance > 0]
+            <li class="cash-six-li clear">
+                <a @click="openWithdrawal(${commissionBalance})" class="request">Commission withdrawal request</a>
+            </li>
+            [/#if]
+        </ul>
+    </div>
+    <div class="historyBox">
+        <div class="historyBox__txt">Transactions History</div>
+        <div class="historyBox-btnBox order-nav">
+            <ul role="tablist">
+                <li tab="cashback" :class="{btnActive:tabIndex == 'cashback'}" @click="switchTab('cashback')">
+                    <a data-toggle="tab" href="#cashback">Cashback</a>
+                </li>
+                <li  tab="withdrawal" :class="{btnActive:tabIndex == 'withdrawal'}" @click="switchTab('withdrawal')">
+                    <a data-toggle="tab" href="#withdrawal">Withdrawal</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div id="myTabContent">
+        <div class="balanceListBox">
+            <div class="tab-pane in active" id="cashback">
+                <div class="balance-select-top">
+                    <div class="balance-select-left">All</div>
+                    <div class="balance-select-box">
+                        <div class="select-content" @click="cashbackState=!cashbackState">
+                            <span>Transaction Status</span>
+                            <i class="mzt-icon mzt-right"></i>
+                        </div>
+                        <ul class="select-list" v-show="cashbackState">
+                            <li class="commonBtn" :class="{btnActive:cashbackParam.status == 'all'}" @click="switchCashbackTab('all')">All</li>
+                            <li class="commonBtn" :class="{btnActive:cashbackParam.status == 'payable'}" @click="switchCashbackTab('payable')">Payable($ {{payableData}})</li>
+                            <li class="commonBtn" :class="{btnActive:cashbackParam.status == 'pending'}" @click="switchCashbackTab('pending')">Pending($ {{pendingData}})</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="reasonListBox" v-lock>
+                    [#include "${templatePath}/user/_data/cashbackListData.html" /]
+                </div>
+            </div>
+            <div class="tab-pane" id="withdrawal">
+                <div class="balance-select-top">
+                    <div class="balance-select-left">All</div>
+                    <div class="balance-select-box">
+                        <div class="select-content" @click="withdrawalState=!withdrawalState">
+                            <span>Transaction Status</span>
+                            <i class="mzt-icon mzt-right"></i>
+                        </div>
+                        <ul class="select-list" v-show="withdrawalState">
+                            <li class="commonBtn" :class="{btnActive:withdrawalParam.status == ''}" @click="switchWithdrawalTab('')">All</li>
+                            <li class="commonBtn" :class="{btnActive:withdrawalParam.status == '1'}" @click="switchWithdrawalTab(1)">Withdrawal Applying</li>
+                            <li class="commonBtn" :class="{btnActive:withdrawalParam.status == '2'}" @click="switchWithdrawalTab(2)">Withdrawal Completed</li>
+                            <li class="commonBtn" :class="{btnActive:withdrawalParam.status == '3'}" @click="switchWithdrawalTab(3)">Withdrawal Failed</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="reasonListBox" v-lock>
+                    [#include "${templatePath}/user/_data/withdrawalListData.html" /]
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+[#include "${templatePath}_dialog/_commission-withdrawal-dialog.html"/]

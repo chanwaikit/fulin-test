@@ -1,0 +1,89 @@
+[#macro css]
+[#include "/_inc/js/bootstrap-min-css.html" /]
+<link href="//at.alicdn.com/t/font_1684923_hjglqsx9kpw.css" rel="stylesheet" type="text/css"/>
+<link href="${static('css/mzt.css')}" rel="stylesheet" type="text/css"/>
+[#include "${templatePath}_inc/importHeaderCss.html" /]
+<link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/vant@2.12/lib/index.css"
+/>
+<link href="${static('css/plugins/element/index.css')}" rel="stylesheet" type="text/css"/>
+<style>
+    :root { --themeColor: #FEBD69; }
+</style>
+[/#macro]
+
+[#macro script]
+[#include "/_inc/js/jquery-3.4.1-min-js.html" /]
+[#include "/_inc/js/jquery-cookie.html" /]
+<!--<script src="${static('tpl1/js/language.js')}"></script>-->
+[#include "/_inc/js/jquery.validate.min.html" /]
+[#include "/_inc/js/bootstrap-min-js.html" /]
+<script>window.isPc = $(window).width() >= 800</script>
+<script type="text/javascript">window.webDomain = '${request.contextPath}';</script>
+<script type="text/javascript">
+    window.GLOBAL_CONFIG = {};
+    window.GLOBAL_CONFIG.isPc = $(window).width() >= 800;
+    window.GLOBAL_CONFIG.templateName = '${templateName}';
+    window.GLOBAL_CONFIG.mainUrl = '${ctxPath}';
+</script>
+[#include "/_inc/js/jquery.tmpl.min.js.html" /]
+<script src="${static('user/js/addCart.js')}"></script>
+<script src="${static('js/plugins/jquery.extend.js')}"></script>
+<script src="${static('js/plugins/jquery.validate/jquery.validate.config.js')}"></script>
+
+[/#macro]
+
+[#macro importMeta]
+[#include "/_inc/meta.html" /]
+[/#macro]
+
+[#include "/_inc/nav.html" /]
+
+[#macro importCss]
+[/#macro]
+
+[#macro res fileName]${static('${templateName}/skin/img/'+fileName)}[/#macro]
+
+[#macro resCss fileName]${static('${templateName}/skin/css/'+fileName)}[/#macro]
+
+[#macro resJS fileName]${static('${templateName}/skin/js/'+fileName)}[/#macro]
+
+[#macro importScript]
+[/#macro]
+
+[#macro img fileName]${static('user/images/'+fileName)}[/#macro]
+
+[#macro layout page=""]
+<!DOCTYPE html>
+<html style="box-sizing: border-box;" lang="en">
+<head>
+    [@css /]
+    [@importCss /]
+    [@importMeta /]
+    [@script /]
+    ${skinPageCode()}
+</head>
+<body data-page="user-${page}">
+<div class="page-wrapper pageWidth mainPage">
+    [#nested]
+</div>
+<script src="${static('js/plugins/element/vue.min.js')}"></script>
+<script src="${static('js/plugins/element/element.js')}"></script>
+<script src="https://cdn.jsdelivr.net/npm/vant@2.12/lib/vant.min.js"></script>
+<script src="${static('js/plugins/element/en.js')}"></script>
+<script src="${static('js/plugins/sea.min.js')}"></script>
+<script src="${static('js/mzt.js')}"></script>
+[@importScript /]
+<script>
+    window.onload=function() {
+        $('.mzt-main-loading').hide()
+    }
+    ELEMENT.locale(ELEMENT.lang.en)
+</script>
+<script src="${static('user/js/jquery.md5.js')}"></script>
+[@includeX template="${templatePath}_inc/importScript.html" defaultTemplate="/web/pages/block-default.html"/]
+${skinPageCode('body')}
+</body>
+</html>
+[/#macro]

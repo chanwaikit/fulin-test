@@ -1,0 +1,98 @@
+[#include "/_inc/layout.html"/]
+[#macro importScript]
+    <script src="[@resJS 'cart.js' /]" type="text/javascript"></script>
+[/#macro]
+[@layout page="list"]
+<div class="testProductPage pageMinWidth">
+    <div class="testProductPage-fliter">
+        <div class="filter-page pageMinWidth">
+            <div class="filter-page-content">
+                <div class="text-show">
+                    <p class="text">All</p>
+                    <div class="inventory"><span v-text="totalRow"></span> products</div>
+                </div>
+                <div class="price"><span class="price-area">Price</span>
+                    <el-input placeholder="Min" v-model="param.minPrice" clearable>
+                        <i slot="prefix" class="icon">$</i>
+                    </el-input>
+                    <span class="line"></span>
+                    <el-input placeholder="Max" v-model="param.maxPrice" clearable>
+                        <i slot="prefix" class="icon">$</i>
+                    </el-input>
+                    <button type="button" class="el-button el-button--default" style="margin-left: 10px;" @click="queryToTag('price', [], true)"><span>Go</span></button>
+                </div>
+                <div class="tag">
+                    <el-select v-model="param.tag" @change="queryToTag('tag', productTagList, true)" placeholder="" style="margin-left: 40px;" clearable>
+                        <i slot="prefix" class="icon">Tag</i>
+                        <el-option v-for="item in productTagList" :key="item.id" :label="item.name" :value="item.id"/>
+                    </el-select>
+                </div>
+                <div class="category">
+                    <el-select v-model="param.c" @change="queryToTag('c', categoryList, true)" collapse-tags style="margin-left: 20px;" placeholder="" clearable>
+                        <i slot="prefix" class="icon">Category</i>
+                        <el-option label="All" value=""></el-option>
+                        <el-option v-for="item in categoryList" :key="item.id" :label="item.name" :value="item.id"/>
+                    </el-select>
+                </div>
+                <div class="sort">
+                    <el-select v-model="param.o" @change="queryToTag('o', sortList, true)" style="margin-left: 20px;" placeholder="" clearable>
+                        <i slot="prefix" class="icon">Sort by</i>
+                        <el-option v-for="item in sortList" :key="item.id" :label="item.name" :value="item.id"/>
+                    </el-select>
+                </div>
+            </div>
+            <div class="filter-page-bottom">
+                <div class="text">Results for Fulfilled by</div>
+                <div class="filter" v-lock>
+                    <div class="common" v-for="(item, index) in filterTags" :key="index">
+                        <span>{{item.text}}</span><i @click="cleanFilterTags(index, item)">x</i>
+                    </div>
+                </div>
+             </div>
+        </div>
+    </div>
+    <div class="testProductPage-content"  v-lock>
+        <div role="feed" class="van-list">
+            <div class="content-productBox pageMinWidth nthLeft"  v-infinite-scroll="loadMore" infinite-scroll-disabled="disabled">
+                <transition v-for="item in pageList" :key="item.id" class="infinite-list-item">
+                    <div class="productWrap">
+                        <a class="page" :href="item.url">
+                            <div class="productBox itemBox-animate productListWidth">
+                                <div class="productImg">
+                                    <img :src="item.thumbnail"  class="img"/>
+                                    [@skin_switch_image id=item.id]
+                                    [#if skinSwitch.exist]
+                                    <img data-lazy data-original="${skinSwitch.url}" class="img-2"/>
+                                    [/#if]
+                                    [/@skin_switch_image]
+                                </div>
+                                <img :src="country.flag" class="img-logo">
+                                <p class="title">
+                                    {{item.title}}
+                                </p>
+                                <div class="priceBox">
+                                    <div class="price-left clear">
+                                        <span class="price">{{country.currency}} {{item.viewPrice}}</span>
+                                        <span class="original-price" v-if="item.viewPrice != item.oldPrice">{{country.currency}} {{item.oldPrice}}</span>
+                                    </div>
+                                    <div class="price-right clear"></div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </transition>
+                <div v-if="pageList.length == 0" class="mzt-empty-list">
+                    <div class="empty-icon">
+                        <img src="[@res 'more_coming.png' /]" alt="">
+                    </div>
+                    <div class="empty-text">
+                        No Data
+                    </div>
+                </div>
+                <p v-if="noMore" class="pageNoMore">No More</p>
+            </div>
+            <div class="van-list__placeholder"></div>
+        </div>
+    </div>
+</div>
+[/@layout]

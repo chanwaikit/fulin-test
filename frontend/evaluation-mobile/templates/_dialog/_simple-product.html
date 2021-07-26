@@ -1,0 +1,73 @@
+<div class="modal fade" id="simple-product" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title" id="myModalLabel">
+
+                </h4>
+            </div>
+            <div class="modal-body">
+<!--                <iframe class="mfp-iframe" src="" frameborder="0" allowfullscreen="" scrolling="0" style="width: 100%; overflow: hidden;min-height: 450px" ></iframe>-->
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade productCard-dialog" id="smallProductCard-dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        </div>
+    </div>
+</div>
+<style>
+    #simple-product .modal-dialog{
+        max-width: 900px;
+        width: 100%;
+        margin: 5vh auto;
+    }
+    #simple-product .modal-content{
+        background: transparent;
+        box-shadow: none;
+        border: none;
+    }
+    #simple-product .modal-header{
+        padding: 10px 0;
+        background: transparent;
+    }
+    #simple-product .modal-body{
+        background: #fff;
+        box-shadow: 0 5px 15px rgba(0,0,0,.5);
+    }
+    #simple-product .modal-header .close{
+        color: white;
+        font-size: 28px;
+        opacity: .8;
+    }
+    #simple-product .modal-header .close:hover{
+        opacity: 1;
+    }
+</style>
+<script>
+    var $iframe = $('<iframe class="mfp-iframe" src="" frameborder="0" allowfullscreen="" scrolling="0" style="width: 100%; overflow: hidden;min-height: 520px" ></iframe>')
+    function autoIframeHeight() {
+        $iframe.height($iframe[0].contentWindow.document.body.scrollHeight===0?$iframe[0].contentWindow.document.documentElement.scrollHeight:$iframe[0].contentWindow.document.body.scrollHeight)
+    }
+    function openProductCardModal(selectAttr) {
+        $('#smallProductCard-dialog').modal('show')
+        $.get( window.GLOBAL_CONFIG.mainUrl + '/product/cart_confirm_data',  {
+            productId: selectAttr.productId,
+            productSubSku: selectAttr.sku
+        }, function (res) {
+            $('#smallProductCard-dialog .modal-content').html(res)
+        })
+    }
+    $('#simple-product').on('show.bs.modal', function (e) {
+        $iframe.attr('src',
+            window.GLOBAL_CONFIG.mainUrl + '/parts/product-popup?productId=' + $(e.relatedTarget).attr('data-id'))
+        $('#simple-product .modal-body').html($iframe);
+    }).on('hidden.bs.modal', function () {
+        $iframe.remove()
+    })
+</script>

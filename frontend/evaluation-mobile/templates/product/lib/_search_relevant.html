@@ -1,0 +1,24 @@
+[@search_product_relevant]
+<div class="mzt-sidebar-main">
+    [#if relevant.types?size > 0]
+    <div class="filters-list bgc-w">
+        <div  class="filter-first-title mzt-collapse cursor active">
+            <h5 class="filters-tt h5 bold">
+                ${ i18n.get('search.category', 'Category') }
+            </h5>
+            <i class="mzt-icon mzt-jianhao"></i>
+        </div>
+        <ul  class="list-group row clearfix" style="display: block; height: 115px; overflow: hidden;">
+            [#list relevant.types as type]
+            <li class="list-group-item" data-search-name="c" data-value="${type.id}"><a href="javascript:void(0);">${type.name}</a></li>
+            [/#list]
+        </ul>
+        <div class="mzt-view"><i class="mzt-icon mzt-jiahao"></i>${ i18n.get('other.more', 'View More')}</div>
+    </div>
+    [/#if]
+</div>
+<div class="mzt-hidden-btn" style="float: right; margin-right: 10px;">
+    <button class="btn btn-default" style="margin-right: 10px;">${ i18n.get('other.close', 'Close')}</button>
+    <button class="btn btn-primary">Sure</button>
+</div>
+[/@search_product_relevant]

@@ -1,0 +1,127 @@
+[#include "/_inc/layout.html"/]
+[#macro importCss]
+<style>
+    .mzt-category_blog{
+        margin: 0;
+        padding: 20px 20px 0;
+        background: #FCFCFC;
+        border-bottom: 2px dotted #e6e6e6;
+    }
+    .mzt-category_blog .mzt-wenjian{
+        font-size: 30px;
+        position: absolute;
+        top: 10px;
+        left: 14px;
+        color: #e6e6e6;
+        display: inline-block;
+        text-align: center;
+        width: 35px;
+    }
+    .mzt-caption_info{
+        margin-bottom: 10px;
+        text-align: center;
+    }
+    .mzt-caption_info p{
+        margin-bottom: 10px;
+    }
+    .mzt-caption_info .mzt-icon{
+        color: #C4C4C4;
+    }
+    .mzt-blog_time{
+        color: #A9A9A9;
+        padding-left: 2px;
+        padding-right: 10px;
+        letter-spacing: 0.5px;
+        font-size: 13px;
+    }
+    .mzt-caption_info a{
+        color: #A9A9A9;
+        font-weight: 500;
+    }
+    .mzt-blog_time span{
+        color: #A9A9A9;
+        padding-left: 2px;
+        padding-right: 10px;
+        letter-spacing: 0.5px;
+        font-size: 13px;
+    }
+    .mzt-blog_title{
+        padding-bottom: 12px;
+        margin-top: 0px;
+        text-align: center;
+        color: #333;
+        font-size: 26px;
+        font-weight: 600;
+    }
+    .mzt-blog_content {
+        padding: 10px 0px 35px 0px;
+    }
+    .mzt-blog_img img{
+        width: 100%;
+        height: auto;
+        max-height: 414px;
+        object-fit: cover;
+    }
+    .mzt-next_box{
+        text-align: center;
+        padding: 20px 0px;
+        clear: both;
+    }
+    @media screen and (max-width: 414px) {
+        .mzt-blog_main .col-md-12,
+        .mzt-blog_main .col-sm-12{
+            padding: 0;
+        }
+    }
+</style>
+[/#macro]
+[#macro importScript]
+[/#macro]
+[@layout]
+<div class="mzt-container ">
+    <div class="mzt-blog_main clearfix m-t50">
+        <div class="col-md-12 col-sm-12 ">
+            <h2 class="mzt-blog_title">
+               ${blog.title}
+            </h2>
+            <div class="mzt-category_blog relative">
+                <i class="mzt-icon mzt-wenjian"></i>
+                <div class="mzt-caption_info">
+                    <p>
+                            <span class="mzt-blog_time">
+                                <span></span>
+                                <a href="#">
+                                    <i class="mzt-icon mzt-calendar2"></i>
+                                    <span><time>${dateToStr(blog.addTime)}</time></span>
+                                </a>
+                            </span>
+                        [@cms_taxonomys articleId=blog.id]
+                        <span class="mzt-comments_link">
+                                <i class="mzt-icon mzt-wenjianjia"></i>
+                                <a href="#">${taxonomy.title}</a>
+                            </span>
+                        [/@cms_taxonomys]
+                    </p>
+                </div>
+                <div class="mzt-blog_content">
+                    <div class="m-b20">
+                        ${blog.content}
+                    </div>
+                    <div class="mzt-next_box overflow">
+                        <div class="pull-left underline-link">
+                            [@cms_next]
+                            [#if next.title??]${ i18n.get('other.prev', 'prev')}：<a href="${next.url}">${next.title}</a>[/#if]
+                            [/@cms_next]
+                        </div>
+                        <div class="pull-right underline-link">
+                            [@cms_previous]
+                            [#if previous.title??]${ i18n.get('other.next', 'next')}：<a href="${previous.url}">${previous.title}</a>[/#if]
+                            [/@cms_previous]
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+[/@layout]

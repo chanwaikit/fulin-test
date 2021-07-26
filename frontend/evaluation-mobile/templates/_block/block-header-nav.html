@@ -1,0 +1,172 @@
+<header class="header_qyjyx">
+    <div class="navHeader">
+        <div class="navHeader-top">
+            [#if page == 'details']
+                <a href="${cxtPath}/?tab=0" class="backIcon"><i class="mzt-icon mzt-left"></i></a>
+            [/#if]
+            <div class="navHeader-top-navIcon" @click="showMenuPopup"><i class="mzt-icon mzt-caidan"></i></div>
+            <a href="${cxtPath}/?tab=0" class="navHeader-top-logo">
+                <img src="${options('site_seo_logo', '[@res 'logo.png' /]')}" class="searchBox__logoImg">
+            </a>
+            [#if page == 'home']
+            <div class="navHeader-top-signIn-box" v-lock>
+                <img :src="countryFlag" class="countryImg">
+                [#include  "${templatePath}_parts/nav-user.html"/]
+            </div>
+            [#else]
+            <div class="navHeader-top-iconBox">
+                <i class="mzt-icon mzt-sousuo1" @click="showSearchPopup"></i>
+            </div>
+            [/#if]
+            <van-popup
+                class="menu-popup"
+                v-model="showMenu"
+                closeable
+                close-icon="close"
+                close-icon-position="top-right"
+                position="left"
+                :style="{ height: '100%' }"
+                v-lock
+            >
+                <div class="sideBarPage">
+                    <div class="itemBox">
+                        [#if User.isAuth()]
+                        [#assign curUser=User.auth() /]
+                        <img src="${curUser.avatar}" alt="" class="itemBox__img">
+                        <span class="itemBox__text">${curUser.nickname}</span>
+                        [#else]
+                        <img src="[@res 'icon_user.png' /]" alt="" class="itemBox__img">
+                        <a href="${cxtPath}/login">
+                            <span class="itemBox__text">Sign In</span>
+                        </a>
+                        [/#if]
+                    </div>
+                    <van-collapse v-model="category" class="textItemBox__text" accordion>
+                        <div class="item-warp">
+                            <a href="${cxtPath}/?tab=0" class="navHeader-top-logo">
+                                <div class="textItemBox">
+                                    <span class="textItemBox__text">Home</span>
+                                </div>
+                            </a>
+                            <div class="textItemBox">
+                                <van-collapse-item title="Freebies" name="category" class="textItemBox__text">
+                                    <div class="categoryListBox">
+                                        <div class="textItemBox" @click="handleSearch('all')">
+                                            <span class="textItemBox__categoryText">All</span>
+                                            <i class="mzt-icon mzt-right"></i>
+                                        </div>
+                                        <div class="textItemBox" v-for="(item, index) in categoryList" :key="index"  @click="handleSearch(item.id)">
+                                            <span class="textItemBox__categoryText" v-text="item.productTypeName"></span>
+                                            <i class="mzt-icon mzt-right"></i>
+                                        </div>
+                                    </div>
+                                </van-collapse-item>
+                            </div>
+                            [#if User.isAuth()]
+                            [@skin_evaluation_cart]
+                            <a href="${cxtPath}/evaClient/order?tab=2">
+                            <div class="textItemBox">
+                                <span class="textItemBox__text">My Cart</span>
+                                <div class="textItemBox__num">${cart.cartNum}</div>
+                            </div>
+                            </a>
+                            [/@skin_evaluation_cart]
+                            [@skin_evaluation_total_cash_back]
+                            <a href="${cxtPath}/evaClient/balance">
+                            <div class="textItemBox">
+                                <span class="textItemBox__text">Total Cash Back</span>
+                                <span class="textItemBox__price">$${cashBack.totalCashBack}</span>
+                            </div>
+                            </a>
+                            [/@skin_evaluation_total_cash_back]
+                            [#else]
+                            <div class="textItemBox">
+                                <span class="textItemBox__text">My Cart</span>
+                                <div class="textItemBox__num">0</div>
+                            </div>
+                            <div class="textItemBox">
+                                <span class="textItemBox__text">Total Cash Back</span>
+                                <span class="textItemBox__price">$0</span>
+                            </div>
+                            [/#if]
+                        </div>
+                        <div class="greyGap"></div>
+                        <div class="item-warp">
+                            <div class="textItemsBox">
+                                <a href="${cxtPath}/evaClient/share">
+                                <div class="textItemBox">
+                                    <span class="textItemBox__text">Refer to Earn [@skin_evaluation_commission_rules] $${rule.commission} [/@skin_evaluation_commission_rules]</span>
+                                </div>
+                                </a>
+                                <div class="textItemBox" style="border: none">
+                                    <van-collapse-item title="Help" name="Help" class="textItemBox__text">
+                                        <div class="categoryListBox">
+                                            <a href="${cxtPath}/userGuide">
+                                                <div class="textItemBox">
+                                                    <span class="textItemBox__text">User Guide</span>
+                                                    <i class="mzt-icon mzt-right"></i>
+                                                </div>
+                                            </a>
+                                            <a href="${cxtPath}/faqContent?index=0">
+                                                <div class="textItemBox">
+                                                    <span class="textItemBox__text">FAQ</span>
+                                                    <i class="mzt-icon mzt-right"></i>
+                                                </div>
+                                            </a>
+                                            <a href="${cxtPath}/userGuide">
+                                                <div class="textItemBox">
+                                                    <span class="textItemBox__text">Contact Us</span>
+                                                    <i class="mzt-icon mzt-right"></i>
+                                                </div>
+                                            </a>
+                                            <a href="${cxtPath}/userGuide">
+                                                <div class="textItemBox">
+                                                    <span class="textItemBox__text">About Us</span>
+                                                    <i class="mzt-icon mzt-right"></i>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    </van-collapse-item>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="greyGap"></div>
+                        <div class="item-warp" style="padding-top: 0;">
+                            <div class="textItemBox">
+                                <van-collapse-item title="settings" name="settings" class="textItemBox__text">
+                                    <template #title>
+                                        <div>Settings<img :src="countryFlag" class="settings textItemBox__countryIcon"></div>
+                                    </template>
+                                    <div class="category-padding">
+                                        <div class="categoryListBox">
+                                            <div class="textItemBox"  v-for="item in countryList" :key="item.id" :value="item.id" @click="handleCountrySearch(item)">
+                                                <span class="textItemBox__categoryText">
+                                                    <img :src="item.flag"  class="textItemBox__countryIcon"> {{ item.countryName }}
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </van-collapse-item>
+                            </div>
+                            <a href="${cxtPath}/client/home?tab=3">
+                            <div class="textItemBox">
+                                <span class="textItemBox__categoryText">Profile</span>
+                            </div>
+                            </a>
+                        </div>
+                    </van-collapse>
+                </div>
+            </van-popup>
+            <van-popup v-model="showSearch" closeable>
+                <van-search
+                        v-model="search.k"
+                        shape="round"
+                        background="#4fc08d"
+                        placeholder="What are you looking for?"
+                        clearable
+                        @search="handleSearch('')"
+                ></van-search>
+            </van-popup>
+        </div>
+    </div>
+</header>

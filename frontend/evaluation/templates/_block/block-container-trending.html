@@ -1,0 +1,13 @@
+[@skin_block_data type=block.layout.code id=block.id]
+<div class="new">
+    <div class="new-top clear">
+        <div class="new-freebies">${blockData.title}</div>
+        <div class="view-more">
+            <span @click="viewMore"> View More </span>
+        </div>
+    </div>
+    <div class="new-content">
+        [@importBlockSpecialGoods blockData=blockData limit=20 class="" /]
+    </div>
+</div>
+[/@skin_block_data]

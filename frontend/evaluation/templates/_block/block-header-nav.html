@@ -1,0 +1,51 @@
+<header class="header_qyjyx">
+    <div class="navHeader">
+        <div class="searchBox pageMinWidth">
+            <a @click="toHome()">
+                <img src="${options('site_seo_logo', '[@res 'logo.png' /]')}" class="searchBox__logoImg">
+            </a>
+            <el-dropdown>
+                <span class="el-dropdown-link" style="display: flex;align-items: center;width: 120px;overflow:hidden;">
+                    <img :src="countryFlag" style="height: 11px;margin-right: 5px;border: 1px solid #d1d1d1">
+                    <span v-text="countryName" style="white-space: nowrap;overflow:hidden;text-overflow: ellipsis;display: inline-block"></span>
+                    <i class="el-icon-arrow-down el-icon--right"></i>
+                </span>
+                <el-dropdown-menu slot="dropdown" v-lock>
+                    <el-dropdown-item v-for="item in countryList" :key="item.id" :value="item.id" @click.native="handleCountrySearch(item)">
+                        <img :src="item.flag" style="height: 11px;margin-right: 5px;border: 1px solid #d1d1d1"> {{ item.countryName }}
+                    </el-dropdown-item>
+                </el-dropdown-menu>
+            </el-dropdown>
+            <el-input placeholder="What are you looking for?" v-model="search.k" class="searchBox__input">
+                <el-select v-model="search.c" slot="prepend" placeholder="" style="width: 120px" class="selectInput">
+                    <el-option label="All" value=""></el-option>
+                    <el-option v-for="item in categoryList" :key="item.id" :label="item.productTypeName" :value="item.id"/>
+                </el-select>
+                <el-button slot="append" icon="el-icon-search" @click="handleSearch('')"></el-button>
+            </el-input>
+            <span class="searchBox-rightBox" v-lock>
+                [#include  "${templatePath}_parts/nav-user.html"/]
+            </span>
+        </div>
+        <div class="tabBox pageMinWidth" v-lock>
+            <el-tabs v-model="activeName" @tab-click="handleTabClick">
+                <el-tab-pane label="Home" name="home"></el-tab-pane>
+                <el-tab-pane name="Category">
+                    <span slot="label">
+                        <el-dropdown trigger="hover">
+                              <span class="el-dropdown-link">
+                                Freebies<i class="el-icon-arrow-down el-icon--right"></i>
+                              </span>
+                            <el-dropdown-menu slot="dropdown">
+                                <el-dropdown-item  @click.native="handleSearch('all')">All</el-dropdown-item>
+                                <el-dropdown-item v-for="item in categoryList" :key="item.id" :value="item.id" @click.native="handleSearch(item.id)">{{ item.productTypeName }}</el-dropdown-item>
+                            </el-dropdown-menu>
+                        </el-dropdown>
+                    </span>
+                </el-tab-pane>
+                <el-tab-pane label="User Guide" name="userGuide"></el-tab-pane>
+                <el-tab-pane label="FAQ" name="faq"></el-tab-pane>
+            </el-tabs>
+        </div>
+    </div>
+</header>

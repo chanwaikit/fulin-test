@@ -1,0 +1,32 @@
+[#macro importMenuNav nav]
+[#if nav.type == 'category']
+[@importMenuNavA nav nav/]
+[@skin_nav_category navId=nav.id]
+    <ul class="mzt-dropdown-child2">
+        [#list navCs as navc]
+        <li> [@importMenuNavA nav navc /]</li>
+        [/#list]
+    </ul>
+[/@skin_nav_category]
+[#else]
+[@importMenuNavA nav nav /]
+[/#if]
+[/#macro]
+
+[#macro importMenuNavA pnav nav]
+[#if pnav.child]
+<span>
+    <a class="mzt-dropdown-toggle" href="${nav.url}" target="${nav.target}">
+        ${nav.title}
+    </a>
+    <i class="mzt-icon mzt-jiantou1"></i>
+</span>
+[#else]
+<span>
+    <a class="mzt-dropdown-toggle" href="${nav.url}"  target="${nav.target}">
+        ${nav.title}
+    </a>
+    <i class="mzt-icon mzt-jiantou1"></i>
+</span>
+[/#if]
+[/#macro]

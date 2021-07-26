@@ -1,0 +1,44 @@
+<footer class="newcommon">
+    <div class="newCommon-footer pageMinWidth">
+        <div class="newCommon-footer-content">
+            <div class="logo"><img src="${options('site_seo_logo', '[@res 'logo.png' /]')}" class="img-logo">
+                <div class="text">
+                    ${options('site_setting_company_introduction', '')}
+                </div>
+                <div class="text">
+                    ${options('site_setting_company_email', '')}
+                </div>
+            </div>
+            [@skin_nav handle='footer-menu']
+            [#list navs as nav ]
+            <div class="about">
+                <p>${nav.title}</p>
+                [#if nav.child]
+                <div class="text">
+                    [#list nav.children as child ]
+                    <div>
+                        <a href="${child.url}" target="${child.target}">${child.title}</a>
+                    </div>
+                    [/#list]
+                </div>
+                [/#if]
+            </div>
+            [/#list]
+            [/@skin_nav]
+        </div>
+        <div class="newCommon-footer-share">
+            <ul class="logo-frends">
+                [#assign footerLink = skinBlockFun('footer-link') /]
+                [#list footerLink.content as item]
+                <li>
+                    <a href="${item.url}" target="_blank">
+                        <img src="${item.pcImage.url}" alt="" width="30px" height="30px">
+                    </a>
+                </li>
+                [/#list]
+            </ul>
+        </div>
+        <div class="newCommon-footer-bottom"><span
+                class="info">${options('site_setting_company_copyright', '')}</span></div>
+    </div>
+</footer>

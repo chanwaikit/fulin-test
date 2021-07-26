@@ -1,0 +1,147 @@
+<div class="mzt-reviews-box">
+    <div class="mzt-reviews_header">
+        <div class="mzt-reviews_headerTop m-b30">
+            [@skin_product_score productId=productId]
+            [#if score??]
+            <p class="mzt-amreview-summary m-b15">${score.value}</p>
+            [#else]
+            <p class="mzt-amreview-summary m-b15">0</p>
+            [/#if]
+            [/@skin_product_score]
+            <div class="mzt-comment_icon m-b20">
+            [@skin_product_score_percentage productId=productId]
+            [#if score??]
+            <div class="ib" data-score="${score.value}" data-mzt-raty></div>
+            <div class="mzt-comment_score m-t20">
+                <span class="hint"></span>
+                <span>${score.num} <span>Review(s)</span></span>
+            </div>
+            [#else]
+            <div class="ib" data-score="0" data-mzt-raty></div>
+            <div class="mzt-comment_score m-t20">
+                <span class="hint"></span>
+                <span>0 <span>Review(s)</span></span>
+            </div>
+            [/#if]
+        </div>
+            <div class="mzt-detail-stars">
+                <ul>
+                    <li>
+                        <span>5 stars</span>
+                        <div>
+                            [#if score??]
+                                <div style="width:${score.rate5_percentage}%;"></div><!--${score.rate5_percentage}-->
+                            [#else]
+                                <div style="width: 0;"></div>
+                            [/#if]
+                        </div>
+                    </li>
+                    <li>
+                        <span>4 stars</span>
+                        <div>
+                            [#if score??]
+                                <div style="width:${score.rate4_percentage}%;"></div>
+                            [#else]
+                                <div style="width: 0;"></div>
+                            [/#if]
+                        </div>
+                    </li>
+                    <li>
+                        <span>3 stars</span>
+                        <div>
+                            [#if score??]
+                            <div style="width:${score.rate3_percentage}%;"></div>
+                            [#else]
+                            <div style="width: 0;"></div>
+                            [/#if]
+                        </div>
+                    </li>
+                    <li>
+                        <span>2 stars</span>
+                        <div>
+                            [#if score??]
+                            <div style="width:${score.rate2_percentage}%;"></div>
+                            [#else]
+                            <div style="width: 0;"></div>
+                            [/#if]
+                        </div>
+                    </li>
+                    <li>
+                        <span>1 stars</span>
+                        <div>
+                            [#if score??]
+                            <div style="width:${score.rate1_percentage}%;"></div>
+                            [#else]
+                            <div style="width: 0px;"></div>
+                            [/#if]
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        [/@skin_product_score_percentage]
+        <div class="mzt-write_reviews">
+            <span class="write-button" id="write-button" data-toggle="modal" data-target="#mzt-write_reviews" onclick="isLoginState()">Write A Review</span>
+        </div>
+    </div>
+    <div class="mzt-reviews-right">
+        <div class="mzt-customer_reviews">
+            [#if data.list??]
+            [#list data.list as comment]
+            <div class="m-b20 clearfix mzt-reviews_box">
+                <div class="mzt-reviews_left m-b20">
+                    <div class="mzt-customer_name">
+                       ${comment.addUserName}
+                    </div>
+                    <div class="mzt-rate_time">${dateToStr(comment.addTime,'yyyy-MM-dd')}</div>
+                </div>
+                <div class="mzt-reviews_right">
+                    <div class="mzt-reviews_detail">
+                        <div class="mzt-common_rate m-b20">
+                            <div class="mzt-comment_icon mzt-rat_comment">
+                                <div class="review-ratings">
+                                    <div class="ib" data-score="${comment.rangeNum}" data-mzt-raty></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mzt-rate_des">${comment.content}</div>
+                        <div class="mzt-reviews_pic m-t20">
+                            [#list comment.exten.images as img]
+                            [#if img != '']
+                            <div class="mzt-pic_item fl m-r15"><img src="${img}"/></div>
+                            [/#if]
+                            [/#list]
+                        </div>
+                    </div>
+                </div>
+            </div>
+            [/#list]
+            [/#if]
+        </div>
+        <div class="mzt-review_pagination comment overflow">
+            <form method="get" action="${ctxPath}/product/comment" class="mzt-form_comment">
+                <div class="M-box "
+                     data-mzt-pagination="{form:'.mzt-form_comment',current:${commond.p!0}, pageCount: ${commond.pageCount!0}, scrollTop: 'a[href=\'#reviews\']'}">
+                </div>
+                ${ hideInputCommond(commond) }
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    // 判断 是否登录
+    function isLoginState () {
+        $.ajax({
+            type: 'GET',
+            dataType: 'JSON',
+            async: false,
+            contentType: "application/json",
+            url: window.GLOBAL_CONFIG.mainUrl + '/isLogin',
+            success: function (res) {
+                if (res.data.code != 200) {
+                    window.location.href = window.GLOBAL_CONFIG.mainUrl+'/login';
+                }
+            }
+        })
+    }
+</script>

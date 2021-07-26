@@ -1,0 +1,37 @@
+[#if clienteleReceiverAddresses[0]??]
+[#list clienteleReceiverAddresses as item]
+<div class="address-list full">
+    <div class="address clearfix">
+        <div>${item.clientSurname}&nbsp;${item.clientName}
+            [#if item.isDefault == 1]&nbsp;&nbsp; <span>Default</span> [/#if]
+        </div>
+        <div class="address-info">
+            ${item.exten.country.nameCn}&nbsp;${item.province}&nbsp;${item.city}&nbsp;${item.address}
+        </div>
+    </div>
+    <div class="address-action clearfix">
+        <a href="#address-window" data-toggle="modal" data-target="#address-window" data-id="${item.id}" >
+            <i class="iconfont mzt-icon icon-edit-box-line"></i>
+        </a>
+        <a href="#address-del" data-toggle="modal" data-target="#address-del" data-id="${item.id}" >
+            <i class="iconfont mzt-icon icon-delete-bin--line"></i>
+        </a>
+    </div>
+</div>
+[/#list]
+<div class="flex-center mzt-address_pagination p-b30">
+    <form method="get" action="${ctxPath}/client/address/addressListData" class="mzt-form_addressList">
+        <div class="M-box"
+             data-mzt-pagination="{form:'.mzt-form_addressList',current:${commond.p!0}, pageCount: ${commond.pageCount!0}, scrollTop: 'div#main-content'}">
+        </div>
+        ${ hideInputCommond(commond) }
+    </form>
+</div>
+[#else]
+<div class="mzt-order_noData">
+    <div class="mzt-noData_icon">
+        <i class="mzt-icon mzt-zanwushuju"></i>
+    </div>
+    No Data
+</div>
+[/#if]

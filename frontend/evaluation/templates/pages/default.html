@@ -1,0 +1,28 @@
+[#include "/_inc/layout.html"/]
+[#macro importCss]
+<style>
+    .page-template {
+        padding: 50px;
+    }
+    .page-template__title {
+        color: rgba(0, 0, 0, 1);
+        font-style: normal;
+        font-weight: 400;
+        margin-bottom: 50px;
+        font-size: 40px
+    }
+    .page-template__description {
+
+    }
+</style>
+[/#macro]
+[@layout]
+<div class="page-detail">
+    <div class="container">
+        <div class="row page-template">
+            <div class="page-template__title text-center">${page.title}</div>
+            <div class="page-template__description">${page.description}</div>
+        </div>
+    </div>
+</div>
+[/@layout]

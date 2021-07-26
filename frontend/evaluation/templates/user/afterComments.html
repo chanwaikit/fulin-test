@@ -1,0 +1,258 @@
+[#include "/_inc/layout.html"/]
+[#macro importCss]
+<style>
+    .mzt-evaluation_order{
+        font-size: 16px;
+        font-weight: 700;
+        line-height: 32px;
+    }
+    .mzt-order_number p{
+        font-size: 14px;
+        margin-right: 20px;
+        color: #aaa;
+        line-height: 28px;
+    }
+    .mzt-order_number span{
+        color: #333333;
+    }
+    .mzt-evaluationOrder_main{
+        background-color: #ffffff;
+        overflow: hidden;
+    }
+    .mzt-order_score img{
+        margin: 0;
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+    }
+    .mzt-orderScore_title{
+        vertical-align: middle;
+    }
+    .mzt-fi-info{
+        float: left;
+        width: 25%;
+        border-right: 1px solid #f5f5f5;
+    }
+    .mzt-fi-operate{
+        float: left;
+        overflow: hidden;
+        zoom: 1;
+        padding: 30px 40px 30px;
+        position: relative;
+        z-index: 1;
+        width: 75%;
+    }
+    .mzt-comment-goods{
+        padding: 65px 35px;
+    }
+    .mzt-comment-goods div{
+        width: 100%;
+        text-align: center;
+    }
+    .mzt-comment-goods div a{
+        display: block;
+    }
+    .mzt-comment-goods .mzt-p-img {
+        width: 100%;
+        height: 100px;
+        margin-bottom: 15px;
+    }
+    .mzt-comment-goods .mzt-p-name{
+        line-height: 20px;
+        margin-bottom: 10px;
+    }
+    .mzt-fi_hint{
+        color: #ffcc00;
+    }
+    .mzt-fi-operate label{
+        width: 100px;
+        font-weight: 400;
+    }
+    .mzt-comment-form{
+        position: relative;
+        width: 100%;
+        padding: 30px 0;
+        text-align: center;
+        background-color: #fff;
+        margin-top: 10px;
+        margin-bottom: 40px;
+    }
+    .mzt-comment-form .btn-submit{
+        width: 220px;
+        height: 48px;
+        line-height: 48px;
+        padding: 0;
+        font-size: 18px;
+        display: inline-block;
+        text-align: center;
+        cursor: pointer;
+        color: #fff;
+        border-radius: 3px;
+        background-color: #df3033;
+    }
+    .mzt-logistics_one{
+        width: 75px;
+        height: 75px;
+        background: #f2f2f2;
+        border-radius: 50px;
+        position: relative;
+    }
+    .mzt-logistics_one i{
+        font-size: 50px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+    .mzt-info_right{
+        vertical-align: top;
+        line-height: 34px;
+    }
+    .mzt-info_right .mzt-info_title{
+        font-size: 14px;
+        font-weight: 700;
+    }
+</style>
+[/#macro]
+
+[#macro importScript]
+[/#macro]
+
+[@layout]
+<div class="account-content">
+    <div class="mzt-container">
+        <div class="text-center">
+            <p class="mzt-evaluation_order">Evaluate orders</p>
+            <div class="mzt-order_number">
+                <p class="ib">
+                    order number: <span>${orderItem.salesOrderNo}</span>
+                </p>
+                <p class="ib">${dateToStr(orderItem.exten.orderTime)}</p>
+            </div>
+        </div>
+        <form id="comment_form">
+        <div class="mzt-evaluationOrder_main m-b20">
+            <div class="mzt-fi-info">
+                <div style="padding: 20px">
+                    <div class="ib">
+                    </div>
+                </div>
+            </div>
+            <div class="mzt-fi-operate">
+                <p class="ib m-r30">
+                    <span class="mzt-orderScore_title">Quality score：</span>
+                    <span class="mzt-order_score">
+                        <span class="score" data-mzt-raty="{readOnly:false,target:'.mzt-evaluationOrder_main input[name=\'qualityRangeNum\']'}"></span>
+                        <input name="qualityRangeNum" id="qualityRangeNum" value="" type="hidden" required/>
+                    </span>
+                </p>
+                <p class="ib">
+                    <span class="mzt-orderScore_title">After sales service score：</span>
+                    <span class="mzt-order_score">
+                        <span class="score" data-mzt-raty="{readOnly:false,target:'.mzt-evaluationOrder_main input[name=\'serviceRangeNum\']'}"></span>
+                        <input name="serviceRangeNum" id="serviceRangeNum" value="" type="hidden" required/>
+                    </span>
+                </p>
+            </div>
+        </div>
+            <div class="mzt-evaluationOrder_main m-b50">
+                <div class="mzt-fi-info">
+                    <div class="mzt-comment-goods">
+                        <div class="mzt-p-img">
+                            <a href="#"><img src="${orderItem.productImageUrl}" width="100px" height="100px" style="margin: 0 auto;"/></a>
+                        </div>
+                        <div class="mzt-p-name">
+                            <a href="#">${orderItem.productName}</a>
+                            <input type="hidden" value="${orderItem.fkProductId}" name="fkProductId"/>
+                        </div>
+                        <div class="mzt-p-price">
+                            <strong>¥ ${orderItem.exten.price}</strong>
+                        </div>
+                        <div class="mzt-p-style">
+                            ${orderItem.skuText}
+                        </div>
+                    </div>
+                </div>
+                <div class="mzt-fi-operate">
+                    <p class="mzt-fi_hint m-b20">
+                        <i class="mzt-icon mzt-gantanhao-xianxingyuankuang"></i>
+                        Please fill in the evaluation of at least one product
+                    </p>
+                    <div class="full overflow m-b20">
+                        <label class="fl" style="width:200px">Product rating</label>
+                        <div class="mzt-order_score fl">
+                            <span class="score" data-mzt-raty="{readOnly:false,target:'.mzt-evaluationOrder_main input[name=\'rangeNum\']'}"></span>
+                            <input name="rangeNum" id="rangeNum" value="" type="hidden" required/>
+                        </div>
+                    </div>
+                    <div class="full overflow m-b20">
+                        <label class="mzt-review_label fl" style="width:200px">Comment on the drying list</label>
+                        <div class="mzt-form_control fl" style="width: 90%">
+                            <textarea cols="3" rows="6"  name="content" placeholder="Share experience experience, give a reference to thousands of people who want to buy~" style="width: 100%;padding: 10px;resize: none;" ></textarea>
+                        </div>
+                    </div>
+                    <div class="full overflow">
+                        <p>Comment on pictures</P>
+                        <div class="mzt-form_control fl">
+                            <div class="review-image-upload">
+                                <div class="mzt-uploader_holder" data-mzt-uploader="slideShows">
+                                    <div class="grid upload-img-box" tabindex="0" role="button" >
+                                        <div class="img-icon-bk"></div>
+                                        <div class="mzt-icon mzt-jiahao2"></div>
+                                        <a href="javascript:void(0)" class="g-u ks-uploader-button">
+                                            <span class="btn-text">Uploader</span>
+                                            <div class="file-input-wrapper" style="overflow: hidden;">
+                                                <input class="g-u file-input" type="file" name="file" >
+                                            </div>
+                                        </a>
+                                    </div>
+                                    <ul class="grid mzt-upload_queue"></ul>
+                                    <div class="mzt-up_tips" >
+                                        <span class="cur" data-cur-num="0">0</span>/<span class="tot" data-max-num="5">5</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="mzt-comment-form">
+                <a href="javascript:;" onclick="commitComment()" class="btn-submit">publish</a>
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+
+    function commitComment() {
+        //验证
+        var rangeNum = $('#rangeNum').val();
+        if(rangeNum == '' || rangeNum == 0){
+            $.Theme.Tips.error('Please rate the product')
+            return;
+        }
+        var qualityRangeNum = $('#qualityRangeNum').val();
+        if(qualityRangeNum == '' || qualityRangeNum == 0){
+            $.Theme.Tips.error('Please rate Quality')
+            return;
+        }
+        var serviceRangeNum = $('#serviceRangeNum').val();
+        if(serviceRangeNum == '' || serviceRangeNum == 0){
+            $.Theme.Tips.error('Please rate the after-sales service')
+            return;
+        }
+        $.ajax({
+            url: window.GLOBAL_CONFIG.mainUrl + '/product/comment',
+            type: 'post',
+            dataType: 'json',
+            data: $("#comment_form").serialize(),
+            success: function (res) {
+                if (res.success) {
+                    $.Theme.Tips.success('Comment successful');
+                    window.location.href = '/client/order/1'
+                }
+            }
+        })
+    }
+</script>
+[/@layout]

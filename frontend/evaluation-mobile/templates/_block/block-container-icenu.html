@@ -1,0 +1,17 @@
+[@skin_block_data type=block.layout.code id=block.id]
+<div class="commonSwipeBox">
+    <div class="commonSwipeBox__title clear">
+        <div class="new-freebies">${blockData.title}</div>
+        <div class="viewMore">
+            <span ><a href="${ctxPath}/productList">View More </a></span>
+            <i class="mzt-icon mzt-right"></i>
+        </div>
+    </div>
+    <div class="commonSwipeBox-list">
+        [#list blockData.childs as item ]
+        [@importBlockSpecialTagGoods blockData=item limit=10 class="relative" /]
+        [/#list]
+    </div>
+</div>
+[/@skin_block_data]
+

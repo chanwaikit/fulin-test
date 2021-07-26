@@ -1,0 +1,74 @@
+[#include "/_inc/layout.html"/]
+[#macro importCss]
+<style>
+    .mzt-notfoud-container {
+        text-align: center;
+        padding: 50px 0;
+    }
+    .mzt-notfoud-container .mzt-notfound-p {
+        border-bottom: 1px solid #f6f6f6;
+        padding-bottom: 15px;
+        font-size: 17px;
+    }
+    .mzt-notfound-reason {
+        color: #9ca4ac;
+        font-size: 14px;
+        line-height: 14px;
+        text-align: left;
+        width: 300px;
+        margin: 0 auto;
+    }
+    .mzt-notfound-reason p {
+        margin-top: 13px;
+    }
+    .mzt-notfound-reason>ul>li {
+        margin-top: 10px;
+        margin-left: 36px;
+    }
+    .mzt-notfound-btn-container {
+        margin: 40px auto 0;
+        text-align: center;
+    }
+    .mzt-notfound-btn-container .mzt-notfound-btn {
+        display: inline-block;
+        border: 1px solid #ebedef;
+        background-color: #363636;
+        color: #fff;
+        font-size: 15px;
+        text-align: center;
+        padding: 10px;
+        line-height: 16px;
+        white-space: nowrap;
+    }
+    .mzt-img-404 {
+        margin-bottom: 20px;
+        display: inline-block;
+    }
+    .mzt-main{
+        text-align: center;
+    }
+</style>
+[/#macro]
+[#macro importScript]
+
+[/#macro]
+[@layout]
+<div class="mzt-main">
+    <div class="mzt-notfoud-container">
+        <div class="mzt-img-404">
+            <p><img src="[@res 'more_coming.png'/]" height="200px"/></p>
+        </div>
+        <p class="mzt-notfound-p">Oh, I'm lost...</p>
+        <div class="mzt-notfound-reason">
+            <p>Possible causes：</p>
+            <ul>
+                <li>The product you are viewing does not exist. It may have been taken off the shelves.</li>
+                <li>Go shopping for other products</li>
+            </ul>
+        </div>
+        <div class="mzt-notfound-btn-container">
+            <a class="mzt-notfound-btn" href="${request.contextPath}/">Back to home page</a>
+        </div>
+    </div>
+</div>
+[/@layout]

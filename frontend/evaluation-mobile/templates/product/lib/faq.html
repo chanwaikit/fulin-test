@@ -1,0 +1,54 @@
+<div>
+    <div class="m-b20 mzt-faq_title">
+        <div class="inline">Product Q&A</div>
+        <div class="mzt-faq_btn write-button inline" id="write-button"  data-toggle="modal" data-target="#mzt-write_faq" onclick="isLoginState()">Write A Q&A</div>
+    </div>
+    [#if data.list??]
+    [#list data.list as qa]
+    <div class="m-b15 mzt-reviews_box">
+        <div class="mzt-faq_question">
+            <p class="mzt-question_title">${qa.problemDesc}</p>
+            <p class="fr mzt-question_info">
+                <span>${qa.exten.userName}</span>
+                <span class="m-l10">${dateToStr(qa.problemTime)}</span>
+            </p>
+        </div>
+        [#if (qa.answerContent)?? && qa.answerContent != '']
+        <div class="mzt-faq_question">
+            <p>${qa.answerContent}</p>
+            <p class="fr mzt-question_info">
+                <span>${dateToStr(qa.answerTime)}</span>
+            </p>
+        </div>
+        [#else]
+        <div style="text-align: left">
+            <p>No answer</p>
+        </div>
+        [/#if]
+    </div>
+    [/#list]
+    [/#if]
+</div>
+<div class="mzt-review_pagination question overflow m-t20">
+    <form method="get" action="${ctxPath}/product/productQa" class="mzt-form_question">
+        <div class="M-box" data-mzt-pagination="{form:'.mzt-form_question',current:${commond.p!0}, pageCount: ${commond.pageCount!0}, scrollTop: 'a[href=\'#question\']'}"></div>
+        ${ hideInputCommond(commond) }
+    </form>
+</div>
+<script>
+    // 判断 是否登录
+    function isLoginState () {
+        $.ajax({
+            type: 'GET',
+            dataType: 'JSON',
+            async: false,
+            contentType: "application/json",
+            url: window.GLOBAL_CONFIG.mainUrl + '/isLogin',
+            success: function (res) {
+                if (res.data.code != 200) {
+                    window.location.href = window.GLOBAL_CONFIG.mainUrl+'/login';
+                }
+            }
+        })
+    }
+</script>

@@ -1,0 +1,32 @@
+[#include "/_inc/layout.html"/]
+[@layout page="faq"]
+<div class="faq-page">
+    <div class="content">
+        <van-sidebar v-model="faqActiveKey">
+            [#list faqTypes as type]
+            <van-sidebar-item title="${type.title}" @click="faqContent('${type.id}', '${type.title}', '${type_index}')"></van-sidebar-item>
+            [/#list]
+        </van-sidebar>
+        <div class="faq-contentBox">
+            <div class="contentBoxWrap">
+                <div class="faqItemsPage">
+                    <div class="purchaseBox">
+                        <p class="title" v-lock>
+                            {{faqParam.title}}
+                        </p>
+                        <div v-if="faqList.length > 0">
+                            <el-collapse v-model="faqActiveName" accordion>
+                                <div class="itemWrap"  v-for="(faq, index) in faqList">
+                                    <el-collapse-item :title="faq.title" :name="index">
+                                        <div v-html="faq.content"></div>
+                                    </el-collapse-item>
+                                </div>
+                            </el-collapse>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+[/@layout]

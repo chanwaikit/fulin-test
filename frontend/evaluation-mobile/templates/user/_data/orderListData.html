@@ -1,0 +1,117 @@
+<div class="boxWrap">
+        <div class="orderItem"  v-for="(item, index) in orderList" :key="index" :class="{'orderItem-active': item.isEnable == 0 || item.status == 8}">
+            <div class="orderNumberBox">
+                <div class="orderNumberText">Order No. : {{item.amazonOrderNo}}</div>
+                <div class="orderCurrentStatus" v-text="item.exten.statusDesc"></div>
+            </div>
+            <div  v-if="item.isEnable == 0 || item.status == 8">
+                <div class="orderItem-productBox">
+                    <div class="imgBox">
+                        <img :src="item.productImageUrl+'!80x80'" alt="">
+                    </div>
+                    <div class="contentBox">
+                        <div class="contentBox-titleWrap">
+                            <div class="title" v-text="item.productName"></div>
+                        </div>
+                        <div class="contentBox-allPriceBox">
+                            <span class="smallText greyText">$ </span>
+                            <span class="greyText" v-text="item.exten.rebate"></span>
+                        </div>
+                        <div class="contentBox-timeLeft"></div>
+                        <div class="contentBox-btnBox">
+                            <a href="${cxtPath}/evaClient/share" target="_blank" class="blackBtn">Refer to Earn $ {{commission}}</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="orderItem-bottomBox">
+                    <p style="color: rgb(153, 153, 153);">
+                        Your product application has been deleted successfully and moved to closed list.
+                    </p>
+                </div>
+            </div>
+            <div v-else>
+                <div class="orderItem-productBox">
+                    <div class="imgBox">
+                        <img :src="item.productImageUrl+'!80x80'" alt="">
+                    </div>
+                    <div class="contentBox">
+                        <div class="contentBox-titleWrap">
+                            <div class="title" v-text="item.productName"></div>
+                        </div>
+                        <div class="contentBox-allPriceBox">
+                            <span class="smallText greyText">$ </span>
+                            <span class="greyText" v-text="item.exten.rebate"></span>
+                        </div>
+                        <div class="contentBox-timeLeft">
+                            <p v-if="(item.exten.time > 0) && (item.status == 1 )"><van-count-down :time="item.exten.time * 1000"  /></p>
+                        </div>
+                        <div class="contentBox-btnBox">
+                            <div>
+                                <a @click="openOrderDialog(item, item.exten.model)" class="blackBtn" >Buy on Amazon</a>
+                            </div>
+                            <div v-if="item.status == 1 "> <!-- 提交亚马逊信息审核 -->
+                                <button class="primaryBtn" @click="openOrder(item.id,1)">Submit Order No.</button>
+                            </div>
+
+                            <div v-if="item.status == 2 || item.status == 4"><!-- 亚马逊信息待审核状态，可以从新提交信息审核 -->
+                                <button class="blackBtn" @click="openOrder(item.id,1)">Edit Order No.</button>
+                            </div>
+                            <div v-if="item.status == 3 || item.status == 7 "> <!-- 亚马逊信息审核通过，再次提交返现信息 -->
+                                <button class="primaryBtn" @click="openOrder(item.id,2)">Submit Cashback</button>
+                            </div>
+                            <div v-if="item.status == 6"> <!-- 返现审核通过或驳回，查看信息 -->
+                                <button class="primaryBtn" @click="viewOrder(item.id)">View</button>
+                            </div>
+                            <van-popover v-model="item.showPopover" trigger="click" class="moreBtn" placement="bottom-start">
+                                <div class="contentBox-list">
+                                    <div v-if="item.status != 6 && item.status != 8">
+                                        <button class="blackBtn" @click="closeOrder(item.id)">Cancel Order</button>
+                                    </div>
+                                    <div>
+                                        <a href="${cxtPath}/evaClient/share" target="_blank" class="blackBtn">Refer to Earn $ {{commission}}</a>
+                                    </div>
+                                    <div v-if="item.status == 8">
+                                        <button class="blackBtn" @click="deleteOrder(item.id)">Delete Order</button>
+                                    </div>
+                                </div>
+                                <template #reference>
+                                    <i class="mzt-icon mzt-gengduo"></i>
+                                </template>
+                            </van-popover>
+                        </div>
+                    </div>
+                </div>
+                <div v-if="item.status == 1 || item.status == 2 || item.status == 4" class="orderItem-bottomBox">
+                    <p style="color: red;">
+                        Your application has been approved. Please purchase on amazon and submit your order No.
+                        within {{item.exten.orderTiming}}H.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="text-center m-t20">
+            <el-pagination
+                    v-if="totalRow > 0"
+                    background
+                    layout="prev, pager, next"
+                    @size-change="handleSizeChange"
+                    @current-change="handleCurrentChange"
+                    :current-page.sync="param.p"
+                    :page-size="param.pageSize"
+                    :total="totalRow">
+            </el-pagination>
+        </div>
+        <div class="mzt-order_noData" v-if="totalRow === 0">
+            <div class="mzt-noData_icon">
+                <i class="iconfont mzt-icon mzt-cart1"></i>
+            </div>
+            <div class="noneText">
+                Your Shopping Cart is Empty, Go Shopping to
+                <br>
+                Get Cash Back!
+            </div>
+            <a href="${cxtPath}/productList" class="noneBtn">Go Shopping Now</a>
+        </div>
+    </div>
+[#include "${templatePath}_dialog/_order-dialog.html"/]
+[#include "${templatePath}_dialog/_view-order-dialog.html"/]

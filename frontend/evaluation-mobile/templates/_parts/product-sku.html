@@ -1,0 +1,83 @@
+<style>
+    @media screen and (max-width: 480px){
+        .mzt-goods-sku li{
+            min-width: 75px;
+            height: 25px;
+            font-size: 13px;
+        }
+        .mzt-qty_name .mzt-name_item{
+            font-size: 12px;
+        }
+        .mzt-qty_name .control{
+            height: 30px;
+            width: 110px;
+            border-radius: 0;
+        }
+        .mzt-qty_name .control input{
+            height: 28px;
+            width: 40px;
+        }
+        .mzt-qty_name .control .qty-minus a, .mzt-qty_name .control .qty-plus a{
+            height: 30px;
+            width: 30px;
+            line-height: 24px;
+        }
+        .mzt-sku_name .mzt-name_item{
+            font-size: 12px !important;
+            line-height: 28px!important;
+        }
+        .mzt-sku_name >span{
+            line-height: 28px!important;
+        }
+        .mzt-sku_name .pro_pri_save{
+            top: 0;
+            font-size: 12px;
+        }
+        .mzt-sku_name .original-price{font-size: 12px}
+        .mzt-sku_name .price{
+            font-size: 16px;
+        }
+    }
+</style>
+<div class="mzt-detail_box">
+    <div data-cart-product-sku></div>
+    <div class="mzt-qty_name p-b20">
+        <span class="mzt-name_item ib">${ i18n.get('product.quality', 'Quality')}:</span>
+        <div class="control">
+            <div class="qty-minus">
+                <a class="btn-qty minus" href="javascript:void(0)">
+                    -
+                </a>
+            </div>
+            <div class="qty-input">
+                <input type="text" class="input-text qty" value="1">
+            </div>
+            <div class="qty-plus">
+                <a class="btn-qty plus" href="javascript:void(0)">
+                    +
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="mzt-sku_name p-b10">
+        <span class="mzt-name_item ib" style="font-size: 18px;font-weight: bold;line-height: 55px">Total Price：</span>
+        <span style="line-height: 55px">
+                <span class="original-price"><span data-cart-product-sku-oldprice></span></span>
+                <span class="price"><span data-cart-product-sku-price></span></span>
+                <span class="pro_pri_save" style="display: none">
+                    <span>save</span>
+                    <span class="pri_save_value">$<span class="pri_save_value_text" data-cart-product-sku-spreadprice>50.4</span></span>
+                </span>
+            </span>
+    </div>
+</div>
+<script>
+    var pageConfig = {
+        'product':${skinSku(RequestParameters['productId'])},
+    };
+    window.PRODUCT_SKU_DRAWING = new ProductSkuDrawing($('div[data-cart-product-sku]'), pageConfig.product, {
+        productPrice: '[data-cart-product-sku-price]',
+        productOldPrice: '[data-cart-product-sku-oldprice]',
+        spreadPrice: '[data-cart-product-sku-spreadprice]'
+    });
+</script>

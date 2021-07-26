@@ -1,0 +1,43 @@
+<div role="tabpanel" class="tab-pane active">
+    [#if commission.withdrawal.list[0]??]
+    <div class="table-responsive order-table" style="margin: 0">
+        <table class="table" style="margin: 0">
+            <tr>
+                <th>Withdrawal amount</th>
+                <th>Paypal account</th>
+                <th>Application time</th>
+                <th>Status</th>
+            </tr>
+            [#list commission.withdrawal.list as item ]
+            <tr>
+                <td>${item.exten.withdrawalAmount}</td>
+                <td class="orderProductName">
+                    ${item.paypalAccount}
+                </td>
+                <td class="orderProductName">
+                    ${dateToStr(item.addTime)}
+                </td>
+                <td class="orderProductName">
+                    ${item.exten.status}
+                </td>
+            </tr>
+            [/#list]
+        </table>
+    </div>
+    <div class="flex-center mzt-share_pagination p-b30">
+        <form method="get" action="${ctxPath}/evaClient/share/shareListData" class="mzt-form_orderList">
+            <div class="M-box"
+                 data-mzt-pagination="{form:'.mzt-form_orderList',current:${commission.commond.p!0}, pageCount: ${commission.commond.pageCount!0}, scrollTop: 'div#main-content'}">
+            </div>
+            ${ hideInputCommond(commission.commond) }
+        </form>
+    </div>
+    [#else]
+    <div class="mzt-order_noData">
+        <div class="mzt-noData_icon">
+            <i class="mzt-icon mzt-zanwushuju"></i>
+        </div>
+        No Data
+    </div>
+    [/#if]
+</div>

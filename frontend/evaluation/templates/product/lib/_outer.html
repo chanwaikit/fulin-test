@@ -1,0 +1,42 @@
+<!--产品详情图-->
+<div class="fl lineBlock showcase_pic_wrap">
+    <div class="sp-loading">
+        <img src="${_res.img('loader-1.gif')}" alt="Loading...">
+    </div>
+    [@skin_product_image productId=product.id]
+    <div class="lineBlock m_imgZoom mzt-detail-loadAfter" data-trigger="hover">
+        <!--大图-->
+        <div class="productBigPic_box">
+            <ul class="hoverBig">
+                <li class="zoom-middle-img">
+                    <div class="mousetrap"></div>
+                    <div class="wrap">
+                        <a href="javascript:void(0);" class="middle-img">
+                            <img itemprop="image" class="middleImg" alt="${productImage.firstImage.alt}" src="[@res 'sitemap.png' /]" data-src="${productImage.firstImage.productImageUrl+'!1000x1000'}" />
+                        </a>
+                        <span class="empty"></span>
+                    </div>
+                    <div class="zoom-big-img" style="background: url(${productFirstImage.productImageUrl}) -158.759px -250px no-repeat;"></div>
+                </li>
+            </ul>
+        </div>
+        <!--小图-->
+        <div class="showCaseSmall_box moveWarp lbBox" id="showCaseSmallPic">
+            <a href="javascript:void(0)" class="showCaseL moveLeftClick lineBlock showBtn"><i class="mzt-icon mzt-left"></i></a>
+            <div class="productSmallPic moveHidden lineBlock">
+                <ul class="productSmallmove lbBox moveBox">
+                    [#list productImage.list as thumbnail]
+                    <li class="lineBlock moveList">
+                        <a title="${thumbnail.alt}" href="${thumbnail.productImageUrl}" class="imgzoom-triggle" data-middleimg="${thumbnail.productImageUrl+'!1000x1000'}">
+                            <img class="zoom-tiny-image thumbnail-load" alt="${thumbnail.alt}" src="[@res 'sitemap.png' /]" data-src="${thumbnail.productImageUrl+'!80x80'}" />
+                            <img class="hide thumbnail-load"   data-src="${thumbnail.productImageUrl+'!1000x1000'}" />
+                        </a>
+                    </li>
+                    [/#list]
+                </ul>
+            </div>
+            <a href="javascript:void(0)" class="showCaseR moveRightClick lineBlock showBtn"><i class="mzt-icon mzt-jiantou1"></i></a>
+        </div>
+        [/@skin_product_image]
+    </div>
+</div>

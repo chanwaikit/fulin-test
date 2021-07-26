@@ -1,0 +1,8 @@
+[#if User.isAuth()]
+[#assign curUser=User.auth() /]
+<span class="navHeader-top-signIn_txt">${curUser.nickname}</span>
+[#else]
+<a href="${cxtPath}/login" class="navHeader-top-signIn">
+    <span class="navHeader-top-signIn_txt">Sign In</span>
+</a>
+[/#if]

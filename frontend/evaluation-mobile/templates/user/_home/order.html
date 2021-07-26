@@ -1,0 +1,52 @@
+<div class="application-content">
+    <div class="application-title">
+        <div class="leftBox">
+            <div class="cashText">Total cash back</div>
+            <div class="priceText">
+                <span style="font-size: 1rem; margin-right: 0.2rem;">$</span>
+                [@skin_evaluation_total_cash_back]
+                ${cashBack.totalCashBack}
+                [/@skin_evaluation_total_cash_back]
+            </div>
+        </div>
+        <a href="${cxtPath}/evaClient/balance" class="rightBox"><div>Withdraw</div></a>
+    </div>
+    <div class="sub-title">
+        <div action="#" class="flex">
+            <el-input placeholder="Please enter the order number" v-model="param.orderNo" clearable>
+                <el-button slot="append" icon="el-icon-search" @click="findOrderListData"></el-button>
+            </el-input>
+        </div>
+    </div>
+    <div class="application-status" v-lock>
+        <div class="application-status-left">
+            <span class="left-text">All</span>
+            <span class="application-badge">{{totalRow}}</span>
+        </div>
+        <div class="application-status-right">
+            <div class="select-box">
+                <div class="select-content" @click="showState=!showState">
+                    <span>Status</span>
+                    <i class="mzt-icon mzt-right"></i>
+                </div>
+                <ul role="tablist" class="select-list commonShadow" v-show="showState" v-lock>
+                    <li name="order_tab_list" :class="{active:param.status == 'all'}" @click="switchTab('all')">
+                        <a data-toggle="tab">All</a>
+                    </li>
+                    <li name="order_tab_list" :class="{active:param.status == 'submit-order'}" @click="switchTab('submit-order')">
+                        <a data-toggle="tab">Submit order</a> <!-- 亚马逊待审核 -->
+                    </li>
+                    <li name="order_tab_list" :class="{active:param.status == 'submit-comments'}" @click="switchTab('submit-comments')">
+                        <a data-toggle="tab">Submit comments</a> <!-- 返现待审核 -->
+                    </li>
+                    <li name="order_tab_list"  :class="{active:param.status == 'closed'}" @click="switchTab('closed')">
+                        <a data-toggle="tab">Closed Orders</a> <!-- 关闭 -->
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="order-data-list" v-loading="tableLoading" v-lock>
+        [#include "${templatePath}/user/_data/orderListData.html" /]
+    </div>
+</div>

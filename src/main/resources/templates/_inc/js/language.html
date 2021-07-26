@@ -1,0 +1,214 @@
+<script>
+    /**
+     * cookie操作
+     */
+    var getCookie = function(name, value, options) {
+        if (typeof value != 'undefined') { // name and value given, set cookie
+            options = options || {};
+            if (value === null) {
+                value = '';
+                options.expires = -1;
+            }
+            var expires = '';
+            if (options.expires && (typeof options.expires == 'number' || options.expires.toUTCString)) {
+                var date;
+                if (typeof options.expires == 'number') {
+                    date = new Date();
+                    date.setTime(date.getTime() + (options.expires * 24 * 60 * 60 * 1000));
+                } else {
+                    date = options.expires;
+                }
+                expires = '; expires=' + date.toUTCString(); // use expires attribute, max-age is not supported by IE
+            }
+            var path = options.path ? '; path=' + options.path : '';
+            var domain = options.domain ? '; domain=' + options.domain : '';
+            var s = [cookie, expires, path, domain, secure].join('');
+            var secure = options.secure ? '; secure' : '';
+            var c = [name, '=', encodeURIComponent(value)].join('');
+            var cookie = [c, expires, path, domain, secure].join('')
+            document.cookie = cookie;
+        } else { // only name given, get cookie
+            var cookieValue = null;
+            if (document.cookie && document.cookie != '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = jQuery.trim(cookies[i]);
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+    };
+
+    /**
+     * 获取浏览器语言类型
+     * @return {string} 浏览器国家语言
+     */
+    var getNavLanguage = function(){
+        if(navigator.appName == "Netscape"){
+            var navLanguage = navigator.language;
+            return navLanguage.substr(0,2);
+        }
+        return false;
+    }
+
+    /**
+     * 设置语言类型： 默认为英文
+     */
+    var i18nLanguage = "zh-EN";
+
+    /*
+    设置一下网站支持的语言种类
+    */
+    var webLanguage = ['zh-CN', 'zh-EN'];
+
+    /**
+     * 执行页面i18n方法
+     * @return
+     */
+    var execI18n = function(){
+        /*
+        获取一下资源文件名
+         */
+        var optionEle = $("#i18n_pagename");
+        if (optionEle.length < 1) {
+            console.log("未找到页面名称元素，请在页面写入\n <meta id=\"i18n_pagename\" content=\"页面名(对应语言包的语言文件名)\">");
+            return false;
+        };
+        var sourceName = optionEle.attr('content');
+        sourceName = sourceName.split('-');
+        /*
+        首先获取用户浏览器设备之前选择过的语言类型
+         */
+        if (getCookie("userLanguage")) {
+            i18nLanguage = getCookie("userLanguage");
+        } else {
+            // 获取浏览器语言
+            var navLanguage = getNavLanguage();
+            if (navLanguage) {
+                // 判断是否在网站支持语言数组里
+                var charSize = $.inArray(navLanguage, webLanguage);
+                if (charSize > -1) {
+                    i18nLanguage = navLanguage;
+                    // 存到缓存中
+                    getCookie("userLanguage",navLanguage);
+                };
+            } else{
+                console.log("not navigator");
+                return false;
+            }
+        }
+        /* 需要引入 i18n 文件*/
+        if ($.i18n == undefined) {
+            console.log("请引入i18n js 文件")
+            return false;
+        };
+        /*
+        这里需要进行i18n的翻译
+         */
+        window.onload=function() {
+           $('.mzt-main-loading').hide()
+            //弹窗表单提交，浮窗浮动
+            $('#popup-email').submit(function(){
+                var email = $(this).find('input[name="email"]'),
+                    emailVal = email.val(),
+                    _this = $(this),
+                    reg = new RegExp("^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$");
+                if (emailVal.length == 0 || !reg.test(emailVal)) {
+                    toastr.warning('Please enter your email address');
+                } else {
+                    $.ajax({
+                        type:'GET',
+                        dataType:'json',
+                        url:_this.attr('action'),
+                        data:$('#popup-email').serialize(),
+                        success:function(result){
+                            email.val('');
+                            let data = result.data.data;
+                            if(data === 'success'){
+                                toastr.success("Subscription successful");
+                            } else if(data === 'repeat'){
+                                toastr.warning("Subscribed, please do not subscribe again");
+                            } else {
+                                toastr.error(result.data.data);
+                            }
+                        },
+                        error:function(){
+                            console.log('error');
+                        }
+                    });
+                }
+                return false;
+            });
+            var box = document.getElementById('box');
+            var speedX = 10,speedY = 8;
+            //水平方向运动最大值
+
+            if (box!=undefined&&box!=null&&box!='') {
+                var maxL = document.documentElement.clientWidth - box.offset().width;
+                maxT = document.documentElement.clientHeight - box.offsetHeight;
+                var timer = null;
+                box.onmouseenter = function () {
+                    clearInterval(timer);
+                };
+                box.onmouseleave = function () {
+                    autoMove();
+                };
+            }
+            autoMove();
+            function autoMove(){
+                timer = setInterval(() => {
+                    if (box!=undefined&&box!=null&&box!='')
+                    {
+                        let nextX = box.offsetLeft + speedX;
+                        nextY = box.offsetTop + speedY;
+                        //左侧边界
+                        if (nextX <= 0) {
+                            nextX = 0;
+                            speedX *= -1;
+                        }
+                        //上侧边界
+                        if (nextY <= 0) {
+                            nextY = 0;
+                            speedY *= -1;
+                        }
+                        //右侧边界
+                        if (nextX >= maxL) {
+                            nextX = maxL;
+                            speedX *= -1;
+                        }
+                        //底侧边界
+                        if (nextY >= maxT) {
+                            nextY = maxT;
+                            speedY *= -1;
+                        }
+                        box.style.left = nextX + 'px';
+                        box.style.top = nextY + 'px';
+                    }
+                }, 100);
+            }
+        }
+    }
+    /*页面执行加载执行*/
+    $(function(){
+        /*执行I18n翻译*/
+        execI18n();
+        /*将语言选择默认选中缓存中的值*/
+        $("#language option[value="+i18nLanguage+"]").attr("langName");
+        /* 选择语言 */
+        $("#language >li").each(function () {
+            $(this).on('click', function() {
+                var language = $(this).find('a').attr('langName')
+                getCookie("userLanguage",language,{
+                    expires: 30,
+                    path:'/'
+                });
+                location.reload();
+            });
+        })
+    });
+</script>

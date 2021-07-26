@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head></head>
+<body>
+    [#if redirect??]
+    <script>
+        window.opener.location.href = '${cxtPath}${redirect}';
+        window.close()
+        window.parent.$.Theme.event.completeRegistration()
+    </script>
+    [/#if]
+<p style="color:red;font-size: 16px">
+${error}
+</p>
+</body>
+</html>

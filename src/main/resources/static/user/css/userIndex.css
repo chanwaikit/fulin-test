@@ -1,0 +1,230 @@
+.mzt-user-center{
+    padding: 50px 0;
+    background-color: #F7F8F9;
+    /*min-height: 600px;*/
+}
+.mzt-user-title{
+    font-size: 24px;
+    line-height: 24px;
+    color: #24323E;
+    margin-bottom: 40px;
+}
+.mzt-user-menu{
+    box-shadow: 0 3px 6px #24323E0D;
+    border-radius: 4px;
+    padding: 31px 0 0 37px;
+    background-color: #fff;
+    overflow: hidden;
+}
+.mzt-user-menu li{
+    line-height: 24px;
+    margin-bottom: 30px;
+    cursor: pointer;
+}
+.mzt-user-menu li a{
+    display: inline-block;
+    width: 100%;
+}
+.mzt-user-menu li.active a{
+    color: #5369F8;
+    font-weight: bold;
+}
+.mzt-user-menu li .iconfont{
+    margin-right: 10px;
+}
+.mzt-user-con{
+    margin-left: 60px;
+}
+.mzt-tab-pane .mzt-tab{
+    box-shadow: 0 3px 6px #24323E0D;
+    border-radius: 4px;
+    background-color: #fff;
+    margin-bottom: 30px;
+}
+.mzt-tab-pane .mzt-tab:last-child{
+    margin-bottom: 0;
+}
+.mzt-tab-pane{
+    display: none;
+}
+.mzt-tab-pane.active{
+    display: block;
+}
+.mzt-center-title{
+    color: #24323E;
+    font-size: 18px;
+    padding: 20px;
+    border-bottom: 1px solid #EFEFEF;
+}
+.mzt-center-main{
+    padding: 20px 20px 30px;
+    background-color: #fff;
+}
+.mzt-center-main li{
+    float: left;
+    padding-right: 0;
+    text-align: center;
+    width: 16.66666%;
+}
+.mzt-center-main li a span{
+    display: block;
+    padding-top: 10px;
+}
+.mzt-center-main li a >.iconfont {
+    padding: 0;
+}
+.mzt-center-main li .iconfont{
+    font-size: 33px;
+    position: relative;
+    display: inline-block;
+}
+.mzt-center-main li span.iconfont .badge{
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    padding: 0;
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    line-height: 20px;
+    background-color: #FF5656;
+    color: #fff;
+    border-radius: 100%;
+    font-size: 14px;
+    font-weight: normal;
+    font-style:normal;
+}
+.mzt-center-title a {
+    font-size: 16px;
+    color: #A7B1C2;
+    float: right;
+    padding-top: 2px;
+}
+.mzt-client-img{
+    width: 80px;
+    height: 80px;
+    display: block;
+    overflow: hidden;
+}
+.mzt-browsing-history li{
+    width: auto;
+    padding-right: 16px;
+    padding-left: 16px;
+}
+.mzt-browsing-history .mzt-history-title{
+    margin-top: 10px;
+    max-width: 80px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.mzt-address-main{
+    border: 2px solid #F8F9FA;
+    border-radius: 4px;
+    background-color: #fff;
+    padding: 20px;
+    min-height: 370px;
+}
+.mzt-address-main .mzt-center-title{
+    padding: 0;
+    border-bottom: none;
+}
+.mzt-address-main .mzt-center-title a {
+    color: #5369F8;
+    font-size: 18px;
+}
+.mzt-address-list{
+    background-color: #FAFAFA;
+    margin-top: 20px;
+    padding: 15px 20px 19px 10px;
+    font-size: 16px;
+    line-height: 16px;
+}
+.mzt-address-left{
+    float: left;
+}
+.mzt-address-left span{
+    padding: 5px 11px;
+    background-color: #24323E;
+    border-radius: 4px;
+    display: inline-block;
+    color: #fff;
+    margin-left: 30px;
+}
+.mzt-address-left .mzt-address-info{
+    margin-top: 12px;
+}
+.mzt-address-right{
+    float: right;
+    max-width: 310px;
+    padding-top: 20px;
+}
+.mzt-address-right a{
+    padding-left: 10px;
+}
+.mzt-order-list{
+    padding: 20px;
+}
+.mzt-order-img,.mzt-order-desc{
+    float: left;
+}
+.mzt-order-img{
+    max-width: 70px;
+    margin-right: 20px;
+}
+.mzt-order-desc p{
+    margin-top: 10px;
+}
+.mzt-order-detail {
+    float: right;
+    padding-top: 28px;
+}
+.address-row .consignee {
+    float: left;
+}
+.consignee .logistics-box-list #open-dropdown-province{
+    border-radius: 4px;
+}
+.open-dropdown-icon{
+    position: absolute;
+    right: 8px;
+    top: 10px;
+}
+.address-header{
+    background-color: #F8F9FA;
+    font-size: 16px;
+    padding: 12px 20px;
+}
+.orderProductName {
+    max-width: 200px;
+}
+.form-edit .iconfont{
+    top: 43px;
+}
+#orderQueryBtn{
+    position: absolute;
+    top: 13px;
+    right: 20px;
+    background: none;
+    padding: 0;
+    line-height: 14px;
+    cursor: pointer;
+}
+.consignee input{
+    margin-top: 0;
+}
+#open-dropdown-province{
+    padding: 9px!important;
+}
+.address-form input:-webkit-autofill,.address-form option:-webkit-autofill {
+    box-shadow: 0 0 0 1000px #ffffff inset;
+    -webkit-text-fill-color: #000000;
+}
+
+.main_left{
+    width: 150px;
+    height: 100%;
+    float:left;
+    background:#c0c0c0;
+    cursor:pointer;
+}

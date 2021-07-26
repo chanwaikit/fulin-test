@@ -1,0 +1,23 @@
+<div class="referralPage">
+    <div class="balanceText">Refer to Earn [@skin_evaluation_commission_rules] $${rule.commission} [/@skin_evaluation_commission_rules]</div>
+    <div class="order-nav full">
+        <ul role="tablist">
+            <li  tab="share"  @click="switchTab('index')" [#if active =='share'] class="active" [/#if]>
+                <a data-toggle="tab">Tell-a-Friend</a>
+            </li>
+            <li tab="shareList" @click="switchTab('list')" [#if active =='shareList'] class="active" [/#if]>
+                <a data-toggle="tab">Share list</a>
+            </li>
+        </ul>
+    </div>
+    <div class="boxWrap address-content" v-if="tabIndex === 'index'">
+        <div class="txt2">Copy your custom referral link and send to friends</div>
+        <div class="urlBox  mzt-save-change">
+            <input disabled="disabled" type="text" id="shareLinks" value="${shareLinks}"/>
+            <button type="button" class="copyBtn" @click="copyShareLinks()" data-clipboard-text="${shareLinks}">copy</button>
+        </div>
+    </div>
+    <div class="share-data-list" v-else v-lock style="padding-bottom: 20px;">
+        [#include "${templatePath}/user/_data/shareListData.html" /]
+    </div>
+</div>

@@ -1,0 +1,11 @@
+<div class="swiper" v-lock="">
+    [@skin_block_data type="slide" handle="banner"]
+    <el-carousel indicator-position="outside" height="400px">
+        [#list blockData.data.slides as slide]
+        <el-carousel-item>
+            <a href="${slide.url}" target="${slide.target}"><img src="${slide.pcImage.url}" alt=""></a>
+        </el-carousel-item>
+        [/#list]
+    </el-carousel>
+    [/@skin_block_data]
+</div>

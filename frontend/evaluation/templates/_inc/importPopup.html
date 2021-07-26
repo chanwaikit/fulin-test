@@ -1,0 +1,45 @@
+[@skin_popup position=1]
+[#if popup.show]
+<div class="mzt-popup-box">
+    <i class="mzt-icon mzt-guanbi mzt-popup-close"></i>
+    <div class="mzt-popup-inner">
+        <h2>Subscribe for Newsletter</h2>
+        <p>Join our email list to receive updates and exclusive offers directly in your inbox.</p>
+        <form data-mzt-subscription-no-code="button.mzt-popup-subscribe">
+            <div class="form-group">
+                <input required name="email" type="email" placeholder="Email" aria-required="true" />
+            </div>
+            <button class="mzt-popup-subscribe" type="button" mzt-loading>subscribe</button>
+        </form>
+        <div class="mzt-popup-close">No thanks</div>
+    </div>
+</div>
+[/#if]
+[/@skin_popup]
+<script>
+    // 邮箱验证
+    function telRuleCheck(email) {
+        var reg = /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/;
+        return reg.test(email);
+    }
+    $('.mzt-popup-box input').blur(function () {
+        var emailval = $(this).val();
+        if (emailval == "" || telRuleCheck(emailval) == false) {
+            $(this).css('border','1px solid #e24247');
+        } else {
+            $(this).css('border','1px solid #000');
+        }
+    });
+    $('.mzt-popup-subscribe').click(function () {
+        var email = $(this).siblings('.form-group').find('input');
+        if (email.val() == "" || telRuleCheck(email.val()) == false) {
+            email.css('border','1px solid #e24247');
+        }else {
+            email.css('border','1px solid #e24247');
+        }
+    });
+    $('.mzt-popup-box .mzt-popup-close').click(function () {
+        $(this).parents('.mzt-popup-box').hide();
+    });
+</script>
+

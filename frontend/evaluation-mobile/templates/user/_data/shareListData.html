@@ -1,0 +1,32 @@
+<div class="listBox" v-if="totalRow !== 0">
+    <div class="titleBox">
+        <!--<span class="title1">Amount</span>-->
+        <span class="title2">Registrant</span>
+        <span class="title3">Registration time</span>
+    </div>
+    <div class="itemBox" v-for="item in shareList">
+        <!--<div class="itemTxt1">+$ {{item.exten.withdrawalAmount}}</div>-->
+        <div class="itemTxt2" v-text="item.exten.loginName"></div>
+        <div class="itemTxt3">{{$.Theme.Util.formatTimestamp(item.addTime)}}</div>
+    </div>
+</div>
+<div class="text-right m-t20">
+    <el-pagination
+            v-if="totalRow > 0"
+            background
+            layout="total, prev, pager, next, sizes"
+            @size-change="handleSizeChange"
+            @current-change="handleCurrentChange"
+            :current-page.sync="param.p"
+            :page-size="param.pageSize"
+            :total="totalRow">
+    </el-pagination>
+</div>
+<div class="mzt-order_noData" v-if="totalRow === 0">
+    <div class="mzt-noData_icon">
+        <i class="iconfont icon-cart1"></i>
+    </div>
+    <div class="noneText">
+        No data
+    </div>
+</div>

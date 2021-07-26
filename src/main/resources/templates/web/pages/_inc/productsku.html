@@ -1,0 +1,36 @@
+[@skin_product_stock productId = productId]
+<div data-spec="{specSize: ${stockMap.product.skus?size}, productId: '${productId}', isSingle: ${stockMap.product.isSingle}}">
+    <div class="product-sku">
+        <div>
+            <span class="sku-cancel cursor fr">
+                    <i class="mzt-icon mzt-guanbi"></i>
+            </span>
+            [#list stockMap.skus as item]
+            [#if item.colorFlag == 0]
+            <div class="goods_attr" >
+                <span class="mzt-name_item fl">${item.specName}：</span>
+                <br/>
+                <ul class="mzt-sku_color ib" style="width: 100%">
+                    [#list item.specList as spec]
+                    <li class="attrText fl" data-value="${spec.id}">
+                        <span>${spec.specName}</span>
+                    </li>
+                    [/#list]
+                </ul>
+            </div>
+            [/#if]
+            [/#list]
+        </div>
+        <div>
+            <a class="sku-confirm cursor" style="width: 130px;margin: 0 auto;">
+                <i class="iconfont mzt-icon icon-gouwuche"></i>
+                <span>Confirm</span>
+            </a>
+        </div>
+    </div>
+    <a class="cursor addTocart">
+        <i class="iconfont mzt-icon icon-gouwuche"></i>
+        <span>Add to cart</span>
+    </a>
+</div>
+[/@skin_product_stock]

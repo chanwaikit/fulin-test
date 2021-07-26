@@ -1,0 +1,14 @@
+<!--[#if isCollection(productId)]
+<a data-mzt-collection="${productId}" class="shoucang-icon" style="color: #D50035"> <i class="mzt-icon mzt-icon4"></i></a>
+<a data-mzt-cart="${productId}"> <i class="mzt-icon mzt-shoucang"></i></a>
+[#else]
+<a data-mzt-collection="${productId}" > <i class="mzt-icon mzt-shoucang"></i></a>
+<a data-mzt-cart="${productId}"> <i class="mzt-icon mzt-shoucang"></i></a>
+[/#if]-->
+[@skin_product_collection_cart productId = productId]
+[#if collectionCart.isCollection]
+<a data-mzt-collection="${productId}" class="mzt-product-icon shoucang-icon" style="color: var(--themeColor)"> <i class="mzt-icon mzt-icon4"></i></a>
+[#else]
+<a data-mzt-collection="${productId}" class="mzt-product-icon" style="color: #000000"> <i class="mzt-icon mzt-shoucang"></i></a>
+[/#if]
+[/@skin_product_collection_cart]

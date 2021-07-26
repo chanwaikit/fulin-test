@@ -1,0 +1,69 @@
+<div id="view-order-dialog">
+    <el-dialog
+            title="View order details"
+            :visible.sync="detailsDialogVisible"
+            width="90%"
+            :close-on-click-modal="false"
+            :close-on-press-escape="false"
+            custom-class="mzt-cart-dialog"
+            append-to-body
+    >
+        <div class="submitOrderNumBox">
+            <div class="imgBox">
+                <img :data-src="orderForm.productImageUrl +'!1000x1000'" :src="orderForm.productImageUrl +'!1000x1000'" alt=""/>
+            </div>
+            <div class="infoBox">
+                <div class="productContent">
+                    <div class="title">
+                        {{ orderForm.productName }}
+                    </div>
+                    <div class="priceBox" style="font-size: 16px;font-weight: bold;">
+                        Rebates amount: $ {{ orderForm.exten.rebates }}
+                    </div>
+                    <div class="priceBox" style="font-size: 16px;font-weight: bold;">
+                        Order status: {{ orderForm.exten.auditStatus }}
+                    </div>
+                    <div class="noteTitle" style="font-weight: bold;">Amazon order information</div>
+                    <div><span class="infoName">Amazon personal store link: </span>{{ orderForm.amazonStoreUrl }}</div>
+                    <div><span class="infoName">Amazon order Number: </span>{{ orderForm.amazonOrderNo }}</div>
+                    <div><span class="infoName">Submission time: </span>{{ $.Theme.Util.formatTimestamp(orderForm.applyTime) }}</div>
+                    <!--         <p>Reviewer: {{ orderForm.exten.reviewer }}</p>-->
+                    <div><span class="infoName">Audit time: </span>{{ $.Theme.Util.formatTimestamp(orderForm.reviewerTime) }}</div>
+                    <div><span class="infoName">Audit status: </span><span v-if="orderForm.status === 4">Refusal</span><span v-else>Adopt</span></div>
+                    <div><span class="infoName">Review notes: </span>{{ orderForm.reviewerRemarks }}</div>
+                    <div v-if="orderForm.status > 4">
+                        <div class="noteTitle" style="font-weight: bold;">Cash back application information</div>
+                        <div><span class="infoName">Amazon comment img:</span>
+                            <div class="order-imgList" style="display: flex">
+                                <div v-for="(item, index) in orderForm.exten.cashBackApply.commentImg.split(',')" :key="index" style="position: relative;margin-right: 10px">
+                                    <el-image
+                                            v-if="item"
+                                            style="width: 50px; height: 50px"
+                                            :src="item"
+                                            :preview-src-list="orderForm.exten.cashBackApply.commentImg.split(',')">
+                                    </el-image>
+                                </div>
+                            </div>
+                        </div>
+                        <div><span class="infoName">Amazon comment link: </span>{{ orderForm.exten.cashBackApply.amazonCommentLink }}</div>
+                        <div><span class="infoName">Paypal account: </span>{{ orderForm.exten.cashBackApply.paypalAccount }}</div>
+                        <div><span class="infoName">Submission time: </span>{{ $.Theme.Util.formatTimestamp(orderForm.exten.cashBackApply.addTime) }}</div>
+                        <!-- <p>Reviewer: {{ orderForm.exten.cashBackApply.exten.reviewer }}</p>-->
+                        <div><span class="infoName">Audit time: </span>{{ $.Theme.Util.formatTimestamp(orderForm.exten.cashBackApply.reviewerTime) }}</div>
+                        <div><span class="infoName">Audit status: </span>{{ orderForm.exten.cashBackApply.exten.auditStatus }}</div>
+                        <div><span class="infoName">Transaction no: </span>{{ orderForm.exten.cashBackApply.paypalSerialNo }}</div>
+                        <div><div class="infoName">Transaction voucher: </div>
+                            <el-image
+                                    v-if="orderForm.exten.cashBackApply.transferVoucher"
+                                    style="width: 50px; height: 50px;margin-left: 10px"
+                                    :src="orderForm.exten.cashBackApply.transferVoucher"
+                                    :preview-src-list="[orderForm.exten.cashBackApply.transferVoucher]"
+                            />
+                        </div>
+                        <div><span class="infoName">Review notes: </span>{{ orderForm.exten.cashBackApply.reviewerRemarks }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </el-dialog>
+</div>

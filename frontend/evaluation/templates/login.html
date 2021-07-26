@@ -1,0 +1,73 @@
+[#include "/_inc/layout.html"/]
+[#macro importCss]
+<link rel="stylesheet" href="${static('user/css/base.css')}">
+<link href="${static('css/mzt.css')}" rel="stylesheet" type="text/css"/>
+<link rel="stylesheet" href="[@resCss 'login.css' /]">
+[/#macro]
+[#macro importScript]
+<script src="${static('js/plugins/jquery.md5/jquery.md5.js')}"></script>
+[#include "/_inc/js/jquery-cookie.html" /]
+<script>
+    new Login();
+</script>
+[/#macro]
+[@layout notHeader=true]
+<div class="simpleNav">
+    <div class="content">
+        <header class="header">
+            <a href="${cxtPath}/" class="simpleNavHeader"><img src="${options('site_seo_logo', '[@res 'logo.png' /]')}" class="logoImg"></a>
+        </header>
+        <div class="simpleContent">
+            <div class="loginPage">
+                <div class="wrap">
+                    <img src="[@res 'pcloginbg.png' /]" alt="" class="leftImg">
+                    <div class="formBox" id="login">
+                        <div class="formBox__title">Sign In</div>
+                        <div class="formBox__txt">
+                            Don’t have an account?
+                            <a href="${cxtPath}/registered" class="txt-cursor-pointer">Sign Up</a>
+                        </div>
+                        <form action="#" method="post" id="login-form" class="login-form">
+                            <div class="login-form-input form-group">
+                                <label class="label" for="username"><span class="mzt-icon mzt-youxiang"></span></label>
+                                <input type="text" id="username" name="username" class="loginName" placeholder="Email"/>
+                            </div>
+                            <div class="login-form-input form-group">
+                                <label for="pass" class="label"><span class="mzt-icon mzt-mima"></span></label>
+                                <input type="password" id="pass" name="password" class="password" placeholder="Password"/>
+                            </div>
+                            <div class="formBox__signBtn">
+                                <button type="button" class="submit" id="loginActionBtn" mzt-loading>Sign In</button>
+                            </div>
+                        </form>
+                        <div class="formBox__forget"><a class="jumpResetPassword" href="javascript:void(0)">Forgot Password?</a></div>
+                        <div class="formBox-or">
+                            <span class="line"></span>
+                            <span class="txt">OR</span>
+                            <span class="line"></span>
+                        </div>
+                        <button class="fbBtnBox" style="color: rgb(255, 255, 255); background: rgb(60, 90, 154); border-color: rgb(60, 90, 154);" onclick="auth('Facebook')">
+                                <span class="van-button__text">
+                                <span class="fb-logo">
+                                    <img src="[@res 'icon_fb.png' /]"></span>
+                                <span class="fb-btnText">Facebook</span>
+                                </span>
+                        </button>
+                        <button class="gpBtnBox" style="color: rgb(255, 255, 255); border-color: rgb(255, 255, 255);" onclick="auth('Google')">
+                                <span class="van-button__text">
+                                    <span class="gp-logo">
+                                        <img src="[@res 'icon_gp.png' /]"></span>
+                                    <span class="gp-btnText">Google</span>
+                                </span>
+                        </button>
+                        [#include  "${templatePath}_inc/importTermsPrivacy.html"/]
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="simpleNavFooter pageMinWidth content-footer">
+            ${options('site_setting_company_copyright', '')}
+        </div>
+    </div>
+</div>
+[/@layout]

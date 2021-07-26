@@ -1,0 +1,36 @@
+<div id="commission-withdrawal-dialog">
+    <el-dialog
+        title="Withdrawal of commission"
+        :visible.sync="withdrawalDialogVisible"
+        width="90%"
+        :close-on-click-modal="false"
+        :close-on-press-escape="false"
+        custom-class="mzt-cart-dialog"
+        append-to-body
+    >
+        <div class="submitOrderNumBox">
+            <div class="infoBox orderBox">
+                <el-form ref="withdrawalForm" :model="withdrawalForm" label-width="100%" class="van-form">
+                    <el-form-item label="Withdrawal amount" prop="withdrawal"
+                                  :rules="[{ required: true, message: 'Input Withdrawal amount', trigger: 'blur' }]">
+                        <el-input v-model="withdrawalForm.withdrawal" :disabled="true" size="small" placeholder="Input Withdrawal amount">
+                            <el-button slot="prepend" :disabled="true" style="pointer-events: none;">
+                            $
+                            </el-button>
+                        </el-input>
+                    </el-form-item>
+                    <el-form-item label="PayPal account" prop="paypalAccount"
+                                  :rules="[{ required: true, message: 'Input PayPal account', trigger: 'blur' }]">
+                        <el-input v-model="withdrawalForm.paypalAccount" size="small" placeholder="Input PayPal account"></el-input>
+                    </el-form-item>
+                    <el-form-item label="Withdrawal notes">
+                        <el-input type="textarea" v-model="withdrawalForm.withdrawalRemarks" rows="5" size="small" placeholder="Input Withdrawal notes"></el-input>
+                    </el-form-item>
+                    <el-form-item class="submitBtn">
+                        <el-button type="primary" size="small" @click="doWithdrawal()">Submit</el-button>
+                    </el-form-item>
+                </el-form>
+            </div>
+        </div>
+    </el-dialog>
+</div>

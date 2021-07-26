@@ -1,0 +1,44 @@
+[#include "${templatePath}_inc/_macro.html"/]
+[#include "/_inc/layout.html"/]
+[#macro importScript]
+<script>
+</script>
+[/#macro]
+[@layout page="home"]
+<div class="homePage-box">
+    <div class="homePage">
+        [@includeX template="${templatePath}_block/block-header-slide.html"/]
+        [#list blocks as block]
+        [@includeX template="${templatePath}_block/${block.layout.templatePath}" defaultTemplate="/web/pages/block-default.html"/]
+        [/#list]
+    </div>
+    <footer class="footer" style="padding-bottom: 50px;">
+        <div class="footer-top"></div>
+        <div class="footer-center">
+            [@skin_nav handle='footer-menu']
+            [#list navs as nav ]
+            [#if nav.child]
+            <div class="footer-nav">
+                [#list nav.children as child ]
+                    <a href="${child.url}" target="${child.target}">${child.title}</a>
+                    <span class="line">|</span>
+                [/#list]
+            </div>
+            [/#if]
+            [/#list]
+            [/@skin_nav]
+        </div>
+        <div class="footer-bottom">
+            <div class="footer-shares">
+                [#assign footerLink = skinBlockFun('footer-link') /]
+                [#list footerLink.content as item]
+                    <a href="${item.url}" target="${item.target}">
+                        <img src="${item.mobileImage.url}" alt="${item.mobileImage.alt}" width="30px" height="30px" style="border-radius: 50%">
+                    </a>
+                [/#list]
+            </div>
+            <p class="footer-copy">${options('site_setting_company_copyright', '')}</p>
+        </div>
+    </footer>
+</div>
+[/@layout]

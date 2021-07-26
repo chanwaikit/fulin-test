@@ -1,0 +1,34 @@
+[#include "/_inc/layout.html"/]
+[#macro importScript]
+<script>
+    InfiniteScrolling.init({
+        url: '${ctxPath}/getProductRecommends',
+        ul: '.recommendations .mzt-recommenda_list',
+        goOn: '.recommendations .show-more-wrap',
+        loading: '.recommend-loading',
+        builder: 'productRecommend',
+        pageSize: 4,
+        btnMore: '.recommendations .show-more-wrap',
+        params: {'collection': '${page.id}'}
+    });
+</script>
+[/#macro]
+[@layout]
+<div class="album-page_box">
+    <div class="album_box_top">
+        <img data-lazy data-original="${page.coverUrl}">
+    </div>
+    <div class="recommendations" style="padding: 0;">
+        <ul class="mzt-recommenda_list overflow" >
+        </ul>
+        <div class="recommend-loading">
+            <img style="margin: 0 auto;" data-lazy data-original="[@res 'loading-circle.gif' /]" alt="">
+        </div>
+        <div class="show-more-wrap">
+            <div class="show-more">Show More</div>
+        </div>
+    </div>
+</div>
+<div class="mzt-recommend-top"></div>
+<div class="mzt-choose-us"></div>
+[/@layout]

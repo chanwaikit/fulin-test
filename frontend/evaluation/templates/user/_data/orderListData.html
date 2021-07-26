@@ -1,0 +1,103 @@
+<div role="tabpanel" class="tab-pane active">
+    <table class="table"  v-for="item in orderList"  :class="{'orderItem-active': item.isEnable == 0 || item.status == 8}">
+        <tr>
+            <th width="16%">{{$.Theme.Util.formatTimestamp(item.addTime)}}</th>
+            <th>Order Number：{{item.amazonOrderNo}}</th>
+            <th width="12%" class="text-center">Rebates</th>
+            <th width="12%" class="text-center">State</th>
+            <th width="16%" class="text-center">Operation</th>
+        </tr>
+        <tr v-if="item.isEnable == 0 || item.status == 8" class="mzt-removed-product">
+            <td>
+                <div class="aloneClientCenterImg">
+                    <img :src="item.productImageUrl+'!80x80'"/>
+                </div>
+            </td>
+            <td class="orderProductName">
+                <p><span v-text="item.productName" /></p>
+            </td>
+            <td class="text-center">$<span v-text="item.exten.rebate" /></td>
+            <td class="text-center"><span v-text="item.exten.statusDesc" /></td>
+            <td class="text-center">
+                <p>
+                    <a  @click="openOrderDialog(item, item.exten.model)" class="blackBtn" >Buy on Amazon</a>
+                </p>
+                <p>
+                    <a href="${cxtPath}/evaClient/share" target="_blank" class="blackBtn">Refer to Earn $ {{commission}}</a>
+                </p>
+                <p v-if="item.status == 8">
+                    <button class="blackBtn" @click="deleteOrder(item.id)">Delete Order</button>
+                </p>
+            </td>
+        </tr>
+        <tr v-else  :class="{'orderItem-active': item.isEnable == 0 || item.status == 8}" >
+            <td>
+                <div class="aloneClientCenterImg">
+                    <img :src="item.productImageUrl+'!80x80'"/>
+                </div>
+            </td>
+            <td class="orderProductName">
+                <p><span v-text="item.productName" /></p>
+                <p v-if="(item.exten.time > 0) && item.status == 1 "><van-count-down :time="item.exten.time * 1000"  /></p>
+            </td>
+            <td class="text-center">$<span v-text="item.exten.rebate" /></td>
+            <td class="text-center"><span v-text="item.exten.statusDesc" /></td>
+            <td class="text-center">
+                <div v-if="item.status == 1"> <!-- 提交亚马逊信息审核 -->
+                    <el-tooltip  effect="dark" :content="'Your application has been approved. Please purchase on amazon and submit your order No. within ' + item.exten.orderTiming + 'H.'" placement="top">
+                        <button class="blackBtn" @click="openOrder(item.id,1)">Submit Order No.</button>
+                    </el-tooltip>
+                </div>
+                <div v-if="item.status != 6 && item.status != 8">
+                    <button class="blackBtn" @click="closeOrder(item.id)">Cancel Order</button>
+                </div>
+                <div v-if="item.status == 8"> <!--删除订单-->
+                    <button class="blackBtn" @click="deleteOrder(item.id)">Delete Order</button>
+                </div>
+
+                <div v-if="item.status == 2 || item.status == 4"><!-- 亚马逊信息待审核状态，可以从新提交信息审核 -->
+                    <el-tooltip  effect="dark" :content="'Your application has been approved. Please purchase on amazon and submit your order No. within ' + item.exten.orderTiming + 'H.'" placement="top">
+                        <button class="blackBtn" @click="openOrder(item.id,1)">Edit Order No.</button>
+                    </el-tooltip>
+                </div>
+                <div v-if="item.status == 3 || item.status == 7 "> <!-- 亚马逊信息审核通过，再次提交返现信息 -->
+                    <button class="blackBtn" @click="openOrder(item.id,2)">Submit Cashback</button>
+                </div>
+                <div v-if="item.status == 6"> <!-- 返现审核通过或驳回，查看信息 -->
+                    <button class="blackBtn" @click="viewOrder(item.id)">View</button>
+                </div>
+                <div>
+                    <a @click="openOrderDialog(item, item.exten.model)" class="blackBtn" >Buy on Amazon</a>
+                </div>
+                <div>
+                    <a href="${cxtPath}/evaClient/share" target="_blank" class="blackBtn">Refer to Earn $ {{commission}}</a>
+                </div>
+            </td>
+        </tr>
+    </table>
+    <div class="text-right m-t20">
+        <el-pagination
+                v-if="totalRow > 0"
+                background
+                layout="total, prev, pager, next, sizes"
+                @size-change="handleSizeChange"
+                @current-change="handleCurrentChange"
+                :current-page.sync="param.p"
+                :page-size="param.pageSize"
+                :total="totalRow">
+        </el-pagination>
+    </div>
+    <div class="mzt-order_noData" v-if="totalRow === 0">
+        <div class="mzt-noData_icon">
+            <i class="iconfont mzt-icon mzt-cart1"></i>
+        </div>
+        <div class="noneText">
+            Your Shopping Cart is Empty, Go Shopping to
+            <br>
+            Get Cash Back!
+        </div>
+        <a href="${cxtPath}/productList" class="noneBtn">Go Shopping Now</a>
+    </div>
+</div>
+[#include "${templatePath}_dialog/_order-dialog.html"/]
+[#include "${templatePath}_dialog/_view-order-dialog.html"/]

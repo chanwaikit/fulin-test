@@ -1,0 +1,39 @@
+[#include "/_inc/layout.html"/]
+[@layout page="faq"]
+<div class="faq-page">
+    <div class="faq-box pageMinWidth">
+        [#assign faqBanner = skinBlockFun('faq-banner') /]
+        <van-swipe class="my-swipe" :autoplay="3000" indicator-color="white">
+            [#list faqBanner.content as item]
+            <van-swipe-item>
+                <a href="${item.url}" target="${item.target}">
+                    <img src="${item.mobileImage.url}" alt="" class="faq-box-img">
+                </a>
+            </van-swipe-item>
+            [/#list]
+        </van-swipe>
+        <div class="faq-box-content faqPaddingWidth">
+            <div class="nav-faq">
+                [#list faqTypes as type]
+                    <div class="box" @click="faqContent('${type.id}', '${type.title}', 0)">
+                        <div class="img">
+                            <div class="img-icon icon-1"></div>
+                        </div>
+                        <div class="text">${type.title}</div>
+                    </div>
+                [/#list]
+            </div>
+            <div class="questiongs">
+                <div class="top">TOP QUESTIONS</div>
+                <el-collapse v-model="faqActiveName" accordion>
+                    [#list faqTop as top]
+                        <el-collapse-item title="${top.title}" name="${top_index}">
+                            <div>${top.content}</div>
+                        </el-collapse-item>
+                    [/#list]
+                </el-collapse>
+            </div>
+        </div>
+    </div>
+</div>
+[/@layout]

@@ -1,0 +1,366 @@
+[#include "/_inc/layout.html"/]
+[@skin_product productId=RequestParameters['productId'] ]
+[#macro importCss]
+<link rel="stylesheet" href="[@resPlu 'imageBox/${product.imageDisplayMode}.css' /]">
+<style>
+    /*详情*/
+    .mzt-detail_box{
+        overflow: hidden;
+    }
+    .mzt-show_information {
+        width: 46.5%;
+    }
+    .mzt-product_mainTitle{
+        font-size: 24px;
+        font-weight: bold;
+        line-height: 36px;
+        color: #17171D;
+    }
+    .mzt-sale_end{
+        color: #666;
+    }
+    .mzt-sale_title {
+        font-size: 20px;
+        color: #ee169b;
+        font-weight: bold;
+    }
+    .mzt-Cart {
+        display: flex;
+        align-items: center;
+    }
+    .mzt-add_cart a {
+        font-size: 18px;
+        font-weight: bold;
+        color: #fff;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 200px;
+        height: 55px;
+        background: #17171D;
+        border-radius: 28px;
+        cursor: pointer;
+    }
+    .mzt-buy_now a {
+        background: #EC006C;
+        text-transform: uppercase;
+        border-radius: 5px;
+    }
+    .mzt-add_cart a img {
+        margin-right: 13px;
+    }
+    .mzt-buy_now{
+        background: #EC006C;
+        border-color: #EC006C;
+        border-radius: 5px;
+        margin-left: 10px;
+    }
+    .mzt-buy_now:hover{
+        opacity: .8;
+        filter: alpha(opacity=80);
+        background: #EC006C;
+        border-color: #EC006C;
+    }
+    /*商品列表和放大镜*/
+    .lineBlock{
+        display: inline-block;
+        zoom: 1;
+        font-size: 13px;
+        letter-spacing: normal;
+        word-spacing: normal;
+        vertical-align: top;
+    }
+    .showcase_pic_wrap {
+        width: 46.5%;
+    }
+    .showcase_pic_wrap .loader {
+        padding-bottom: 100%;
+        position: relative;
+    }
+    .showcase_pic_wrap .loader img {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+    }
+    .productBigPic_box {
+        width: 100%;
+        height: auto;
+        position: relative;
+    }
+    .productBigPic_box .hoverBig, .productBigPic_box .hoverBig li {
+        width: 100%;
+        height: 100%;
+    }
+    .productBigPic_box .hoverBig, .productBigPic_box .hoverBig li {
+        width: 100%;
+        height: 100%;
+    }
+    .m_imgZoom .zoom-middle-img {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        display: block;
+        text-align: center;
+        vertical-align: middle;
+        z-index: 20;
+    }
+    .m_imgZoom .mousetrap {
+        z-index: 9999;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        left: 0;
+        top: 0;
+        cursor: move;
+        background: #fff;
+        opacity: 0;
+        filter: alpha(opacity=0);
+    }
+    .m_imgZoom .wrap {
+        position: relative;
+        width: 100%;
+        height: 100%;
+    }
+    .m_imgZoom .middle-img {
+        display: inline-block;
+        vertical-align: middle;
+        width: 100%;
+    }
+    .productBigPic_box .empty {
+        width: 0;
+    }
+    .empty {
+        width: 1px;
+        height: 100%;
+        font-size: 0;
+        vertical-align: middle;
+        display: inline-block;
+    }
+    .m_imgZoom .zoom-middle-img img {
+        display: inline-block;
+        width: 100%;
+    }
+    .m_imgZoom .zoom-big-img {
+        width: 100%;
+        height: 100%;
+        left: 100%;
+        top: 0;
+        overflow: hidden;
+        position: absolute;
+        display: none;
+        z-index: 20;
+        background: #fff;
+    }
+    .m_imgZoom .zoom-range {
+        background: url([@res 'tile.gif'/]);
+        cursor: move;
+        z-index: 200;
+        width: 200px!important;
+        height: 200px!important;
+        top: 0;
+        left: 0;
+        position: absolute;
+    }
+    .showCaseSmall_box {
+        height: 84px;
+        width: 100%;
+        position: relative;
+        display: flex;
+    }
+    .productSmallPic {
+        height: 87px;
+        width: 94%;
+    }
+    .moveBox {
+        position: absolute;
+        left: 0;
+        top: 0;
+        z-index: 1;
+        white-space: nowrap;
+    }
+    .productSmallmove li {
+        width: 84px;
+        height: 84px;
+        border: 1px solid #ddd;
+        padding: 1px;
+        text-align: center;
+        overflow: hidden;
+    }
+    .productSmallmove .active,.productSmallmove .cpActive {
+        padding: 0;
+        border: 2px solid #f60;
+    }
+    .productSmallmove li a {
+        display: block;
+        line-height: 45px;
+    }
+    .productSmallmove img {
+        max-width: 100%;
+        max-height: 100%;
+    }
+    .productSmallmove li:after {
+        content: "";
+        width: 0;
+        height: 100%;
+        display: inline-block;
+        vertical-align: middle;
+        font-size: 0;
+    }
+    .showCaseSmall_box>.showBtn{
+        width: 20px;
+        height: 84px;
+        line-height: 84px;
+        border: 1px solid transparent;
+        background-image: none;
+        background-color: #f9f9f9;
+        z-index: 9;
+        text-align: center;
+        cursor: pointer;
+        float: left;
+    }
+    .moveHidden {
+        position: relative;
+    }
+    .moveHidden {
+        overflow: hidden;
+    }
+    .mzt-sale_time >span{
+        border: 0;
+        margin-left: 5px;
+        margin-right: 10px;
+        width: 40px;
+        height: 40px;
+        background: linear-gradient(45deg, #c471ed, #f64f59);
+        padding: 5px;
+        border-radius: 10px;
+        display: inline-block;
+    }
+    .mzt-sale_time >span:first-child{
+        margin-left: 0;
+    }
+    .mzt-sale_time span>span{
+        display: block;
+        text-align: center;
+    }
+    .mzt-sale_time .countdown-num{
+        font-size: 18px;
+        color: white;
+        line-height: 18px;
+    }
+    .mzt-sale_time .countdown-text{
+        font-size: 9px;
+        color: #ffffff;
+        line-height: 12px;
+        text-transform: uppercase;
+    }
+    body{
+        overflow: hidden;
+    }
+    @media screen and (max-width: 414px) {
+        .mzt-detail_box .showcase_pic_wrap{
+            float: unset;
+            width: 100%;
+            padding: 0;
+        }
+        .mzt-detail_box .mzt-show_information{
+            padding: 0;
+        }
+        .mzt-sku_name .price{
+            font-size: 16px!important;
+        }
+        .mzt-detail_box .mzt-sku_name .original-price{
+            font-size: 12px !important;
+        }
+    }
+</style>
+[/#macro]
+[#macro importScript]
+<script src="[@resPlu 'imageBox/${product.imageDisplayMode}.min.js' /]" type="text/javascript"></script>
+<script src="[@resJS 'cart.js' /]" type="text/javascript"></script>
+<script>
+    var pageConfig = {
+        'product':${skinSku(product.id)}
+    };
+    window.PRODUCT_SKU_DRAWING = new ProductSkuDrawing($('div[data-mzt-ProductSku]'), pageConfig.product);
+
+    $.Theme.config = {
+        navUserContainer: '.mzt-header_box .head-acount'
+    }
+    $('div[data-end-date]').each(function () {
+        new $.Theme.plugins.MZTCountdown(this, {end: $(this).attr('data-end-date')})
+    })
+    window.onload = function () {
+        $('.mzt-main-loading').hide();
+        parent.autoIframeHeight()
+    }
+    function openProductCardModal(selectAttr) {
+        parent.openProductCardModal(selectAttr)
+    }
+</script>
+[/#macro]
+[@layout notHeader=true]
+<div class="mzt-detail_box " data-image-box="${product.imageDisplayMode}">
+    <div class="mzt-main-loading">
+        <svg viewBox="25 25 50 50" class="circular"><circle cx="50" cy="50" r="20" fill="none" class="path"></circle></svg>
+    </div>
+    [#include "${templatePath}product/lib/_${product.imageDisplayMode}.html" /]
+    <!--产品详情-->
+    <div class="fr mzt-show_information">
+        <div class="mzt-product_mainTitle">${product.productName}</div>
+        <div class="mzt-sale_end p-b10">
+            [@skin_actPromotion_activity productId = product.id]
+            [#if activityMap.endTime??]
+            <p class="mzt-sale_title">
+                Flash Sale Ends In
+            </p>
+<!--            data-mzt-countdown="{ end:'${activityMap.endTime}', lang: 'en'}"-->
+            <div class="mzt-sale_time" data-end-date="${activityMap.endTime}"></div><br>
+            [/#if]
+            [/@skin_actPromotion_activity]
+        </div>
+        <div data-mzt-ProductSku></div>
+        <div class="mzt-qty_name p-b20">
+            <span class="mzt-name_item ib">${ i18n.get('product.quality', 'Quality')}:</span>
+            <div class="control">
+                <div class="qty-minus">
+                    <a class="btn-qty minus" href="javascript:void(0)">
+                        -
+                    </a>
+                </div>
+                <div class="qty-input">
+                    <input type="text" class="input-text qty" value="1">
+                </div>
+                <div class="qty-plus">
+                    <a class="btn-qty plus" href="javascript:void(0)">
+                        +
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="mzt-sku_name p-b20">
+            <span class="mzt-name_item ib" style="font-size: 16px;font-weight: bold;line-height: 55px">Total Price：</span>
+            <span style="line-height: 55px">
+                <span class="original-price" style="font-size: 16px;"><span data-mzt-ProductOldPrice>${product.marketPrice}</span></span>
+                <span class="price" style="font-size: 24px"><span data-mzt-ProductPrice>${product.mallPrice}</span></span>
+                <span class="pro_pri_save" style="display: none;font-size: 14px">
+                    <span>save</span>
+                    <span class="pri_save_value">$<span class="pri_save_value_text" data-mzt-spreadPrice>50.4</span></span>
+                </span>
+            </span>
+        </div>
+        <div class="mzt-Cart p-b20" style="overflow: hidden">
+            <div class="mzt-add_cart">
+                <a class="" onclick="addToCart()"><img src="${_res.img('details-cart.png')}">${ i18n.get('product.cart', 'Add to cart')}</a>
+            </div>
+            <div>
+                <div class="ib mzt-add_cart mzt-buy_now ">
+                    <a class="" onclick="jumpbuyNow()">${ i18n.get('product.buy', 'Buy Now')}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+[/@layout]
+[/@skin_product]

@@ -1,0 +1,74 @@
+<div class="balancePage">
+    <div class="titleBox">
+        <div class="balanceText">My balance</div>
+        <div class="cashbackBox">
+            <div class="cashback">
+                <p class="currentText">Current Cash Back</p>
+                <div class="priceBox">
+                    <div class="priceBox-item">
+                        <p class="txt activeTxt">$${totalCashBack}</p>
+                        <p class="txt2">Total cash back</p>
+                    </div>
+                    <div class="priceBox-item">
+                        <p class="txt">$${commissionBalance}</p>
+                        <p class="txt2">Commission balance</p>
+                    </div>
+                    <div class="priceBox-item">
+                        <p class="txt">$${pendingCashBack}</p>
+                        <p class="txt2">Pending</p>
+                    </div>
+                </div>
+                [#if commissionBalance > 0]
+                <div>
+                    <a @click="openWithdrawal(${commissionBalance})" class="priceBox-btn">Commission withdrawal request</a>
+                </div>
+                [/#if]
+            </div>
+            <div class="point">
+                <p class="pointText">Number of recommended friends
+                    <span class="redTxt">${referrerCount}</span>
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="historyBox">
+        <div class="historyBox__txt">Transactions History</div>
+        <div class="historyBox-btnBox order-nav">
+            <ul role="tablist">
+                <li tab="cashback" :class="{btnActive:tabIndex == 'cashback'}" @click="switchTab('cashback')">
+                    <a data-toggle="tab" href="#cashback">Cashback</a>
+                </li>
+                <li  tab="withdrawal" :class="{btnActive:tabIndex == 'withdrawal'}" @click="switchTab('withdrawal')">
+                    <a data-toggle="tab" href="#withdrawal">Withdrawal</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div id="myTabContent">
+        <div class="balanceListBox">
+            <div class="tab-pane in active" id="cashback">
+                <div class="stepPriceBox">
+                    <span class="commonBtn" :class="{btnActive:cashbackParam.status == 'all'}" @click="switchCashbackTab('all')">All</span>
+                    <span class="commonBtn" :class="{btnActive:cashbackParam.status == 'payable'}" @click="switchCashbackTab('payable')">Payable($ {{payableData}})</span>
+                    <span class="commonBtn" :class="{btnActive:cashbackParam.status == 'pending'}" @click="switchCashbackTab('pending')">Pending($ {{pendingData}})</span>
+                    <span class="commonBtn" :class="{btnActive:cashbackParam.status == 'closed'}" @click="switchCashbackTab('closed')">Closed($ {{closedData}})</span>
+                </div>
+                <div class="reasonListBox">
+                    [#include "${templatePath}/user/_data/cashbackListData.html" /]
+                </div>
+            </div>
+            <div class="tab-pane" id="withdrawal">
+                <div class="stepPriceBox">
+                    <span class="commonBtn" :class="{btnActive:withdrawalParam.status == ''}" @click="switchWithdrawalTab('')">All</span>
+                    <span class="commonBtn" :class="{btnActive:withdrawalParam.status == '1'}" @click="switchWithdrawalTab(1)">Withdrawal Applying</span>
+                    <span class="commonBtn" :class="{btnActive:withdrawalParam.status == '2'}" @click="switchWithdrawalTab(2)">Withdrawal Completed</span>
+                    <span class="commonBtn" :class="{btnActive:withdrawalParam.status == '3'}" @click="switchWithdrawalTab(3)">Withdrawal Failed</span>
+                </div>
+                <div class="reasonListBox">
+                    [#include "${templatePath}/user/_data/withdrawalListData.html" /]
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+[#include "${templatePath}_dialog/_commission-withdrawal-dialog.html"/]

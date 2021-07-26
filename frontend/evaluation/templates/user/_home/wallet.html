@@ -1,0 +1,30 @@
+<div class="application">
+    <div class="sub-title">My Wallet</div>
+    <div class="order-nav full">
+        <ul role="tablist">
+            <li name="wallet_tab_list" tab="wallet" [#if active =='wallet'] class="active" [/#if] >
+            <a data-toggle="tab">Cash back withdrawal</a>
+            </li>
+            <li name="wallet_tab_list" tab="withdrawal" [#if active =='withdrawal'] class="active" [/#if]>
+            <a data-toggle="tab">Withdrawal</a>
+            </li>
+            <li name="wallet_tab_list" tab="cashback" [#if active =='cashback'] class="active" [/#if]>
+            <a data-toggle="tab">Cashback</a>
+            </li>
+        </ul>
+    </div>
+    <div class="address-content full">
+        <div class="col-sm-6 no-padding">
+            <div class="form-edit">
+                <div class="priceBox-item_A0wZw">
+                    <p class="txt_50S6_">$${totalCashBack}</p>
+                    <p class="txt2_1etea">Total cash back</p>
+                </div>
+            </div>
+        </div>
+        <div class="m-row"></div>
+    </div>
+    <div class="share-data-list" style="display: none">
+        [#include "${templatePath}/user/_data/shareListData.html" /]
+    </div>
+</div>

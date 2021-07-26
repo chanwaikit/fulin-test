@@ -1,0 +1,17 @@
+[@skin_block_data type=block.layout.code id=block.id]
+<div class="list">
+    <div class="list-top">
+        <div class="top-text">${blockData.title}</div>
+        <div class="content">
+            <div class="watch"><span @click="learnMore">Learn More</span></div>
+        </div>
+    </div>
+    [#list blockData.data.slides as slide]
+    <div class="list-img">
+        <a href="${slide.url}" target="${slide.target}">
+            <img src="${slide.pcImage.url}" alt="${slide.pcImage.alt}">
+        </a>
+    </div>
+    [/#list]
+</div>
+[/@skin_block_data]

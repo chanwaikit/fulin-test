@@ -1,0 +1,43 @@
+[#include "/_inc/layout.html"/]
+[@layout page="userGuide"]
+<div class="helpPage">
+    <div class="sideBoxPage">
+        <div class="sideBoxContent pageMinWidth">
+            <div class="sideBox">
+                <div class="sideListBox">
+                    <p class="sideListBox__title">Getting Started</p>
+                    [#list userGuides as guide]
+                    <div class="sideListBox-item" @click="handleScrollView(${guide_index})" :class="{'sideListBox-item--active': guideIndex === ${guide_index}}">
+                        <span class="point"></span>${guide.title}
+                    </div>
+                    [/#list]
+                </div>
+            </div>
+            <div class="contentBox">
+                <div>
+                    [#assign userGuideBanner = skinBlockFun('user-guide-banner') /]
+                    <el-carousel height="100px" indicator-position="none">
+                    [#list userGuideBanner.content as item]
+                        <el-carousel-item>
+                            <a href="${item.url}" target="${item.target}">
+                                <img src="${item.pcImage.url}" class="contentImg">
+                            </a>
+                        </el-carousel-item>
+                    [/#list]
+                    </el-carousel>
+                    <div class="contentBoxWrap">
+                        [#list userGuides as guide]
+                        <p class="contentBoxWrap__textTitle ${(guide_index == 0)?string('contentBoxWrap__title', '')}">
+                            ${guide.title}
+                        </p>
+                        <p class="contentBoxWrap__commonText">
+                            ${guide.content}
+                        </p>
+                        [/#list]
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+[/@layout]

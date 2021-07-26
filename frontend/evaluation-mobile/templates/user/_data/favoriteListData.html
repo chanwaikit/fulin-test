@@ -1,0 +1,46 @@
+[#if favoritePage.list[0]??]
+<div>
+    [#list favoritePage.list as item]
+    [#if item.isEnable == 0 ]
+    <div name="favorite_tab" delId="${item.id}" class="mzt-removed-product">
+        <div class="product-info">
+            <a href="${item.exten.seoUrl}" class="clientCenterImg" target="_blank"><img  src="${item.productImageUrl}" width="50px" height="50px" style="object-fit: contain"></a>
+            <div class="" style="width: 80%;font-size: .7rem;margin-left: 10px">
+                <div class="product-name"><a href="${item.exten.seoUrl}" target="_blank" >${item.productName}</a></div>
+                <div>Invalid</div>
+                <div>${dateToStr(item.addTime)}</div>
+                <div class="mzt-removed-remove"><a href="#favorite-del" data-toggle="modal" data-target="#favorite-del" data-id="${item.id}" style="color: var(--themeColor)">Remove</a></div>
+            </div>
+        </div>
+    </div>
+    [#else]
+    <div name="favorite_tab" delId="${item.id}">
+        <div class="product-info">
+            <a href="${item.exten.seoUrl}" class="clientCenterImg" target="_blank"><img  src="${item.productImageUrl}!50x50"></a>
+            <div class="" style="width: 80%;font-size: .7rem;margin-left: 10px">
+                <div class="product-name"><a href="${item.exten.seoUrl}" target="_blank" >${item.productName}</a></div>
+                <div>Effective</div>
+                <div>${dateToStr(item.addTime)}</div>
+                <div><a href="#favorite-del" data-toggle="modal" data-target="#favorite-del" data-id="${item.id}">Remove</a></div>
+            </div>
+        </div>
+    </div>
+    [/#if]
+    [/#list]
+</div>
+[#else]
+<div class="mzt-order_noData">
+    <div class="mzt-noData_icon">
+        <i class="mzt-icon mzt-zanwushuju"></i>
+    </div>
+    No Data
+</div>
+[/#if]
+<div class="flex-center mzt-favorite_pagination p-b30">
+    <form method="get" action="${ctxPath}/client/favorite/favoriteListData" class="mzt-form_favoriteList">
+        <div class="M-box"
+             data-mzt-pagination="{form:'.mzt-form_favoriteList',current:${commond.p!0}, pageCount: ${commond.pageCount!0}}">
+        </div>
+        ${ hideInputCommond(commond) }
+    </form>
+</div>

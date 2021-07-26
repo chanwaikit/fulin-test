@@ -1,0 +1,369 @@
+.layoutPage {
+    width: 100%;
+    height: 100%;
+}
+.login-body {
+    padding: 1rem;
+    height: 100%;
+    overflow: auto;
+}
+.login-body .close {
+    position: fixed;
+    top: .9rem;
+    right: .9rem;
+    z-index: 1000;
+}
+.login-body .close>i {
+    font-size: 1.25rem;
+    color: #666;
+}
+.login-body .login-logo {
+    height: 3.25rem;
+    text-align: center;
+}
+.login-body .login-logo img {
+    height: 1.45rem;
+}
+.login-body .login-tabs{
+    position: relative;
+    display: flex;
+    background-color: #fff;
+    -webkit-user-select: none;
+    user-select: none;
+    box-sizing: content-box;
+    height: 100%;
+}
+.login-body .login-tabs>li{
+    font-size: .9rem;
+    position: relative;
+    flex: 1;
+    box-sizing: border-box;
+    min-width: 0;
+    padding: 0 .25rem;
+    line-height: 2.2rem;
+    text-align: center;
+    cursor: pointer;
+}
+.login-body .login-tabs>li>a{
+    color: #646566;
+}
+.login-body .login-tabs>li.active >a{
+    font-weight: bold;
+    color: #222222;
+}
+.login-body .login-tabs>li::after{
+    content:'';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    z-index: 1;
+}
+.login-body .login-tabs>li.active::after{
+    background-color: rgb(80, 190, 141);
+    height: 0.1rem;
+    border-radius: 0.1rem;
+    width: 100%;
+}
+.login-body .login-tabs:after{
+    position: absolute;
+    box-sizing: border-box;
+    content: " ";
+    pointer-events: none;
+    top: -50%;
+    right: -50%;
+    bottom: -50%;
+    left: -50%;
+    border: 0 solid #ebedf0;
+    -webkit-transform: scale(.5);
+    transform: scale(.5);
+    border-width: 0;
+    border-bottom: .1rem solid #ddd;
+}
+.login-body .login-form,.login-body .registered-form {
+    margin-top: 1rem;
+}
+.login-body .login-form-input {
+    padding: .4rem .8rem;
+    border: .05rem solid #ddd;
+    background: #fafafa;
+    border-radius: .2rem;
+    margin-bottom: .75rem;
+    position: relative;
+}
+.login-body .mzt-code {
+    display: flex;
+}
+.login-body .mzt-code .v-code{
+    flex: 1;
+}
+.login-body .login-form-input input{
+    border: none;
+    font-size: .8rem;
+    width: 12.5rem;
+}
+.login-body .login-form-input select{
+    display: inline-block;
+    border: none;
+    width: 83%;
+}
+.login-body .login-form-input select option{
+    width: 100px;
+}
+.login-body .login-form-input strong{
+    color: red;
+    position: absolute;
+    left: 0;
+    font-size: 12px;
+    font-weight: normal;
+    bottom: -18px;
+}
+.login-body .login-form-input .label{
+    margin-right: .4rem;
+    color: #DDDDDD;
+}
+.login-body .login-again{
+    text-align: left;
+    color: #333333;
+    margin-top: 10px;
+}
+.login-body .checkbox-login input{
+    margin-top: 0;
+}
+.login-body .checkbox-login label{
+    color: #b5b5b5;
+    font-size: 12px;
+    line-height: 20px;
+    margin-left: 8px;
+    margin-bottom: 0;
+}
+.login-body .checkbox-login{
+    display: flex;
+    align-items: center;
+}
+.checkbox-login input[type=checkbox]:checked:after{
+    border: 1px solid var(--themeColor);
+    background-color: var(--themeColor);
+}
+.login-body .fbBtnBox {
+    width: 100%;
+    height: 44px;
+    line-height: 44px;
+    border-radius: 4px;
+    font-size: 0;
+    position: relative;
+    padding: 0 15px;
+    border: 1px solid #ebedf0;
+    cursor: pointer;
+    transition: opacity .2s;
+    display: inline-block;
+    box-sizing: border-box;
+}
+.login-body .gpBtnBox {
+    background: #fff;
+    box-shadow: 0 0 3px rgb(0 0 0 / 20%);
+    opacity: 1;
+    width: 100%;
+    height: 44px;
+    line-height: 44px;
+    margin-top: 16px;
+    border-radius: 4px;
+    font-size: 0;
+    position: relative;
+    padding: 0 15px;
+}
+.login-body .formBox__forget {
+    font-size: 14px;
+    color: #444;
+    text-align: right;
+    height: 16px;
+    line-height: 16px;
+    margin-top: 10px;
+}
+.login-body .formBox-or {
+    display: flex;
+    align-items: center;
+}
+.login-body .formBox-or .line {
+    flex: 1;
+    background: #eee;
+    height: 1px;
+}
+.login-body .formBox-or .txt {
+    color: #999;
+    font-size: 12px;
+    margin: 25px 10px;
+}
+.login-body .fbBtnBox .fb-logo {
+    position: absolute;
+    left: 104px;
+    top: 0;
+}
+.login-body .fbBtnBox .fb-logo img {
+    height: 21px;
+}
+.login-body .fbBtnBox .fb-btnText {
+    height: 36px;
+    line-height: 36px;
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 14px;
+    font-weight: 700;
+}
+.login-body .gpBtnBox .gp-logo {
+    position: absolute;
+    left: 104px;
+    top: 0;
+}
+.login-body .gpBtnBox .gp-logo img{
+    height: 21px;
+}
+.login-body .gpBtnBox .gp-btnText {
+    color: #747474;
+    height: 1.8rem;
+    line-height: 1.8rem;
+    display: inline-block;
+    vertical-align: middle;
+    font-size: .7rem;
+    font-weight: 700;
+}
+.login-body .formBox__bottomTxt {
+    color: #999;
+    text-align: center;
+    font-size: .5rem;
+    margin-top: 1rem;
+}
+.login-body .formBox__bottomTxt .txt-color-primary {
+    color: var(--themeColor);
+    cursor: pointer;
+}
+.login-body .close_tel{
+    background: transparent;
+}
+.login-body .formBox__signBtn button{
+    background: var(--themeColor);
+    cursor: pointer;
+    width: 100%;
+    height: 44px;
+    line-height: 44px;
+    color: #fff;
+    border-radius: 6px;
+    font-size: 16px;
+    margin: 20px 0 10px;
+    position: relative;
+}
+/*忘记密码*/
+.register-title {
+    text-align: center;
+    font-size: 16px;
+    color: #24323e;
+    margin-top: 15px;
+}
+.register-desc {
+    text-align: center;
+    font-size: 14px;
+    color: #a7b1c2;
+    margin-top: 15px;
+}
+.steps {
+    width: 100%;
+    text-align: center;
+    position: relative;
+}
+
+.steps:before {
+    width: 100%;
+    position: absolute;
+    border: 1px dashed #a7b1c2;
+    top: 15px;
+    content: '';
+    left: 0;
+    z-index: 0;
+}
+.steps ul {
+    margin-top: 20px;
+    display: flex;
+}
+.steps ul li {
+    flex: 1;
+    float: left;
+    margin-right: 20px;
+    z-index: 1;
+}
+.steps ul li i {
+    display: inline-block;
+    height: 30px;
+    width: 30px;
+    line-height: 30px;
+    border-radius: 100%;
+    font-style: initial;
+    border: 1px solid #a7b1c2;
+    color: #a7b1c2;
+    background-color: #fff;
+}
+.steps ul li.active i {
+    background-color: var(--themeColor);
+    border: 1px solid var(--themeColor);
+    color: #fff;
+}
+.steps ul li span {
+    display: block;
+    margin-top: 10px;
+    color: #24323e;
+}
+.register-content .login-form{
+    background: #fafafa;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 4px 15px;
+    margin-bottom: 15px;
+    width: 100%;
+    overflow: hidden;
+    color: #323233;
+    font-size: 14px;
+    line-height: 24px;
+    display: flex;
+    justify-content: space-between;
+}
+.register-content .login-form input{
+    padding: 5px 16px;
+    margin: 0;
+    border: none;
+    line-height: inherit;
+    width: 100%;
+}
+.register-content .login-form .close_tel{
+    padding: 5px 16px;
+    width: auto;
+    margin-left: 5px;
+    border: 1px solid #ddd;
+}
+.register-content  .float-left{
+    margin-bottom: 0;
+    flex: 1;
+}
+.register-content .next-step,.register-content  .login-on {
+    width: 100%;
+    height: 40px;
+    border-radius: 4px;
+    background-color: var(--themeColor);
+    color: #fff;
+    box-shadow: none;
+    border: 0;
+    margin-top: 15px;
+}
+.no-account {
+    background-color: #fafafa;
+    text-align: center;
+    margin-top: 30px;
+}
+.no-account p {
+    padding-top: 20px;
+}
+.no-account p a {
+    display: inline-block;
+    padding: 9px 20px;
+    background-color: var(--themeColor);
+    border-radius: 25px;
+    color: #fff;
+    margin-bottom: 20px;
+}

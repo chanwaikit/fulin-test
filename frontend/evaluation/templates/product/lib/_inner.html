@@ -1,0 +1,14 @@
+<div class="fl mzt-detail-viewBox">
+    <div class="sp-loading">
+        <img src="${_res.img('loader-1.gif')}" alt="Loading...">
+    </div>
+    [@skin_product_image productId=product.id]
+    <div class="sp-wrap mzt-detail-loadAfter">
+        [#list productImage.list as thumbnail]
+            <a title="${thumbnail.alt}" class="middleImg" href="${thumbnail.productImageUrl+'!1000x1000'}">
+                <img class="thumbnail-load" data-src="${thumbnail.productImageUrl}" src="${thumbnail.productImageUrl}" alt="">
+            </a>
+        [/#list]
+    </div>
+    [/@skin_product_image]
+</div>

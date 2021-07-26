@@ -1,0 +1,31 @@
+<div class="application">
+    <div class="sub-title">My Wallet</div>
+    <div class="order-nav full">
+        <ul role="tablist">
+            <li name="share_tab_list" tab="commission" [#if active =='commission'] class="active" [/#if] >
+            <a data-toggle="tab">Commission withdrawal</a>
+            </li>
+            <li name="share_tab_list" tab="withdrawal" [#if active =='withdrawal'] class="active" [/#if]>
+            <a data-toggle="tab">Commission record details</a>
+            </li>
+        </ul>
+    </div>
+    <div class="address-content full">
+        <div class="col-sm-6 no-padding">
+            <div class="form-edit">
+                <div class="priceBox-item_A0wZw">
+                    <p class="txt_50S6_">$ ${commissionBalance}</p>
+                    <p class="txt2_1etea">Commission balance</p>
+                </div>
+            </div>
+            <div class="form-edit  mzt-save-change overflow">
+                <a type="button" href="#mzt-withdrawal" data-toggle="modal" data-target="#mzt-withdrawal">Withdrawal</a>
+            </div>
+        </div>
+        <div class="m-row"></div>
+    </div>
+    <div class="share-data-list" style="display: none">
+        [#include "${templatePath}/user/_data/commissionListData.html" /]
+    </div>
+</div>
+[#include "${templatePath}/pages/_inc/_withdrawal.html"/]

@@ -1,0 +1,59 @@
+div role="tabpanel" class="tab-pane active">
+    <div class="system-message">
+        <div class="sub-title">System Messages</div>
+        [#if sysMessageList[0]?? ]
+        [#list sysMessageList as item]
+        <div class="system-list full">
+            <div class="system-txt">
+                <div class="system-title"  onclick="viewMessage('${item.id}')">
+                    <a href="#system-window" data-toggle="modal" data-target="#system-window">${item.title}</a>
+                </div>
+                <div class="system-desc line-limit-length">${item.content}</div>
+                <time>${dateToStr(item.addTime)}</time>
+            </div>
+            <div class="message-del" onclick="bindMessageId('${item.id}')">
+                <a href="#system-del" data-toggle="modal" data-target="#system-del">
+                    <i class="iconfont mzt-icon icon-delete-bin--line"></i>
+                </a>
+            </div>
+        </div>
+        [/#list]
+        [#else]
+        <div class="system-list full">
+            No Information
+        </div>
+        [/#if]
+    </div>
+</div>
+<div class="modal fade address-window" id="system-del" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <input type="hidden" id="message_id" value="">
+        <div class="modal-content">
+            <div class="del-title"><i class="iconfont mzt-icon icon-tishi"></i><span class="i18n" name="deleteSystem"></span></div>
+            <div class="del-txt i18n" name="sureDelete">
+
+            </div>
+            <div class="address-form">
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default i18n" name="close" data-dismiss="modal"></button>
+                    <button type="button" class="btn btn-primary i18n" name="delete" onclick="removeMessage()"></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade system-window" id="system-window" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="system-title">
+                <span id="message_title"></span>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><i
+                        class="iconfont mzt-icon icon-guanbi"></i></button>
+            </div>
+            <div class="system-txt" id="message_content">
+
+            </div>
+            <time id="message_time"></time>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,34 @@
+[@skin_evaluation_cart]
+[#if cart.cartNum != -1 ]
+    <a href="${cxtPath}/evaClient/order">
+    <el-badge value="${cart.cartNum}" class="item" :max="99">
+        <i class="mzt-icon mzt-icon- searchBox__cartIcon iconicon_MyOrders"></i>
+    </el-badge>
+    </a>
+[#else]
+    <a href="${cxtPath}/login">
+    <i class="mzt-icon mzt-icon- searchBox__cartIcon iconicon_MyOrders"></i>
+    </a>
+[/#if]
+[/@skin_evaluation_cart]
+
+[#if User.isAuth()]
+[#assign curUser=User.auth() /]
+[@skin_evaluation_total_cash_back]
+<a href="${cxtPath}/evaClient/balance" class="searchBox__priceBtn">$${cashBack.pendingCashBack}</a>
+[/@skin_evaluation_total_cash_back]
+<el-popover placement="bottom" width="200" trigger="click" class="searchBox-infoBox">
+    <div class="userInfoList">
+        <a href="${cxtPath}/evaClient/order" class="userInfoList-item">My Orders</a>
+        <a href="${cxtPath}/client/favorite/1" class="userInfoList-item">My Favorites</a>
+        <a href="${cxtPath}/evaClient/balance" class="userInfoList-item">My Balance</a>
+        <a href="${cxtPath}/evaClient/share" class="userInfoList-item">Refer to Earn $5</a>
+        <a href="${cxtPath}/client/findSetting" class="userInfoList-item">My Profile</a>
+        <a class="userInfoList-item" href="${ctxPath}/user/logout">Sign Out</a>
+    </div>
+    <span class="searchBox-infoBox" slot="reference"><span class="txt">${curUser.nickname}</span><i class="mzt-icon mzt-arrow-down downIcon"></i></span>
+</el-popover>
+[#else]
+<a href="${cxtPath}/registered" class="searchBox__priceBtn">Sign up</a>
+<a href="${cxtPath}/login"  class="searchBox__priceBtn searchBox__priceBtn--slide hover-login">Sign in</a>
+[/#if]

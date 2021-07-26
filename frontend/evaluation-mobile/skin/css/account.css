@@ -1,0 +1,125 @@
+.myAccount {
+    height: 100vh;
+}
+.myAccount .head {
+    margin-left: .6rem;
+    display: flex;
+    align-items: center;
+    height: 4.7rem;
+}
+.myAccount .head>img{
+    margin: 0;
+}
+.myAccount .head .font {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    height: 1.35rem;
+    display: inline-block;
+    padding-left: .6rem;
+    font-size: .75rem;
+    font-family: Segoe UI;
+    font-weight: 700;
+    line-height: 1.35rem;
+    color: #222;
+    opacity: 1;
+}
+.myAccount .center_card {
+    position: relative;
+    margin: 0 auto -2.3rem;
+    box-sizing: border-box;
+    width: 17.55rem;
+    height: 5.2rem;
+    padding: .6rem;
+    background: #fff;
+    box-shadow: 0 0.15rem 0.3rem rgb(0 0 0 / 16%);
+    opacity: 1;
+    border-radius: .2rem;
+}
+.myAccount .center_card .card_header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.myAccount .center_card .card_header .card_title {
+    padding-left: .35rem;
+    display: inline-block;
+    font-size: .65rem;
+    font-family: Segoe UI;
+    font-weight: 600;
+    line-height: .85rem;
+    color: #222;
+    opacity: 1;
+}
+.myAccount .center_card .card_content {
+    margin-top: .5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.myAccount .center_card .card_content .card_money_font {
+    font-size: .75rem;
+    font-family: Segoe UI;
+    font-weight: 400;
+    line-height: 1rem;
+    color: #ffaf5b;
+    opacity: 1;
+}
+.myAccount .center_card .card_content .card_money_font .card_content_money {
+    font-size: 1.4rem;
+    font-weight: 500;
+}
+.myAccount .center_card .card_content .center_card_description {
+    margin-top: .5rem;
+    font-size: .55rem;
+    font-family: Segoe UI;
+    font-weight: 400;
+    line-height: .75rem;
+    color: #222;
+    opacity: 1;
+}
+.myAccount .center_card .card_content .card_button {
+    width: 4rem;
+    height: 1.5rem;
+    background: #ffaf5b;
+    position: absolute;
+    top: 35%;
+    right: .5rem;
+    opacity: 1;
+    border: none;
+    border-radius: .2rem;
+}
+.myAccount .center_card_background {
+    z-index: -1;
+    width: 100%;
+    height: 3.5rem;
+    background: #fff;
+}
+.myAccount .navListBox{
+    background: #fff;
+}
+.myAccount .primary-text>a {
+    display: flex;
+    box-sizing: border-box;
+    width: 100%;
+    padding: .5rem .8rem;
+    overflow: hidden;
+    color: #323233;
+    font-size: .7rem;
+    line-height: 1.2rem;
+    background-color: #fff;
+    height: 2rem;
+    position: relative;
+}
+.myAccount .primary-text >a >i{
+    font-size: 20px;
+}
+.myAccount .primary-text>a>span{
+    flex: 1;
+    margin-left: .475rem;
+}
+.myAccount .primary-text >a .mzt-right{
+    font-size: 16px;
+    color: #767676;
+    font-weight: bold;
+}

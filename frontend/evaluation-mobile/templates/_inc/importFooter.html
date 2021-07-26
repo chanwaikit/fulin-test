@@ -1,0 +1,41 @@
+[#if page!='details']
+<div class="navFooter" >
+    <van-tabbar v-model="tabActive" active-color="#FEBD69" inactive-color="#757575" @change="handleTabClick">
+        <van-tabbar-item>
+            <span>Home</span>
+            <template #icon="props">
+                <i class="mzt-icon bottomIcon" :class="props.active ? 'mzt-tab_icon_home_filled' : 'mzt-tab_icon_home_outline'"></i>
+            </template>
+        </van-tabbar-item>
+        <van-tabbar-item>
+            <span>Product</span>
+            <template #icon="props">
+                <i class="mzt-icon bottomIcon" :class="props.active?'mzt-tab_icon_product_filled':'mzt-tab_icon_product_outline'"></i>
+            </template>
+        </van-tabbar-item>
+        [@skin_evaluation_cart]
+        [#if cart.cartNum != -1 ]
+        <van-tabbar-item badge="${cart.cartNum}">
+            <span>My orders</span>
+            <template #icon="props">
+                <i class="mzt-icon bottomIcon" :class="props.active?'mzt-tab_icon_cart_filled':'mzt-Bar_icon_Cart'"></i>
+            </template>
+        </van-tabbar-item>
+        [#else]
+        <van-tabbar-item>
+            <span>My orders</span>
+            <template #icon="props">
+                <i class="mzt-icon bottomIcon" :class="props.active?'mzt-tab_icon_cart_filled':'mzt-Bar_icon_Cart'"></i>
+            </template>
+        </van-tabbar-item>
+        [/#if]
+        [/@skin_evaluation_cart]
+        <van-tabbar-item>
+            <span>Me</span>
+            <template #icon="props">
+                <i class="mzt-icon bottomIcon" :class="props.active?'mzt-tab_icon_me_filled':'mzt-tab_icon_me_outline'"></i>
+            </template>
+        </van-tabbar-item>
+    </van-tabbar>
+</div>
+[/#if]

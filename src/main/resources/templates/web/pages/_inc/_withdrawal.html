@@ -1,0 +1,88 @@
+<div class="modal fade" id="mzt-withdrawal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Withdrawal</h4>
+            </div>
+            <div class="modal-body">
+                <form class="mzt-withdrawal_form overflow">
+                    <input type="hidden" value="2"  name="type"/>
+                    <div class="full overflow m-b20">
+                        <label class="mzt-review_label fl">Withdrawal amount<span class="required">*</span></label>
+                        <div class="mzt-form_control fl form-group">
+                            <input type="text" name="withdrawalAmount">
+                        </div>
+                    </div>
+                    <div class="full overflow m-b20">
+                        <label class="mzt-review_label fl">Paypal account<span class="required">*</span></label>
+                        <div class="mzt-form_control fl form-group">
+                            <input type="text" name="paypalAccount">
+                        </div>
+                    </div>
+                    <div class="full overflow m-b20">
+                        <label class="mzt-review_label fl">Remarks<span class="required">*</span></label>
+                        <div class="mzt-form_control fl form-group">
+                            <textarea cols="5" rows="5"  name="withdrawalRemarks" ></textarea>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default text-uppercase" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary text-uppercase submit">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var Withdrawal = function() {
+        this.$dialog = $('#mzt-withdrawal');
+        this.$form = this.$dialog.find('.mzt-withdrawal_form');
+        this.$submitBtn = this.$dialog.find('button.submit');
+
+        this.valid = function () {
+            var that = this;
+            this.$form.validate({
+                rules:{
+                    withdrawalAmount:{
+                        required:true
+                    },
+                    paypalAccount:{
+                        required:true
+                    }
+                },
+                submitHandler : function() {
+                    that.submit();
+                }
+            });
+        };
+        this.submit = function () {
+            var that = this;
+            $.post(window.webDomain+ '/evaClient/applyWithdrawal', this.$form.serialize(), function (res) {
+                if (res.success) {
+                    $.Theme.Tips.success('Apply successful');
+                    that.$dialog.modal('hide');
+                    // var jqueryPagination = $('.mzt-order_pagination div[data-mzt-pagination]').data('plugin');
+                    // jqueryPagination.reload(1);
+                }
+            })
+        };
+        this.init = function () {
+            var that = this;
+
+            this.valid();
+            this.$submitBtn.on('click', function () {
+                that.$form.submit();
+            });
+
+            this.$dialog.on('hidden.bs.modal', function () {
+                that.$form[0].reset();
+            })
+        };
+        this.init();
+    };
+    $(function () {
+        new Withdrawal();
+    });
+</script>

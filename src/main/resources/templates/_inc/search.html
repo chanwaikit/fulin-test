@@ -1,0 +1,14 @@
+<div>
+    <ul class="manual-searchresults">
+        [#if lookup.list?? && (lookup.list?size > 0)]
+        [#list lookup.list as data]
+        <li class="manual-searchresults-noresults keyword" data-text="${data.keywords}">
+            ${data.keywords}
+            <span class="fr">About ${data.totalRow} results</span>
+        </li>
+        [/#list]
+        [#else]
+        <li class="manual-searchresults-noresults">Not found</li>
+        [/#if]
+    </ul>
+</div>

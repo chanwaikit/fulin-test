@@ -1,0 +1,81 @@
+<div role="tabpanel" class="tab-pane active">
+    <div class="account-tab">
+        <div class="sub-title">Basic setup</div>
+        <div class="basic-info full">
+            <ul>
+                <li>
+                    <a href="${cxtPath}/client/findSetting" class="clientCenterImg">
+                        <img src="${clientInfo.iconImageUrl}!80x80"  alt="">
+                        <span>${clientInfo.clientSurname}${clientInfo.clientName}</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="${cxtPath}/evaClient/order">
+                        <span class="iconfont mzt-icon icon-pay"></span>
+                        <span>All Orders</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="${cxtPath}/evaClient/order?orderStatus=04">
+                        <span class="iconfont mzt-icon icon-daishouhuo">
+                            [#if countOrderStatusMap.notShipped > 0 ]
+                            <i class="badge">${countOrderStatusMap.shipped}</i>
+                            [/#if]
+                        </span>
+                        <span>Wait For Receiving</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="${cxtPath}/evaClient/order?orderStatus=06">
+                        <span class="iconfont mzt-icon icon-tuihuiquanbu"></span>
+                        <span >Return/after sale</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="account-tab order-tab">
+        <div class="sub-title">My Order</div>
+        <div class="order-info full">
+            [#list orderNo as item]
+            <div class="order-list full">
+                <div class="order-img">
+                    <a href="${orderDetail[item_index].seoUrl}" class="clientCenterImg"  target="_blank">
+                        <img  src="${orderDetail[item_index].productImageUrl}!80x80" alt="order2.png">
+                    </a>
+                </div>
+                <div class="order-txt">
+                    <p>
+                        <a href="/client/order/detail/${item.id}" target="_blank">
+                            <span>Sales Order No：</span>  ${orderDetail[item_index].salesOrderNo}&nbsp;&nbsp;
+                        </a>
+                        <span>Order Time</span> ：${orderDetail[item_index].paymentTime}&nbsp;&nbsp;
+                        <span>Order Status</span>：${orderDetail[item_index].salesOrderStatus}</p>
+                    <p>
+                        <span>Logistics Company</span> ：[#if item.transportsChannelName != ""]${item.transportsChannelName}[#else]
+                        <span> not available</span>[/#if]&nbsp;&nbsp;
+                        <span>Tracking Number</span>：[#if item.transportsNo != ""]${item.transportsNo}[#else]
+                        <span> not available</span>[/#if]</p>
+                </div>
+                <div class="order-detail">
+                    <p><a href="/client/order/detail/${item.id}" target="_blank">Order Details</a></p>
+                </div>
+            </div>
+            [/#list]
+        </div>
+    </div>
+    <div class="account-tab order-tab">
+        <div class="sub-title">Browsing history <a href="${cxtPath}/client/trails?p=1" class="more" target="_blank">More records</a></div>
+        <div class="basic-info full">
+            <ul>
+                [#list goodsTrails as item]
+                <li>
+                    <a href="${item.exten.seoUrl}" class="clientCenterImg" target="_blank" >
+                        <img src="${item.defaultImageUrl}!80x80" alt="order1.png">
+                    </a>
+                </li>
+                [/#list]
+            </ul>
+        </div>
+    </div>
+</div>

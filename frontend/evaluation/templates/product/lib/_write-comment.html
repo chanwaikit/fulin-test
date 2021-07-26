@@ -1,0 +1,132 @@
+<div class="modal fade" id="mzt-write_reviews" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Write Your Own Review</h4>
+            </div>
+            <div class="modal-body">
+                <form class="mzt-review_form overflow">
+                    <input type="hidden" value="${product.id}" name="fkProductId"/>
+                    <div class="full overflow m-b20">
+                        <label class="mzt-review_label fl">Your Rating<span class="required">*</span></label>
+                        <div class="fl" style="width: 70%">
+                            <div class="mzt-comment_icon mzt-form_control">
+                                <span class="mzt-comment-icon_label">
+                                    <span>Shipping</span><span class="required">*</span>
+                                </span>
+                                <span class="score" data-mzt-raty="{readOnly:false,target:'#mzt-write_reviews input[name=\'rangeNum\']'}"></span>
+                                <input name="rangeNum" value="" type="hidden" required/>
+                            </div>
+                            <div class="mzt-comment_icon mzt-form_control">
+                                <span class="mzt-comment-icon_label">
+                                    <span>Service</span><span class="required">*</span>
+                                </span>
+                                <span class="score" data-mzt-raty="{readOnly:false,target:'#mzt-write_reviews input[name=\'serviceRangeNum\']'}"></span>
+                                <input name="serviceRangeNum" value="" type="hidden" required/>
+                            </div>
+                            <div class="mzt-comment_icon mzt-form_control">
+                                <span class="mzt-comment-icon_label">
+                                    <span>Quality</span><span class="required">*</span>
+                                </span>
+                                <span class="score" data-mzt-raty="{readOnly:false,target:'#mzt-write_reviews input[name=\'qualityRangeNum\']'}"></span>
+                                <input name="qualityRangeNum" value="" type="hidden" required/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="full overflow m-b20">
+                        <label class="mzt-review_label fl">Nickname<span class="required">*</span></label>
+                        <div class="mzt-form_control fl form-group">
+                            <input type="text" name="addUserName">
+                        </div>
+                    </div>
+                    <div class="full overflow m-b20">
+                        <label class="mzt-review_label fl">Review<span class="required">*</span></label>
+                        <div class="mzt-form_control fl form-group">
+                            <textarea cols="5" rows="5"  name="content" ></textarea>
+                        </div>
+                    </div>
+                    <div class="full overflow m-b20">
+                        <label class="mzt-review_label fl">Img</label>
+                        <div class="mzt-form_control fl">
+                            <div class="review-image-upload">
+                                <div class="mzt-uploader_holder" data-mzt-uploader="slideShows">
+                                    <div class="grid upload-img-box" tabindex="0" role="button" >
+                                        <div class="img-icon-bk"></div>
+                                        <div class="mzt-icon mzt-jiahao2"></div>
+                                        <a href="javascript:void(0)" class="g-u ks-uploader-button">
+                                            <span class="btn-text">Uploader</span>
+                                            <div class="file-input-wrapper" style="overflow: hidden;">
+                                                <input class="g-u file-input" type="file" >
+                                            </div>
+                                        </a>
+                                    </div>
+                                    <ul class="grid mzt-upload_queue"></ul>
+                                    <div class="mzt-up_tips" >
+                                        <span class="cur" data-cur-num="0">0</span>/<span class="tot" data-max-num="5">5</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default text-uppercase" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary text-uppercase submit">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var WriteComment = function() {
+        this.$dialog = $('#mzt-write_reviews');
+        this.$form = this.$dialog.find('.mzt-review_form');
+        this.$submitBtn = this.$dialog.find('button.submit');
+
+        this.valid = function () {
+            var that = this;
+            this.$form.validate({
+                rules:{
+                    addUserName:{
+                        required:true,
+                    },
+                    content: {
+                        required:true
+                    }
+                },
+                submitHandler : function() {
+                    that.submit();
+                }
+            });
+        };
+        this.submit = function () {
+            var that = this;
+            $.post(window.GLOBAL_CONFIG.mainUrl + '/product/comment', this.$form.serialize(), function (res) {
+                if (res.success) {
+                    $.Theme.Tips.success('Comment successful');
+                    that.$dialog.modal('hide');
+                    var jqueryPagination = $('.mzt-review_pagination.comment div[data-mzt-pagination]').data('plugin');
+                    jqueryPagination.reload(1);
+                }
+            })
+        };
+        this.init = function () {
+            var that = this;
+
+            this.valid();
+            this.$submitBtn.on('click', function () {
+                that.$form.submit();
+            });
+
+            this.$dialog.on('hidden.bs.modal', function () {
+                $('.mzt-upload_queue').val('');
+                that.$form[0].reset();
+            })
+        };
+        this.init();
+    };
+    $(function () {
+        new WriteComment();
+    });
+</script>

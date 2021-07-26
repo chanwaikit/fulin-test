@@ -1,0 +1,28 @@
+
+
+# Created by .ignore support plugin (hsz.mobi)
+### Example user template template
+### Example user template
+
+# IntelliJ project files
+.idea
+*.iml
+/**/target/
+
+*.class
+
+/app-log/
+
+app-log/
+
+# Mobile Helper for Java (J2ME)
+.mtj.tmp/
+
+
+*.jar
+*.war
+*.ear
+
+/src/main/java/com/mazentop/modules/web/StudyController.java
+/F:/
+

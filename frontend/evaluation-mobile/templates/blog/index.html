@@ -1,0 +1,374 @@
+[#include "/_inc/layout.html"/]
+[#macro importCss]
+<style>
+    .mzt-banner {
+        max-width: 1590px;
+        padding: 0 15px;
+        box-sizing: border-box;
+        margin: 36px auto 0;
+    }
+    .mzt-banner .banner {
+        width: 100%;
+        height: 454px;
+    }
+    .mzt-blog-search {
+        max-width: 100%;
+        margin: 50px auto 105px;
+        width: 687px;
+        height: 100px;
+        background: #FFFFFF;
+        box-shadow: 0px 3px 15px rgba(0,0,0,0.1);
+        border-radius: 17px;
+        float: none;
+        padding: 20px;
+        box-sizing: border-box;
+    }
+    .mzt-blog-search .form {
+        position: relative;
+    }
+    .mzt-blog-search .mzt-blogSearch-content .form .field.search .control input {
+        background: #F8FAFF;
+        border-radius: 8px;
+        height: 60px;
+        padding: 0 0 0 59px;
+        font-weight: 600;
+        font-size: 16px;
+        color: #000;
+    }
+    .mzt-blog-search .mzt-blogSearch-content .form .actions button {
+        width: 20px;
+        height: 20px;
+        position: absolute;
+        left: 22px;
+        top: 50%;
+        transform: translate(0, -50%);
+        font-size: 0;
+        border-radius: 0;
+        outline: none;
+        border: none;
+        background: transparent;
+    }
+    .mzt-blog-search .mzt-blogSearch-content .form .actions button:before {
+        color: #000;
+        font-size: 20px;
+    }
+    .mzt-blog_main .mzt-blog-List {
+        max-width: 1590px;
+        padding: 0 15px;
+        box-sizing: border-box;
+        margin: 0 auto 100px;
+        overflow: hidden;
+    }
+    .mzt-blog-item{
+        width: 31.3%;
+        float: left;
+        margin-right: 2%;
+        margin-bottom: 4%;
+    }
+    .mzt-blog-item:nth-child(3n+3){
+        margin-right: 0;
+    }
+    .mzt-blog_main .mzt-blog-List.mzt-blog-ListLast {
+        margin-bottom: 48px;
+    }
+    .mzt-blog_main .mzt-blog-List .mzt-blog-ListTitle {
+        text-align: center;
+        margin-bottom: 50px;
+    }
+    .mzt-blog_main .mzt-blog-List .mzt-blog-ListTitle h2 {
+        margin: 0;
+        height: 50px;
+        background: #fff;
+        border: 1px solid #db0162;
+        border-radius: 4px;
+        display: inline-block;
+        padding: 0 20px;
+        min-width: 200px;
+        box-sizing: border-box;
+        line-height: 50px;
+        font-size: 36px;
+        color: #DB0162;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+    .mzt-blog_main .mzt-swiper-blogBox {
+        position: relative;
+        overflow: hidden;
+    }
+    .mzt-blog_main .mzt-swiper-blog1 ,
+    .mzt-blog_main .mzt-swiper-blog2 ,
+    .mzt-blog_main .mzt-swiper-blog3 ,
+    .mzt-blog_main .mzt-swiper-blog4 {
+        max-width: 1440px;
+        margin: 0 auto;
+    }
+    .mzt-blog_main .swiper-button-next ,
+    .mzt-blog_main .swiper-button-prev {
+        width: 40px;
+        height: 80px;
+        background-color: #eee;
+        margin-top: 0;
+        transform: translate(0,-50%);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #000;
+    }
+    .mzt-blog_main .swiper-button-prev {
+        left: 0;
+    }
+    .mzt-blog_main .swiper-button-next {
+        right: 0;
+    }
+    .mzt-blog_main .swiper-button-next .mzt-icon ,
+    .mzt-blog_main .swiper-button-prev .mzt-icon {
+        font-size: 24px;
+    }
+    .mzt-blog_main .mzt-blog_img {
+        text-decoration: none;
+        text-align: center;
+        display: block;
+        width: 400px;
+        height: 400px;
+        overflow: hidden;
+        margin: 0 auto;
+        border-radius: 50%;
+    }
+    .mzt-blog_main .mzt-blog_img img {
+        overflow: hidden;
+        margin: 0 auto;
+        height: 100%;
+    }
+    .mzt-blog_main .mzt-blog_title {
+        margin-top: 15px;
+        text-align: center;
+        font-size: 16px;
+        font-weight: 600;
+        line-height: 20px;
+        color: #17171D;
+    }
+    .mzt-blog_main .mzt-blog-List > a {
+        width: 140px;
+        height: 40px;
+        background: #17171D;
+        border-radius: 4px;
+        line-height: 40px;
+        display: block;
+        text-align: center;
+        margin: 40px auto 0;
+        font-size: 16px;
+        font-weight: 400;
+        color: #fff;
+        text-transform: uppercase;
+    }
+    .mzt-blog_main .mzt-swiper-blog4 {
+        overflow: hidden;
+    }
+    .mzt-blog_main .mzt-swiper-blog4 .mzt-swiper-blogList {
+        width: calc(100%/3 - 120px);
+        float: left;
+        margin-left: 180px;
+        margin-bottom: 40px;
+    }
+    .mzt-blog_main .mzt-swiper-blog4 .mzt-swiper-blogList:nth-child(3n+1) {
+        clear: both;
+        margin-left: 0;
+    }
+    .mzt-blog_main .mzt-blog-List.mzt-blog-ListLast > a {
+        margin: 0 auto;
+    }
+    .mzt-blog_main .mzt-swiper-blog4 .mzt-blog_img .mzt-blog_title {
+        text-align: left;
+    }
+    .mzt-blog_main .mzt-swiper-blog4 .mzt-swiper-blogList p ,
+    .mzt-blog_main .mzt-swiper-blog4 .mzt-swiper-blogList .mzt-blog_img div {
+        font-size: 16px;
+        font-weight: 600;
+        line-height: 20px;
+        color: #aaa;
+        margin: 10px 0 0 0;
+        text-align: left;
+    }
+    .mzt-blog_main .mzt-swiper-blog4 .mzt-swiper-blogList .mzt-blog_img div {
+        max-height: 62px;
+        overflow: hidden;
+    }
+    .mzt-blog_main .mzt-swiper-blog4 .mzt-swiper-blogList .mzt-blog_img div p {
+        margin-top: 0;
+    }
+    .mzt-blog_main .mzt-swiper-blog4 .mzt-swiper-blogList .mzt-mzt-blog_viewMore {
+        display: block;
+        width: 100px;
+        height: 30px;
+        background: #DB0162;
+        border-radius: 2px;
+        font-size: 16px;
+        font-weight: 600;
+        color: #fff;
+        line-height: 30px;
+        text-align: center;
+        text-decoration: none;
+        margin-top: 10px;
+    }
+    @media screen and (max-width: 992px) {
+        .mzt-blog_main .mzt-blog_img{
+            width: 300px;
+            height: 300px;
+        }
+    }
+    @media screen and (max-width: 992px) {
+        .mzt-blog_main .mzt-swiper-blog4 .mzt-swiper-blogList {
+            width: calc(100%/3 - 60px);
+            margin-left: 90px;
+            margin-bottom: 20px;
+        }
+        .mzt-blog_main .mzt-blog-List.mzt-blog-ListLast > a {
+            margin: 20px auto 0;
+        }
+        .mzt-blog_main .mzt-blog_img{
+            width: 200px;
+            height: 200px;
+        }
+    }
+    @media screen and (max-width: 500px) {
+        .mzt-blog-search {
+            margin: 20px auto;
+            width: 90%;
+            height: 60px;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+        .mzt-blog-search .mzt-blogSearch-content .form .field.search .control input {
+            height: 40px;
+            padding: 0 0 0 30px;
+            font-size: 14px;
+        }
+        .mzt-blog-search .mzt-blogSearch-content .form .actions button {
+             width: 18px;
+             height: 18px;
+             left: 6px;
+        }
+        .mzt-blog-search .mzt-blogSearch-content .form .actions button:before {
+            font-size: 16px;
+        }
+        .mzt-blog_main .mzt-blog-List {
+            margin: 0 auto 30px;
+        }
+        .mzt-blog_main .mzt-blog-List .mzt-blog-ListTitle {
+            margin-bottom: 20px;
+        }
+        .mzt-blog_main .mzt-blog-List .mzt-blog-ListTitle h2 {
+            height: 36px;
+            padding: 0 10px;
+            min-width: 160px;
+            box-sizing: border-box;
+            line-height: 36px;
+            font-size: 24px;
+        }
+        .mzt-blog_main .swiper-button-next ,
+        .mzt-blog_main .swiper-button-prev {
+            width: 30px;
+            height: 50px;
+        }
+        .mzt-blog_main .swiper-button-next .mzt-icon ,
+        .mzt-blog_main .swiper-button-prev .mzt-icon {
+            font-size: 18px;
+        }
+        .mzt-blog_main .mzt-swiper-blog4 .mzt-swiper-blogList {
+            width: 100%;
+            margin-left: 0;
+            margin-bottom: 20px;
+        }
+        .mzt-blog_main .mzt-swiper-blog4 .mzt-blog_img .mzt-blog_title {
+            text-align: center;
+        }
+        .mzt-blog_main .mzt-swiper-blog4 .mzt-swiper-blogList p ,
+        .mzt-blog_main .mzt-swiper-blog4 .mzt-swiper-blogList .mzt-blog_img div {
+            text-align: center;
+        }
+        .mzt-blog_main .mzt-swiper-blog4 .mzt-swiper-blogList .mzt-mzt-blog_viewMore {
+            margin: 15px auto 0;
+        }
+        .mzt-form_blog {
+            text-align: center;
+        }
+    }
+</style>
+[/#macro]
+[#macro importScript]
+[/#macro]
+[@layout]
+[@includeX template="${templatePath}_block/block-header-slide.html"/]
+<div class="mzt-blog-search">
+    <div class="mzt-blogSearch-content">
+        <form class="form" id="blog_search_mini_form" aaction="${cxtPath}/blog" method="get">
+            <div class="field search">
+                <div class="control">
+                    <input id="blog_search" type="text" name="title" value="" placeholder="Search posts here..." class="input-text" maxlength="128" role="combobox" aria-haspopup="false" aria-autocomplete="both" autocomplete="off">
+                </div>
+            </div>
+            <div class="actions">
+                <button type="submit" onclick="" title="Search" class="action search mzt-icon mzt-sousuo">
+                    <span>Search</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="mzt-blog_main">
+    <div class="mzt-blog-List">
+        [#list blogs as blog]
+        <div class="mzt-blog-item">
+            <a href="${skinSeoUrl(blog.id, 'blog')}" class="mzt-blog_img">
+                <img src="${blog.thumbnail}"/>
+            </a>
+            <h3 class="mzt-blog_title">${blog.title}</h3>
+        </div>
+        [/#list]
+    </div>
+    <!--分页-->
+    <div class="mzt-review_pagination overflow">
+        <form action="${cxtPath}/blog" class="mzt-form_blog text-center m-t20" target="_self" method="get">
+            <div class="M-box ib"
+                 data-mzt-pagination="{form:'.mzt-form_blog', loading: 'self', current:${commond.p!0}, pageCount: ${commond.pageCount!0}}">
+            </div>
+            ${ hideInputCommond(commond) }
+        </form>
+    </div>
+</div>
+[/@layout]
+<script src="${static('js/plugins/swiper/swiper.min.js')}"></script>
+<script>
+    var swiper = new Swiper('.mzt-swiper-blog1,.mzt-swiper-blog2,.mzt-swiper-blog3', {
+        slidesPerView: 3,
+        spaceBetween: 180,
+        navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+        },
+        loop: true,
+        breakpoints: {
+            1560: {
+                slidesPerView: 3,
+                spaceBetween: 180
+            },
+            1300:{
+                slidesPerView: 3,
+                spaceBetween: 100
+            },
+            992: {
+                slidesPerView: 2,
+                spaceBetween: 100
+            },
+            640: {
+                slidesPerView: 2,
+                spaceBetween: 50
+            },
+            500: {
+                slidesPerView: 1,
+                spaceBetween: 0
+            }
+        }
+    });
+</script>
+[@importScript /]

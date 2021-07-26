@@ -1,0 +1,160 @@
+[#include "/_inc/layout.html"/]
+[#macro importCss]
+<link href="${static('user/css/base.css')}" rel="stylesheet" type="text/css"/>
+<link rel="stylesheet" href="${static('user/css/pagination.css')}">
+<link href="${static('user/css/searchableSelect.css')}" rel="stylesheet" type="text/css"/>
+<style>
+    .client-active {
+        color: #5369F8;
+        font-weight: bold;
+    }
+    .orderProductName {
+        max-width: 200px;
+    }
+    .orderProductName .van-count-down{
+       color: red;
+    }
+    .open-dropdown-icon{
+        position: absolute;
+        right: 8px;
+        top: 10px;
+    }
+</style>
+[/#macro]
+
+[#macro importScript]
+<script src="${static('user/js/searchableSelect.js')}"></script>
+<script src="${static('user/js/user-center.js')}"></script>
+<script>
+    window.user_center['${active}'].init();
+</script>
+[/#macro]
+
+[@layout page="user-"+active]
+[#if active == 'account']
+<div class="mzt-userper-main main-content">
+    <div class="account-content content">
+        <div class="myAccount">
+            [#if User.isAuth()]
+            [#assign curUser=User.auth() /]
+            <div class="head">
+                <img src="${curUser.avatar}" class="infoBox__img" style="width: 2.5rem;">
+                <div class="font">${curUser.nickname}</div>
+            </div>
+            [/#if]
+            <div class="center_card">
+                <div class="card_header">
+                    <div class="card_header_left" style="display: inline-block;">
+                        <i class="mzt-icon mzt-balance"></i>
+                        <span class="card_title">Cash Balance</span>
+                    </div>
+                </div>
+                <div class="card_content">
+                    <div>
+                        [@skin_evaluation_total_cash_back]
+                        <div style="display: inline-block; margin-left: 1.2rem;">
+                            <div class="card_money_font">$ <span class="card_content_money">${cashBack.totalCashBack}</span></div>
+                            <div class="center_card_description">Total cash back</div>
+                        </div>
+                        <div style="display: inline-block; margin-left: 1.8rem;">
+                            <div class="card_money_font">$ <span class="card_content_money">${cashBack.pendingCashBack}</span></div>
+                            <div class="center_card_description">Pending</div>
+                        </div>
+                        [/@skin_evaluation_total_cash_back]
+                    </div>
+                   <div style="display: inline-block;">
+                        <button class="card_button">
+                            <a href="${cxtPath}/evaClient/balance" class="card_button_font">Withdraw</a>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="center_card_background"></div>
+            <ul class="account-menu navListBox">
+                <li role="presentation" class="primary-text">
+                    <a href="${cxtPath}/evaClient/share" [#if active=='share'] class="navList--active" [/#if]>
+                    <i class="iconfont mzt-icon mzt-cart2"></i><span>Refer to Earn [@skin_evaluation_commission_rules] $${rule.commission} [/@skin_evaluation_commission_rules]</span>
+                    <i class="mzt-icon mzt-right"></i>
+                    </a>
+                </li>
+                <li role="presentation" class="primary-text">
+                    <a href="${cxtPath}/client/favorite/1" [#if active=='favorite'] class="navList--activeox" [/#if]>
+                    <i class="iconfont mzt-icon icon-shoucang1 mzt-heart-line"></i><span>My Favorites</span>
+                    <i class="mzt-icon mzt-right"></i>
+                    </a>
+                </li>
+                <li role="presentation" class="primary-text">
+                    <a href="${cxtPath}/client/findSetting" [#if active=='setting'] class="navList--activeox" [/#if]>
+                    <i class="iconfont mzt-icon mzt-me"></i><span>My Profile</span>
+                    <i class="mzt-icon mzt-right"></i>
+                    </a>
+                </li>
+                <li role="presentation" class="primary-text">
+                    <a href="${cxtPath}/userGuide" [#if active=='order'] class="navList--active" [/#if]>
+                    <i class="iconfont mzt-icon mzt-cart2"></i><span>User Guide</span>
+                    <i class="mzt-icon mzt-right"></i>
+                    </a>
+                </li>
+                <li role="presentation" class="primary-text">
+                    <a href="${cxtPath}/faq" [#if active=='order'] class="navList--active" [/#if]>
+                    <i class="iconfont mzt-icon mzt-cart2"></i><span>FAQ</span>
+                    <i class="mzt-icon mzt-right"></i>
+                    </a>
+                </li>
+                <li role="presentation" class="primary-text">
+                    <a href="${cxtPath}/userGuide" [#if active=='order'] class="navList--active" [/#if]>
+                    <i class="iconfont mzt-icon mzt-cart2"></i><span>Contact Us</span>
+                    <i class="mzt-icon mzt-right"></i>
+                    </a>
+                </li>
+                <li role="presentation" class="primary-text">
+                    <a href="${cxtPath}/userGuide" [#if active=='order'] class="navList--active" [/#if]>
+                    <i class="iconfont mzt-icon mzt-cart2"></i><span>About</span>
+                    <i class="mzt-icon mzt-right"></i>
+                    </a>
+                </li>
+            </ul>
+            <div class="primary-text" style="margin-top: 0.6rem;">
+                <a href="${ctxPath}/user/logout" [#if active=='share'] class="navList--active" [/#if]>
+                <i class="iconfont mzt-icon mzt-tuichudenglu"></i><span>Sign Out</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+[#else]
+<div class="mzt-userper-main main-content">
+    <div class="content">
+        [#include "${templatePath}/user/_home/${active}.html"/]
+        <footer class="footer" style="margin: 0;padding-bottom: 50px;">
+            <div class="footer-top"></div>
+            <div class="footer-center">
+                [@skin_nav handle='footer-menu']
+                [#list navs as nav ]
+                [#if nav.child]
+                <div class="footer-nav">
+                    [#list nav.children as child ]
+                    <a href="${child.url}" target="${child.target}">${child.title}</a>
+                    <span class="line">|</span>
+                    [/#list]
+                </div>
+                [/#if]
+                [/#list]
+                [/@skin_nav]
+            </div>
+            <div class="footer-bottom">
+                <div class="footer-shares">
+                    [#assign footerLink = skinBlockFun('footer-link') /]
+                    [#list footerLink.content as item]
+                    <a href="${item.url}" target="${item.target}">
+                        <img src="${item.mobileImage.url}" alt="${item.mobileImage.alt}" width="30px" height="30px" style="border-radius: 50%">
+                    </a>
+                    [/#list]
+                </div>
+                <p class="footer-copy">${options('site_setting_company_copyright', '')}</p>
+            </div>
+        </footer>
+    </div>
+</div>
+[/#if]
+[/@layout]

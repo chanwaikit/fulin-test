@@ -1,0 +1,22 @@
+<div class="listBox">
+    <div class="titleBox">
+        <span class="title1">Amount</span>
+        <span class="title2">Reason</span>
+        <span class="title3">Date</span>
+        <span class="title4">Status</span>
+    </div>
+    <div class="itemBox">
+        <div class="itemTxt1">+$5</div>
+        <div class="itemTxt2">Refer a Friend</div>
+        <div class="itemTxt3">2021-02-04 13:53:40</div>
+        <div class="itemTxt4">Pending</div>
+    </div>
+</div>
+<div class="flex-center mzt-balance_pagination p-b30">
+    <form method="get" action="${ctxPath}/evaClient/order" class="mzt-form_balanceList">
+        <div class="M-box"
+             data-mzt-pagination="{form:'.mzt-form_balanceList',current:${order.commond.p!0}, pageCount: ${order.commond.pageCount!0}, scrollTop: 'div#main-content'}">
+        </div>
+        ${ hideInputCommond(order.commond) }
+    </form>
+</div>

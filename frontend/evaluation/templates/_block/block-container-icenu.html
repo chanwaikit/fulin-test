@@ -1,0 +1,17 @@
+[@skin_block_data type=block.layout.code id=block.id]
+<div class="new">
+    <div class="new-top clear">
+        <!-- New Freebies -->
+        <div class="new-freebies">${blockData.title}</div>
+        <div class="view-more">
+            <span @click="viewMore"> View More </span>
+        </div>
+    </div>
+    <div class="new-content">
+        [#list blockData.childs as item ]
+        [@importBlockSpecialTagGoods blockData=item limit=10 class="relative" /]
+        [/#list]
+    </div>
+</div>
+[/@skin_block_data]
+

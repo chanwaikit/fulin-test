@@ -1,0 +1,710 @@
+/*-----------个人中心页面----------------*/
+.data-favorite-table .table>tbody>tr>td,
+.data-favorite-table .table>tbody>tr>th,
+.data-favorite-table .table>tfoot>tr>td,
+.data-favorite-table .table>tfoot>tr>th,
+.data-favorite-table .table>thead>tr>td,
+.data-favorite-table .table>thead>tr>th{
+    padding: 15px;
+}
+.overFlowPage {
+    display: flex;
+    width: 1200px;
+    margin: 20px auto 100px;
+    padding: 0 10px;
+    box-sizing: border-box;
+}
+.navBox {
+    flex-basis: 250px;
+    height: 700px;
+    text-align: center;
+}
+.overFlowPage .infoBox{
+    background: #fff;
+    padding: 20px;
+    border-radius: 6px;
+    width: 250px;
+}
+.overFlowPage .infoBox__txt {
+    color: #666;
+    font-size: 14px;
+    margin: 14px 0 20px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+}
+.overFlowPage .infoBox__img {
+    width: 70px;
+    height: 70px;
+}
+.overFlowPage .infoBox-priceBox {
+    display: flex;
+}
+.overFlowPage .infoBox-priceBox .priceWrap {
+    flex: 1;
+}
+.overFlowPage .infoBox-priceBox .priceWrap .price {
+    color: #ffaf52;
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+.overFlowPage .infoBox-priceBox .priceWrap .txt {
+    color: #999;
+    font-size: 14px;
+}
+.overFlowPage .navListBox {
+    background: #fff;
+    margin: 20px 0;
+    padding: 10px;
+    height: 450px;
+    border-radius: 6px;
+}
+.overFlowPage .navListBox>li {
+    font-size: 16px;
+    text-align: left;
+    cursor: pointer;
+    line-height: 16px;
+    color: #222;
+}
+.overFlowPage .navListBox .navList--active{
+    color: var(--themeColor);
+    background: #f9f9f9;
+}
+.overFlowPage .navListBox >li>a {
+    padding: 14px 10px;
+    display: flex;
+    align-items: center;
+}
+.overFlowPage .navListBox >li>a:hover{
+    color: var(--themeColor);
+}
+.overFlowPage .navListBox .iconfont {
+    width: 20px;
+    height: 20px;
+    color: #999;
+    font-size: 18px;
+    vertical-align: middle;
+    margin: 0 10px 0 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.routerBox {
+    width: 100%;
+    margin-left: 20px;
+}
+@media (min-width: 1280px) and (max-width: 1360px){
+    .pageMinRouterBoxWidth {
+        width: 950px!important;
+    }
+}
+.overFlowPage .application {
+    height: auto;
+    overflow: auto;
+    min-height: 300px;
+    padding: 20px;
+    background: #fff;
+    border-radius: 6px;
+}
+.overFlowPage .sub-title{
+    padding-bottom: 10px;
+    font-size: 20px;
+    font-weight: 400;
+    color: #595757;
+    border-bottom: 1px solid #ddd;
+    display: flex;
+}
+.overFlowPage .balanceText {
+    height: 50px;
+    line-height: 50px;
+    font-size: 22px;
+    margin-bottom: 0;
+    margin-top: 0;
+    border-bottom: 1px solid #efefef;
+    padding-left: 30px;
+}
+.overFlowPage .balancePage {
+    color: #575556;
+}
+.balancePage .titleBox {
+    background: #fff;
+    border-radius: 6px;
+}
+.balancePage .titleBox .cashbackBox {
+    display: flex;
+    height: 306px;
+}
+.balancePage .titleBox .cashbackBox .cashback {
+    flex: 1;
+    border-right: 1px solid #efefef;
+    text-align: center;
+}
+.balancePage .titleBox .cashbackBox .cashback .currentText {
+    text-align: center;
+    font-size: 20px;
+    margin: 24px auto;
+}
+.balancePage .titleBox .cashbackBox .cashback .priceBox {
+    display: flex;
+    justify-content: center;
+}
+.balancePage .titleBox .cashbackBox .cashback .priceBox-item {
+    box-sizing: border-box;
+    width: 146px;
+    height: 146px;
+    border: 6px solid #f0f0f0;
+    border-radius: 50%;
+    text-align: center;
+    margin-left: 30px;
+}
+
+.balancePage .titleBox .cashbackBox .cashback .priceBox-item .txt {
+    font-weight: 700;
+    margin-top: 38px;
+    font-size: 24px;
+    margin-bottom: 0;
+    color: #585657;
+}
+.balancePage .titleBox .cashbackBox .cashback .priceBox-item .txt2 {
+    font-size: 16px;
+    margin-top: 4px;
+    font-weight: 400;
+}
+.balancePage .titleBox .cashbackBox .cashback .priceBox-item .activeTxt {
+    color: var(--themeColor);
+}
+.balancePage .titleBox .cashbackBox .cashback .priceBox-btn{
+    display: inline-block;
+    background: var(--themeColor);
+    cursor: pointer;
+    margin: 20px auto 0;
+    padding-left: 24px;
+    padding-right: 24px;
+    box-sizing: border-box;
+    text-align: center;
+    line-height: 36px;
+    min-width: 190px;
+    height: 36px;
+    color: #fff;
+    background-color: #ffaf52;
+    font-size: 16px;
+}
+.balancePage .titleBox .cashbackBox .cashback .priceBox-btn:hover{
+    opacity: .8;
+}
+.balancePage .titleBox .cashbackBox .point {
+    flex-basis: 284px;
+}
+.balancePage .titleBox .cashbackBox .point .pointText {
+    margin-top: 130px;
+    padding: 0 30px;
+    background-color: #fff;
+    font-size: 16px;
+}
+.balancePage .titleBox .cashbackBox .point .pointText .redTxt {
+    color: red;
+    font-weight: 700;
+}
+.balancePage .historyBox {
+    margin-top: 20px;
+    background: #fff;
+    border-radius: 6px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+.balancePage .historyBox__txt {
+    height: 50px;
+    font-size: 20px;
+    line-height: 50px;
+    padding-left: 30px;
+}
+.balancePage .historyBox-btnBox {
+    padding-bottom: 10px;
+    text-align: center;
+}
+.balancePage .order-nav >ul{
+    justify-content: center;
+}
+.balancePage .order-nav >ul>li{
+    border: none;
+}
+.balancePage .order-nav >ul>li>a{
+    color: var(--themeColor);
+    display: inline-block;
+    width: 100px;
+    height: 32px;
+    line-height: 32px;
+    border: 1px solid var(--themeColor);
+    text-align: center;
+    font-size: 16px;
+    margin: 0 8px;
+    cursor: pointer;
+}
+.balancePage .order-nav >ul>li.btnActive a{
+    background: var(--themeColor);
+    color: #fff;
+}
+.balancePage .stepPriceBox {
+    padding: 20px 30px;
+    background: #ffffff;
+    border-top: 1px solid #f5f5f5;
+}
+.balancePage .commonBtn {
+    display: inline-block;
+    cursor: pointer;
+    font-size: 16px;
+    box-sizing: border-box;
+    color: var(--themeColor);
+    height: 32px;
+    line-height: 32px;
+    text-align: center;
+    padding: 0 12px;
+    margin: 0 8px;
+    border: 1px solid var(--themeColor);
+}
+.balancePage .stepPriceBox .btnActive {
+    background: var(--themeColor);
+    color: #fff;
+}
+.balancePage .reasonListBox {
+    background: #fff;
+    padding-bottom: 20px;
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
+}
+.balancePage .reasonListBox .typeBox {
+    padding: 20px 30px;
+}
+.balancePage .reasonListBox .order-nav>ul{
+    justify-content: left;
+}
+.listBox .titleBox {
+    background: #ffaf52;
+    font-size: 18px;
+    color: #fff;
+    align-content: center;
+    justify-content: center;
+    display: flex;
+    border-radius: 0;
+}
+.listBox .titleBox>span{
+    padding: 10px;
+}
+.listBox .titleBox .title1,
+.listBox .itemBox .itemTxt1{
+    width: 90px;
+}
+.listBox .titleBox .title2,
+.listBox .itemBox .itemTxt2{
+    flex: 1;
+}
+.listBox .itemBox .itemTxt2{
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.listBox .titleBox .title3,
+.listBox .itemBox .itemTxt3{
+    width: 160px;
+}
+.listBox .titleBox .title4,
+.listBox .itemBox .itemTxt4 {
+    width: 150px;
+}
+.listBox .titleBox .title5,
+.listBox .itemBox .itemTxt5 {
+    width: 170px;
+}
+.listBox .titleBox .title6,
+.listBox .itemBox .itemTxt6 {
+    width: 100px;
+}
+.listBox .itemBox {
+    display: flex;
+    font-size: 14px;
+}
+.listBox .itemBox>div{
+    padding: 10px;
+}
+.balanceListBox .tab-pane{
+    display: none;
+}
+.balanceListBox .tab-pane.active{
+    display: block;
+}
+
+/*订单*/
+.order-nav >ul{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    color: #222;
+    font-size: 16px;
+    margin-top: 20px;
+}
+.order-nav >ul>li{
+    justify-content: space-around;
+    cursor: pointer;
+    padding-bottom: 5px;
+    border-bottom: 3px solid transparent;
+}
+.order-nav >ul>li>a{
+    color: #222;
+}
+.order-nav >ul>li.active{
+    border-color: #ffaf52;
+}
+.order-data-list{
+    margin-top: 15px;
+}
+.order-data-list .table>tbody>tr>th{
+    padding: 10px 20px;
+    background: #f9f9f9;
+    border-bottom: 1px solid #ddd;
+}
+.order-data-list .table>tbody{
+    border: 1px solid #ddd;
+}
+.order-data-list .table{
+    margin-top: 15px;
+    width: 100%;
+    margin-bottom: 0;
+}
+.overFlowPage .sub-title form {
+    border: 1px solid #ddd;
+}
+
+.overFlowPage .sub-title .btn{
+    border-radius: 0;
+}
+.order-data-list .aloneClientCenterImg{
+    width: 72px;
+    border: 1px solid #ddd;
+    height: 72px;
+    flex-wrap: nowrap;
+    box-sizing: border-box;
+    display: inline-block;
+}
+.order-data-list .aloneClientCenterImg >img{
+    width: 70px;
+    height: 70px;
+}
+.order-data-list .orderProductPrice{
+    color: #333;
+    font-size: 14px;
+    font-weight: 700;
+}
+.order-data-list .orderProductName >p{
+    font-size: 14px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    margin-bottom: 6px;
+}
+.order-data-list .blackBtn{
+    width: 160px;
+    height: 36px;
+    box-sizing: border-box;
+    text-align: center;
+    line-height: 34px;
+    background: #fff;
+    margin: 10px 0 0;
+    cursor: pointer;
+    border-radius: 2px;
+    display: inline-block;
+    border: 1px solid #444;
+}
+.order-data-list .blackBtn:last-child{
+    margin-bottom: 10px;
+}
+.order-data-list .blackBtn:hover{
+    background: #444;
+    color: #fff;
+}
+.mzt-order_pagination{
+    margin-top: 80px;
+}
+.mzt-order_pagination .M-box .active,
+.mzt-order_pagination .M-box1 .active,
+.mzt-order_pagination .M-box2 .active,
+.mzt-order_pagination .M-box3 .active,
+.mzt-order_pagination .M-box4 .active{
+    color: var(--themeColor);
+    background: transparent;
+    border:none;
+}
+.mzt-order_pagination .M-box a,
+.mzt-order_pagination .M-box1 a,
+.mzt-order_pagination .M-box2 a,
+.mzt-order_pagination .M-box3 a,
+.mzt-order_pagination .M-box4 a{
+    background: transparent;
+    border:none;
+    color: #666666;
+}
+.mzt-order_pagination .M-box a:hover,
+.mzt-order_pagination .M-box1 a:hover,
+.mzt-order_pagination .M-box2 a:hover,
+.mzt-order_pagination .M-box3 a:hover,
+.mzt-order_pagination .M-box4 a:hover{
+    background: transparent;
+    border:none;
+    color: var(--themeColor);
+}
+
+.order-data-list .table.orderItem-active{
+    opacity: .6;
+}
+
+/*Refer to Earn $5*/
+.referralPage {
+    background: #fff;
+    border-radius: 6px;
+    color: #595757;
+}
+.referralPage .order-nav{
+    display: flex;
+    justify-content: space-between;
+    padding: 0 18%;
+    margin: 30px 0;
+}
+.referralPage .order-nav >ul>li{
+    border: none;
+}
+.referralPage .order-nav >ul>li>a{
+    color: #575655;
+    width: 220px;
+    border: 1px solid #fff;
+    height: 45px;
+    display: inline-block;
+    text-align: center;
+    line-height: 45px;
+    box-sizing: border-box;
+    cursor: pointer;
+    font-size: 20px;
+    border-radius: 4px;
+}
+.referralPage .order-nav >ul>li>a:hover{
+    color: #575655;
+}
+.referralPage .order-nav >ul>li.active a{
+    border: 1px solid var(--themeColor);
+    color: #000;
+}
+.referralPage .boxWrap {
+    padding-bottom: 60px;
+}
+.referralPage .txt2 {
+    font-size: 16px;
+    margin-bottom: 28px;
+    color: #595757;
+    margin-top: 4px;
+    text-align: center;
+}
+.referralPage .urlBox {
+    text-align: center;
+    padding-bottom: 30px;
+}
+.referralPage .urlBox input{
+    width: 420px;
+    -webkit-appearance: none;
+    background-color: #fff;
+    background-image: none;
+    border-radius: 4px;
+    border: 1px solid #dcdfe6;
+    box-sizing: border-box;
+    color: #606266;
+    display: inline-block;
+    font-size: inherit;
+    outline: none;
+    padding: 0 15px;
+    transition: border-color .2s cubic-bezier(.645,.045,.355,1);
+    height: 32px;
+    line-height: 32px;
+}
+.referralPage .copyBtn {
+    font-size: 16px;
+    font-family: Roboto-Regular;
+    background-color: #ffaf52;
+    color: #fff;
+    margin-left: 40px;
+    width: 130px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    border-radius: 4px;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.mzt-order_noData{
+    text-align: center;
+    padding: 40px 0;
+}
+.mzt-order_noData i{
+    font-size: 100px;
+    color: #c3c3c3;
+}
+.mzt-order_noData .noneText{
+    font-size: 13px;
+    color: #999;
+    margin: 20px 0 24px;
+    line-height: 20px;
+}
+.mzt-order_noData .noneBtn{
+    width: 220px;
+    height: 32px;
+    color: #fff;
+    text-align: center;
+    line-height: 32px;
+    border-radius: 2px;
+    background: var(--themeColor);
+    display: inline-block;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+/*我的信息*/
+.accountInfoBox{
+    background: #ffffff;
+    padding: 32px;
+}
+.accountInfoBox .avatar {
+    display: flex;
+    margin-bottom: 20px;
+}
+.accountInfoBox .item-info {
+    width: 100%;
+    display: flex;
+}
+.accountInfoBox .item-info .left {
+    width: 50%;
+}
+.accountInfoBox .item-info .right {
+    width: 50%;
+}
+.accountInfoBox .item-info p {
+    display: inline-block;
+    line-height: 36px;
+}
+.accountInfoBox .hello {
+    margin-left: 20px;
+    line-height: 80px;
+}
+.accountInfoBox .edit-icon{
+    float: right;
+    color: grey;
+}
+.accountInfoBox .edit-icon i:hover {
+    color: #006eff;
+}
+.accountInfoBox .edit-icon i {
+    font-size: 18px;
+    cursor: pointer
+}
+.accountInfoBox .label-title {
+    width: 20%;
+    color: grey;
+}
+.accountInfoBox .authentication {
+    color: grey;
+    font-size: 17px;
+    margin-bottom: 5px;
+}
+.accountInfoBox .el-form-item__label{
+    font-weight: normal;
+}
+.accountInfoBox .avatar-uploader input[type=file]{
+    display: none;
+}
+.accountInfoBox .avatar-uploader{}
+.accountInfoBox .avatar-uploader .el-upload{
+    width: 80px;
+    height: 80px;
+    border: 1px dashed #ffaf52;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffaf52;
+}
+.accountSetting .title {
+    font-size: 30px;
+    color: #5d5c5a;
+    padding-left: 32px;
+    margin-top: 0;
+    margin-bottom: 0;
+    line-height: 66px;
+    font-family: Roboto-Regular;
+    background: #fff;
+}
+.accountSetting .title .certification {
+    float: right;
+    margin-right: 33px;
+}
+.accountSetting .form-edit{
+    display: flex;
+    background: #fff;
+    font-size: 14px;
+    border-top: 1px solid #efefef;
+    color: #5d5c5a;
+    align-items: center;
+    justify-content: center;
+    padding: 16px 30px;
+}
+.accountSetting .form-name{
+    flex-basis: 300px;
+    font-size: 16px;
+}
+.accountSetting .form-edit>input {
+    flex: 1;
+    height: 32px;
+    line-height: 32px;
+    border: 1px solid #DDDDDD;
+    padding: 0 10px;
+}
+.accountSetting .mzt-img-box{
+    width: 100px;
+    height: 100px;
+}
+.accountSetting .mzt-img-box>div{
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+.accountSetting .mzt-img-box>div>input{
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+}
+.accountSetting .form-edit button{
+    color: var(--themeColor);
+    display: inline-block;
+    min-width: 100px;
+    height: 32px;
+    line-height: 32px;
+    border: 1px solid var(--themeColor);
+    text-align: center;
+    font-size: 16px;
+    margin: 0 8px;
+    cursor: pointer;
+    background: transparent;
+}
+.accountSetting .form-edit button:hover{
+    background: var(--themeColor);
+    color: #fff;
+}
+
+/*分页样式*/
+.overFlowPage .el-pagination.is-background .el-pager li:not(.disabled).active{
+    background-color:var(--themeColor);
+}
+
+.w-auto {
+    width: auto !important;
+}

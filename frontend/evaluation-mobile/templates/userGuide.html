@@ -1,0 +1,33 @@
+[#include "/_inc/layout.html"/]
+[@layout page="userGuide"]
+<div class="helpPage">
+    <div class="sideBoxPage">
+        <div class="sideBoxContent pageMinWidth">
+            <div class="contentBox">
+                <div>
+                    [#assign userGuideBanner = skinBlockFun('user-guide-banner') /]
+                    <van-swipe class="my-swipe" :autoplay="3000" :show-indicators="false">
+                        [#list userGuideBanner.content as item]
+                        <van-swipe-item>
+                            <a href="${item.url}" target="${item.target}">
+                                <img src="${item.mobileImage.url}" class="contentImg">
+                            </a>
+                        </van-swipe-item>
+                        [/#list]
+                    </van-swipe>
+                    <div class="contentBoxWrap" style="margin-top: 15px;">
+                        [#list userGuides as guide]
+                        <p class="${(guide_index == 0)?string('contentBoxWrap__title', 'contentBoxWrap__textTitle')}">
+                            ${guide.title}
+                        </p>
+                        <p class="contentBoxWrap__commonText">
+                            ${guide.content}
+                        </p>
+                        [/#list]
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+[/@layout]

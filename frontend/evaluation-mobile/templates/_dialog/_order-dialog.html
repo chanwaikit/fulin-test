@@ -1,0 +1,163 @@
+<div id="product-order-dialog">
+    <el-dialog
+        :visible.sync="cartDialogVisible"
+        width="90%"
+        :close-on-click-modal="false"
+        :close-on-press-escape="false"
+        custom-class="mzt-cart-dialog"
+        append-to-body
+    >
+        <div class="submitOrderNumBox" v-lock>
+            <div class="infoBox" v-if="type === 'keyword'">
+                <div class="dialogBox">
+                    <div class="content">
+                        <div class="noteTitle">Amazon Store Name</div>
+                        <div class="noteTxt">{{orderForm.amazonSeller}}</div>
+                        <div class="noteTitle">Buy this product on Amazon</div>
+                        <div class="noteTxt">
+                            Please click the copy keyword button below and
+                            paste it into the Amazon search bar. In the search results,
+                            you can find the target product by comparing the<span style="color: red; font-weight: bold;">
+                         product image, price, brand, store name and title information</span>, and
+                            verify the product links found before buying on Amazon.
+                        </div>
+                        <div class="btn-yes keywordsBtn" :data-clipboard-text="orderForm.keywords" @click="copyKeywordsText">Copy keywords</div>
+                        <div class="noteTitle">Assistive tools: have you found the target product?</div>
+                        <div class="noteTxt">Copy the URL of the Amazon details page of the product, paste it into the input box below, and then click validate product.</div>
+                        <div class="noteInput">
+                            <el-input v-model="verifyProductLinks" size="small" placeholder="Input Amazon personal link"></el-input>
+                            <div class="btn-yes validationBtn" @click="validationProducts">Validation products</div>
+                        </div>
+                        <div class="goCartTxt txt-color-primary txt-underline">
+                            <a href="${cxtPath}/evaClient/order">Go to Cart</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="infoBox submitOrder" v-if="step === 1"><!-- 提交亚马逊信息 -->
+                <div class="content">
+<!--                    <div style="text-align: center">-->
+<!--                        <i class="mzt-icon mzt-ai53 topImg"></i>-->
+<!--                        <div class="title">Successfully added to cart</div>-->
+<!--                    </div>-->
+                    <div class="title">Submit Order No.</div>
+                    <el-form ref="amazonForm" :model="amazonForm" label-width="100%" class="van-form">
+                        <el-form-item v-if="isAddAmazonProfileUrl" prop="amazonStoreUrl" class="orderNumberInput" :rules="[{ required: true, message: 'Input Amazon personal store link', trigger: 'blur' }]">
+                            <el-input v-model="amazonForm.amazonStoreUrl" size="medium" placeholder="Input Amazon personal store link"></el-input>
+                        </el-form-item>
+                        <el-form-item prop="amazonOrderNo" class="orderNumberInput" :rules="[{ required: true, message: 'Input order number', trigger: 'blur' }]">
+                            <el-input v-model="amazonForm.amazonOrderNo" size="medium" placeholder="Input order number"></el-input>
+                        </el-form-item>
+                        <el-form-item class="uploadBox">
+                            <div style="display: flex;justify-content: space-between;align-items: center">
+                                <el-upload
+                                        class="avatar-uploader"
+                                        :action="uploadFileUrl"
+                                        list-type="picture-card"
+                                        :file-list="amazonForm.imageList"
+                                        :limit="1"
+                                        :before-upload="beforeAvatarUpload"
+                                        :on-success="handleUploadAmazonFormSuccess"
+                                        :on-exceed="handleUploadExceed"
+                                        :on-remove="handleUploadAmazonFormRemove"
+                                        :on-preview="handlePictureCardPreview">
+                                    <span class="uploadBtn">
+                                        <i class="mzt-icon uploadIcon mzt-chuanshu_shangchuan"></i>
+                                        Upload order screenshot
+                                    </span>
+                                </el-upload>
+                                <el-link :underline="false" @click="showExamplePopup" class="exampleTxt">View Example</el-link>
+                                <van-popup v-model="showExample" :style="{ width: '80%' }">
+                                    <div style="height: 100%">
+                                        [#assign orderExampleDiagram = skinBlockFun('order-example-diagram') /]
+                                        <img src="${orderExampleDiagram.content[0].mobileImage.url}" alt="">
+                                    </div>
+                                </van-popup>
+                            </div>
+                            <el-dialog
+                                    :visible.sync="dialogVisible"
+                                    :close-on-click-modal="false"
+                                    :close-on-press-escape="false"
+                                    custom-class="mzt-cart-dialog"
+                                    append-to-body>
+                                <img width="100%" :src="dialogImageUrl" alt="">
+                            </el-dialog>
+                        </el-form-item>
+                        <div class="rebateBox clear" >Rebate Amount:
+                            <span class="txt-color-price priceTxt">$ {{orderForm.exten.rebates}}</span>
+                        </div>
+                        <div class="rebateBox clear" v-if="orderForm.status===4">Audit Order Remarks:
+                            <div style="margin-top: 5px">{{orderForm.reviewerRemarks}}</div>
+                        </div>
+
+                        <el-form-item class="submitBtn">
+                            <el-button type="primary" size="medium" @click="applyAmazonOrder()">Submit</el-button>
+                        </el-form-item>
+                        <p class="bottomTipTxt">
+                            Please fill in all the information above truthflly, it will
+                            shorten your order review time so that you can get rebate
+                            faster.
+                        </p>
+                    </el-form>
+                </div>
+            </div>
+            <div class="infoBox submitOrder" v-else-if="step === 2">
+                <div class="content">
+                    <div class="title">Submit comment</div>
+                    <el-form ref="applyForm" :model="applyForm" label-width="100%" class="van-form">
+                        <el-form-item class="orderNumberInput " prop="paypalAccount" :rules="[{ required: true, message: 'Input correct payPal account', trigger: 'blur' }]">
+                            <el-input v-model="applyForm.paypalAccount" size="medium" placeholder="Input payPal account"></el-input>
+                        </el-form-item>
+                        <el-form-item class="orderNumberInput">
+                            <div style="display: flex">
+                                <el-input  v-model="applyForm.amazonCommentLink" size="medium" placeholder="Input comment link"></el-input>
+                            </div>
+                        </el-form-item>
+                        <el-form-item class="uploadBox">
+                            <div style="display: flex;justify-content: space-between;align-items: center">
+                                <el-upload
+                                        class="avatar-uploader"
+                                        :action="uploadFileUrl"
+                                        list-type="picture-card"
+                                        :file-list="applyForm.imageList"
+                                        name="logoImage"
+                                        limit="1"
+                                        :before-upload="beforeAvatarUpload"
+                                        :on-success="handleUploadApplyFormSuccess"
+                                        :on-exceed="handleUploadExceed"
+                                        :on-remove="handleUploadApplyFormRemove"
+                                        :on-preview="handlePictureCardPreview">
+                                    <span class="uploadBtn">
+                                        <i class="mzt-icon uploadIcon mzt-chuanshu_shangchuan"></i>
+                                        Upload review screenshot
+                                    </span>
+                                </el-upload>
+                                <el-link :underline="false" @click="showExamplePopup" class="exampleTxt">View Example</el-link>
+                                <van-popup v-model="showExample" :style="{ width: '80%' }">
+                                    <div style="height: 100%">
+                                        [#assign reviewExampleDiagram = skinBlockFun('review-example-diagram') /]
+                                        <img src="${reviewExampleDiagram.content[0].mobileImage.url}" alt="">
+                                    </div>
+                                </van-popup>
+                            </div>
+                        </el-form-item>
+                        <div class="rebateBox clear" >Rebate Amount:
+                            <span class="txt-color-price priceTxt">$ {{orderForm.exten.rebates}}</span>
+                        </div>
+                        <div class="rebateBox clear" v-if="orderForm.status===7">Audit Comments Remarks:
+                            <div style="margin-top: 5px">{{orderForm.commentsRemarks}}</div>
+                        </div>
+                        <el-form-item class="submitBtn">
+                            <el-button type="primary" size="medium" @click="applyCashBack()">Submit</el-button>
+                        </el-form-item>
+                        <p class="bottomTipTxt">
+                            Please fill in all the information above truthflly, it will
+                            shorten your order review time so that you can get rebate
+                            faster.
+                        </p>
+                    </el-form>
+                </div>
+            </div>
+        </div>
+    </el-dialog>
+</div>

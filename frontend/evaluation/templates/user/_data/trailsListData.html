@@ -1,0 +1,51 @@
+[#if goodsTrailList.list[0]??]
+<table class="table">
+    <tr>
+        <th>The preview image</th>
+        <th style="width: 550px;">Product name</th>
+        <th>Product browsing time</th>
+    </tr>
+    [#list goodsTrailList.list as item]
+    [#if item.isEnable == 0 ]
+    <tr class="mzt-removed-product">
+        <td>
+            <a href="${item.exten.seoUrl}" target="_blank" class="clientCenterImg">
+                <img src="${item.defaultImageUrl}!80x80">
+            </a>
+        </td>
+        <td>
+            <a href="${item.exten.seoUrl}" target="_blank" >${item.goodsName}</a>
+        </td>
+        <td>${item.exten.addTime}</td>
+    </tr>
+    [#else]
+    <tr>
+        <td>
+            <a href="${item.exten.seoUrl}" target="_blank" class="clientCenterImg">
+                <img src="${item.defaultImageUrl}!80x80">
+            </a>
+        </td>
+        <td>
+            <a href="${item.exten.seoUrl}" target="_blank" >${item.goodsName}</a>
+        </td>
+        <td>${item.exten.addTime}</td>
+    </tr>
+    [/#if]
+    [/#list]
+</table>
+[#else]
+<div class="mzt-order_noData">
+    <div class="mzt-noData_icon">
+        <i class="mzt-icon mzt-zanwushuju"></i>
+    </div>
+    No Data
+</div>
+[/#if]
+<div class="flex-center mzt-order_pagination p-b30">
+    <form method="get" action="${ctxPath}/client/trails/trailsListData" class="mzt-form_orderList">
+        <div class="M-box"
+             data-mzt-pagination="{form:'.mzt-form_orderList',current:${commond.p!0}, pageCount: ${commond.pageCount!0}, scrollTop: 'div#main-content'}">
+        </div>
+        ${ hideInputCommond(commond) }
+    </form>
+</div>

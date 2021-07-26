@@ -1,0 +1,13 @@
+<div class="swiper" v-lock="">
+    [@skin_block_data type="slide" handle="banner"]
+    <van-swipe class="my-swipe" :autoplay="3000" indicator-color="white" style="height: 250px;">
+        [#list blockData.data.slides as slide]
+        <van-swipe-item>
+            <a href="${slide.url}" target="${slide.target}">
+                <img src="${slide.mobileImage.url}" alt="${slide.mobileImage.alt}" style="width: 100%;height: 100%;object-fit: cover">
+            </a>
+        </van-swipe-item>
+        [/#list]
+    </van-swipe>
+    [/@skin_block_data]
+</div>

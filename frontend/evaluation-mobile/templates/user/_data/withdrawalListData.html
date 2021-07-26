@@ -1,0 +1,45 @@
+<ul class="cash-list">
+    <li class="order-box"  v-for="(item, index) in withdrawalList" :key="index">
+        <div class="balance-item">
+            <div class="order-left"><span class="order-price">+$ {{item.exten.withdrawalAmount}}</span></div>
+            <div class="order-right">
+                <div class="title" :title="item.sn">{{item.sn}}</div>
+                <div class="title" :title="item.paypalAccount">{{item.paypalAccount}}</div>
+                <div class="status" v-text="item.exten.status"></div>
+                <div class="time">{{$.Theme.Util.formatTimestamp(item.addTime)}}</div>
+                <div class="time">{{item.transactionNo}}</div>
+                <div class="popup">
+                    <a :href="item.transferVoucher" target="_blank" style="color: var(--themeColor)" v-if="item.transferVoucher">View voucher</a>
+                    <el-popover
+                            v-else
+                            placement="bottom"
+                            width="300"
+                            trigger="click">
+                        <span>No certificate</span>
+                        <span slot="reference">View voucher</span>
+                    </el-popover>
+                </div>
+            </div>
+        </div>
+    </li>
+</ul>
+<div class="mzt-order_noData" v-if="withdrawalTotalRow === 0">
+    <div class="mzt-noData_icon">
+        <i class="iconfont icon-cart1"></i>
+    </div>
+    <div class="noneText">
+        No data
+    </div>
+</div>
+<div class="text-right m-t20">
+    <el-pagination
+            v-if="withdrawalTotalRow > 0"
+            background
+            layout="prev, pager, next"
+            @size-change="handleWithdrawalSizeChange"
+            @current-change="handleWithdrawalCurrentChange"
+            :current-page.sync="withdrawalParam.p"
+            :page-size="withdrawalParam.pageSize"
+            :total="withdrawalTotalRow">
+    </el-pagination>
+</div>

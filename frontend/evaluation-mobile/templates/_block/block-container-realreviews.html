@@ -1,0 +1,12 @@
+[@skin_block_data type=block.layout.code id=block.id]
+<div class="stepBox">
+    <h2 class="stepBox__title">
+        Simple Process to Get 100% Cash Back
+    </h2>
+    [#list blockData.data.slides as slide]
+    <a href="${slide.url}" target="${slide.target}">
+        <img src="${slide.mobileImage.url}" class="stepBox__stepImg" alt="${slide.mobileImage.alt}">
+    </a>
+    [/#list]
+</div>
+[/@skin_block_data]

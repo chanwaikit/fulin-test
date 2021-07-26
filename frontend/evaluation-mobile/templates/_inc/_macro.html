@@ -1,0 +1,66 @@
+[#macro importBlockSpecialGoods blockData limit=20 class=""]
+[@skin_eva_block_special_goods id=blockData.dataId limit=limit]
+[#list goodsList as goods]
+<div class="commonSwipeBox-list-child">
+    <div class="homeProductItemPage commonSwipeBox-list-child">
+        <a href="${goods.url}" class="productBox itemBox-animate">
+            <div class="imgBox">
+                <img src="${goods.coverUrl}"  class="img"/>
+                <img src="${currentCountry.flag}" class="imgBox__amazonIcon">
+            </div>
+            <div class="wrap">
+                <p class="title">
+                    ${goods.title}
+                </p>
+                <div class="priceBox">
+                    ${currentCountry.currency} ${goods.minPrice}
+                    [#if goods.minPrice != goods.minMarketPrice ]
+                    <span  class="original-price">${currentCountry.currency} ${goods.minMarketPrice}</span>
+                    [/#if]
+                </div>
+                <div class="cashBox">
+                    <div class="cashBox__text">$${goods.cashBack} Cash Back</div>
+                    <!--<a href="${goods.url}" class="cashBox__btn">
+                        &lt;!&ndash;<i class="mzt-icon mzt-icon-"></i>&ndash;&gt;
+                    </a>-->
+                </div>
+            </div>
+        </a>
+    </div>
+</div>
+[/#list]
+[/@skin_eva_block_special_goods]
+[/#macro]
+[#macro importBlockSpecialTagGoods blockData limit=10 class=""]
+[@skin_eva_block_special_goods id=blockData.dataId limit=limit]
+[#list goodsList as goods]
+<div class="commonSwipeBox-list-child">
+    <div class="homeProductItemPage commonSwipeBox-list-child">
+        <a href="${goods.url}" class="productBox itemBox-animate">
+            <div class="imgBox">
+                <img src="${goods.coverUrl}"  class="img"/>
+                <img src="${currentCountry.flag}" class="imgBox__amazonIcon">
+            </div>
+            <div class="wrap">
+                <p class="title">
+                    ${goods.title}
+                </p>
+                <div class="priceBox">
+                    ${currentCountry.currency} ${goods.minPrice}
+                    [#if goods.minPrice != goods.minMarketPrice ]
+                    <span  class="original-price">${currentCountry.currency} ${goods.minMarketPrice}</span>
+                    [/#if]
+                </div>
+                <div class="cashBox">
+                    <!--<div class="cashBox__text">$${goods.cashBack} Cash Back</div>
+                    <a href="${goods.url}" class="cashBox__btn">
+                        &lt;!&ndash;<i class="mzt-icon mzt-icon-"></i>&ndash;&gt;
+                    </a>-->
+                </div>
+            </div>
+        </a>
+    </div>
+</div>
+[/#list]
+[/@skin_eva_block_special_goods]
+[/#macro]

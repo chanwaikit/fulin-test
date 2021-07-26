@@ -1,0 +1,158 @@
+[#macro css]
+[#include "${templatePath}_inc/importCss.html" /]
+<link href="${static('css/plugins/element/index.css')}" rel="stylesheet" type="text/css"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vant@2.12/lib/index.css"/>
+<link href="${static('css/plugins/bootstrap/bootstrap.min.css')}" rel="stylesheet" type="text/css"/>
+<style>
+    :root { --themeColor: #FEBD69; }
+    @keyframes mzt-loading-rotate {
+        to {
+            transform: rotate(1turn)
+        }
+    }
+    @keyframes mzt-loading-dash {
+        0% {
+            stroke-dasharray: 1, 200;
+            stroke-dashoffset: 0
+        }
+        50% {
+            stroke-dasharray: 90, 150;
+            stroke-dashoffset: -40px
+        }
+        to {
+            stroke-dasharray: 90, 150;
+            stroke-dashoffset: -120px
+        }
+    }
+    .mzt-main-loading{
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: #fff;
+        display: flex;
+        z-index: 9999;
+    }
+    .mzt-main-loading .circular {
+        height: 60px;
+        width: 60px;
+        animation: mzt-loading-rotate 2s linear infinite;
+        margin: 200px auto 0;
+    }
+    .mzt-main-loading .circular .path {
+        animation: mzt-loading-dash 1.5s ease-in-out infinite;
+        stroke-dasharray: 90,150;
+        stroke-dashoffset: 0;
+        stroke-width: 3;
+        stroke: var(--themeColor);
+        stroke-linecap: round;
+    }
+</style>
+[/#macro]
+
+[#macro script]
+
+[/#macro]
+
+[#macro importMeta]
+[#include "/_inc/meta.html" /]
+[/#macro]
+
+[#include "/_inc/nav.html" /]
+
+
+[#macro importCss][/#macro]
+
+[#macro importScript][/#macro]
+
+[#macro res fileName]${static('${templateName}/skin/img/'+fileName)}[/#macro]
+
+[#macro resCss fileName]${static('${templateName}/skin/css/'+fileName)}[/#macro]
+
+[#macro resJS fileName]${static('${templateName}/skin/js/'+fileName)}[/#macro]
+
+[#macro resPlu fileName]${static('${templateName}/skin/plugins/'+fileName)}[/#macro]
+
+[#macro layout page="" notHeader=false]
+<!DOCTYPE html>
+<html style="box-sizing: border-box;overflow-x: hidden" lang="en">
+<head>
+    [@importMeta /]
+    [@css /]
+    [#include "/_inc/js/jquery-min.html" /]
+    [@importCss /]
+    ${skinPageCode()}
+</head>
+<body data-page="${page}" id="mainPage">
+<div class="mzt-main-loading">
+    <svg viewBox="25 25 50 50" class="circular"><circle cx="50" cy="50" r="20" fill="none" class="path"></circle></svg>
+</div>
+<div class="mainPage">
+    [#if notHeader]
+    <main class="mzt-main">
+        <div class="mzt-main-vue">
+            [#nested]
+        </div>
+    </main>
+    [#else]
+    [#include "${templatePath}_inc/importHeaderNav.html" /]
+    <main class="mzt-main">
+        <div class="mzt-main-vue">
+        [#nested]
+        [#if templateName == '/evaluation']
+            [#include "${templatePath}_inc/importFooter.html" /]
+        [/#if]
+        </div>
+        <div class="top-content_puaPP btnHover cusor-point" style="" data-mzt-top>
+            <img src="[@res 'backtop.png' /]" class="top-icon_3HZpP">
+        </div>
+    </main>
+    [/#if]
+    [#if templateName == '/evaluation-mobile' && !notHeader]
+    [#include "${templatePath}_inc/importFooter.html" /]
+    [/#if]
+</div>
+<script type="text/javascript">
+
+    window.GLOBAL_CONFIG = {};
+    window.GLOBAL_CONFIG.isPc = $(window).width() >= 800;
+    window.GLOBAL_CONFIG.templateName = '${templateName}';
+    window.GLOBAL_CONFIG.mainUrl = '${ctxPath}';
+    window.GLOBAL_CONFIG.siteMapUrl = '[@res "sitemap.png" /]';
+    window.GLOBAL_CONFIG.sCountry = {
+        countryCode: '${User.sCountry().countryCode}',
+        countryName: '${User.sCountry().countryName}',
+        flag: '${User.sCountry().flag}',
+        currency: '${User.sCountry().currency}',
+        id: '${User.sCountry().id}'
+    };
+</script>
+<script src="${static('js/plugins/bootstrap/bootstrap.min.js')}"></script>
+<!-- jquery 分页，评价星星，表单验证js-->
+<script src="${static('js/plugins/jquery.extend.js')}"></script>
+[#include "/_inc/js/jquery-cookie.html" /]
+[#include "/_inc/js/jquery.validate.min.html" /]
+<script src="${static('js/plugins/swiper/swiper.min.js')}"></script>
+<script src="${static('js/plugins/element/vue.min.js')}"></script>
+<script src="${static('js/plugins/element/element.js')}"></script>
+<script src="https://cdn.jsdelivr.net/npm/vant@2.12/lib/vant.min.js"></script>
+<script src="${static('js/plugins/element/en.js')}"></script>
+<script src="${static('js/plugins/clipboard/clipboard.min.js')}"></script>
+<script src="${static('js/plugins/sea.min.js')}"></script>
+<script src="${static('js/mzt.js')}"></script>
+[@includeX template="${templatePath}_inc/importScript.html" defaultTemplate="/web/pages/block-default.html"/]
+[@importScript /]
+${skinPageCode('body')}
+<script>
+    ELEMENT.locale(ELEMENT.lang.en)
+    $('[data-lazy]').each(function () {
+        $(this).show().lazyload({effect : 'fadeIn', effect_params: [400], placeholder : window.GLOBAL_CONFIG.siteMapUrl });
+    })
+    window.onload = function () {
+        $('.mzt-main-loading').hide();
+    }
+</script>
+</body>
+</html>
+[/#macro]

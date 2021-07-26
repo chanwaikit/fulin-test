@@ -1,0 +1,44 @@
+<ul class="cash-list">
+    <li class="order-box"  v-for="(item, index) in cashbackList" :key="index">
+        <div class="balance-item">
+            <div class="order-left"><span class="order-price">-$ {{item.exten.rebate}}</span></div>
+            <div class="order-right">
+                <div class="title" :title="'Cash Back' + item.productName">Cash Back {{item.productName}}</div>
+                <div class="status" v-text="item.exten.statusDesc"></div>
+                <div class="time">{{$.Theme.Util.formatTimestamp(item.addTime)}}</div>
+                <div class="time" v-if="cashbackParam.status == 'payable' || cashbackParam.status == 'all'">{{item.exten.transactionNo}}</div>
+                <div class="popup" v-if="cashbackParam.status == 'payable' || cashbackParam.status == 'all'">
+                    <a :href="item.exten.transferVoucher" target="_blank" style="color: var(--themeColor)" v-if="item.exten.transferVoucher">View voucher</a>
+                    <el-popover
+                            v-else
+                            placement="bottom"
+                            width="300"
+                            trigger="click">
+                        <span>No certificate</span>
+                        <span slot="reference">View voucher</span>
+                    </el-popover>
+                </div>
+            </div>
+        </div>
+    </li>
+</ul>
+<div class="mzt-order_noData" v-if="cashbackTotalRow === 0">
+    <div class="mzt-noData_icon">
+        <i class="iconfont icon-cart1"></i>
+    </div>
+    <div class="noneText">
+        No data
+    </div>
+</div>
+<div class="text-right m-t20">
+    <el-pagination
+            v-if="cashbackTotalRow > 0"
+            background
+            layout="prev, pager, next"
+            @size-change="handleCashbackSizeChange"
+            @current-change="handleCashbackCurrentChange"
+            :current-page.sync="cashbackParam.p"
+            :page-size="cashbackParam.pageSize"
+            :total="cashbackTotalRow">
+    </el-pagination>
+</div>

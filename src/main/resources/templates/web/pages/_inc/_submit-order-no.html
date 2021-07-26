@@ -1,0 +1,121 @@
+<div class="modal fade" id="mzt-submit_order_no" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Submit Order No.</h4>
+            </div>
+            <div class="modal-body">
+                <form class="mzt-order_form overflow">
+                    <input type="hidden" value=""  id="evaOrderId" name="evaOrderId"/>
+                    <div class="full overflow m-b20">
+                        <label class="mzt-review_label fl">Amazon comment link<span class="required">*</span></label>
+                        <div class="mzt-form_control fl form-group">
+                            <input type="text" name="amazonCommentLink">
+                        </div>
+                    </div>
+                    <div class="full overflow m-b20">
+                        <label class="mzt-review_label fl">Amazon order no<span class="required">*</span></label>
+                        <div class="mzt-form_control fl form-group">
+                            <input type="text" name="amazonOrderNo">
+                        </div>
+                    </div>
+                    <div class="full overflow m-b20">
+                        <label class="mzt-review_label fl">Paypal account<span class="required">*</span></label>
+                        <div class="mzt-form_control fl form-group">
+                            <input type="text" name="paypalAccount">
+                        </div>
+                    </div>
+                    <div class="full overflow m-b20">
+                        <label class="mzt-review_label fl">Remarks<span class="required">*</span></label>
+                        <div class="mzt-form_control fl form-group">
+                            <textarea cols="5" rows="5"  name="applyRemarks" ></textarea>
+                        </div>
+                    </div>
+                    <div class="full overflow m-b20">
+                        <label class="mzt-review_label fl">Comment screenshot</label>
+                        <div class="mzt-form_control fl">
+                            <div class="review-image-upload">
+                                <div class="mzt-uploader_holder" data-mzt-uploader="slideShows">
+                                    <div class="grid upload-img-box" tabindex="0" role="button" >
+                                        <div class="img-icon-bk"></div>
+                                        <div class="mzt-icon mzt-jiahao2"></div>
+                                        <a href="javascript:void(0)" class="g-u ks-uploader-button">
+                                            <span class="btn-text">Uploader</span>
+                                            <div class="file-input-wrapper" style="overflow: hidden;">
+                                                <input class="g-u file-input" type="file" >
+                                            </div>
+                                        </a>
+                                    </div>
+                                    <ul class="grid mzt-upload_queue"></ul>
+                                    <div class="mzt-up_tips" >
+                                        <span class="cur" data-cur-num="0">0</span>/<span class="tot" data-max-num="5">5</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default text-uppercase" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary text-uppercase submit">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var SubmitOrderNo = function() {
+        this.$dialog = $('#mzt-submit_order_no');
+        this.$form = this.$dialog.find('.mzt-order_form');
+        this.$submitBtn = this.$dialog.find('button.submit');
+
+        this.valid = function () {
+            var that = this;
+            this.$form.validate({
+                rules:{
+                    amazonCommentLink:{
+                        required:true,
+                    },
+                    amazonOrderNo: {
+                        required:true
+                    },
+                    paypalAccount: {
+                        required:true
+                    }
+                },
+                submitHandler : function() {
+                    that.submit();
+                }
+            });
+        };
+        this.submit = function () {
+            var that = this;
+            $.post(window.webDomain+ '/evaOrder/applyCashBack', this.$form.serialize(), function (res) {
+                if (res.success) {
+                    $.Theme.Tips.success('Apply successful');
+                    that.$dialog.modal('hide');
+                    var jqueryPagination = $('.mzt-order_pagination div[data-mzt-pagination]').data('plugin');
+                    jqueryPagination.reload(1);
+                }
+            })
+        };
+        this.init = function () {
+            var that = this;
+
+            this.valid();
+            this.$submitBtn.on('click', function () {
+                that.$form.submit();
+            });
+
+            this.$dialog.on('hidden.bs.modal', function () {
+                $('.mzt-upload_queue').val('');
+                that.$form[0].reset();
+            })
+        };
+        this.init();
+    };
+    $(function () {
+        new SubmitOrderNo();
+    });
+</script>

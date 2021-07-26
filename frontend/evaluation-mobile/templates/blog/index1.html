@@ -1,0 +1,250 @@
+[#include "/_inc/layout.html"/]
+[#macro importCss]
+<style>
+    .mzt-category_blog{
+        margin: 0;
+        padding: 20px 20px 0;
+        background: #FCFCFC;
+        border-bottom: 2px dotted #e6e6e6;
+    }
+    .mzt-category_blog .mzt-wenjian{
+        font-size: 30px;
+        position: absolute;
+        top: 10px;
+        left: 14px;
+        color: #e6e6e6;
+        display: inline-block;
+        text-align: center;
+        width: 35px;
+    }
+    .mzt-caption_info{
+        margin-bottom: 10px;
+        text-align: center;
+    }
+    .mzt-caption_info p{
+        margin-bottom: 10px;
+    }
+    .mzt-caption_info .mzt-icon{
+        color: #C4C4C4;
+    }
+    .mzt-blog_time{
+        color: #A9A9A9;
+        padding-left: 2px;
+        padding-right: 10px;
+        letter-spacing: 0.5px;
+        font-size: 13px;
+    }
+    .mzt-caption_info a{
+        color: #A9A9A9;
+        font-weight: 500;
+    }
+    .mzt-blog_time span{
+        color: #A9A9A9;
+        padding-left: 2px;
+        padding-right: 10px;
+        letter-spacing: 0.5px;
+        font-size: 13px;
+    }
+    .mzt-blog_title{
+        padding-bottom: 12px;
+        margin-top: 0px;
+    }
+    .mzt-blog_title a{
+        color: #4f5362;
+        font-size: 26px;
+        font-weight: 600;
+    }
+    .mzt-blog_content .mzt-blog_img{
+        display: block;
+        width: 100%;
+        margin-bottom: 10px;
+    }
+    .mzt-blog_img img{
+        width: 100%;
+        height: auto;
+        max-height: 414px;
+        object-fit: cover;
+    }
+    .mzt-content_box{
+        padding: 10px 0px 35px 0px;
+    }
+    .mzt-blog_more{
+        line-height: 24px;
+        letter-spacing: 0.3px;
+        font-size: inherit;
+        margin-bottom: 20px;
+    }
+    .mzt-blog_more a{
+        color: rgba(0,113,206,1);
+        display: inline-block;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-size: 13px;
+        vertical-align: middle;
+        -webkit-transform: translateZ(0);
+        transform: translateZ(0);
+        box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
+        -moz-osx-font-smoothing: grayscale;
+        padding-right: 2.2em;
+        -webkit-transition-duration: 0.3s;
+        transition-duration: 0.3s;
+    }
+    .mzt-blog_more a .mzt-icon{
+        -webkit-transform: translateZ(0);
+        transform: translateZ(0);
+    }
+    .mzt-blog_more a:hover{
+        color: rgba(51,51,51,1);
+    }
+    .mzt-custom_blog{
+        min-height: 20px;
+        padding: 30px 19px 19px 19px;
+        margin-bottom: 20px;
+        border-radius: 4px;
+        height: auto;
+    }
+    .mzt-widget_search{
+        margin-bottom: 42px;
+    }
+    .mzt-blog_search  .form-control
+    {
+        display: inline-block;
+        height: 45px;
+        line-height: 45px;
+        padding: 6px 12px;
+        box-shadow: unset;
+    }
+    .mzt-blog_search  .form-control:focus{
+        border-color: #ccc;
+        outline: 0;
+    }
+    .mzt-blog_search .btn{
+        height: 45px;
+        color: #fff;
+        background-color: #4d82b8;
+        border-radius: 0;
+        border-top-right-radius: 3px;
+        border-bottom-right-radius: 3px
+    }
+    .mzt-blog_search .btn:hover{
+        background-color: #737682
+    }
+    .mzt-widget_categories h5 {
+        display: inline-block;
+        padding: 0px;
+        margin-bottom: 20px;
+        font-size: 15px;
+        line-height: 1.571428571428571em;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-weight: 600;
+    }
+    .mzt-widget_categories ul li{
+        margin-left: 20px;
+        list-style-type: none;
+        margin-bottom: 12px;
+        list-style: none;
+        letter-spacing: 0.3px;
+    }
+    @media screen and (max-width: 414px) {
+        .mzt-blog_main .col-md-8,
+        .mzt-blog_main.col-sm-8,
+        .mzt-blog_main.col-md-4,
+        .mzt-blog_main.col-sm-4{
+            padding: 0;
+        }
+        .mzt-custom_blog{
+            padding: 30px 0;
+        }
+    }
+    .mzt-form_blog {
+        text-align: center;
+    }
+</style>
+[/#macro]
+[#macro importScript]
+[/#macro]
+[@layout]
+<div class="mzt-container ">
+    <div class="mzt-blog_main clearfix m-t50">
+        <!--左边-->
+        <div class="fl col-md-8 col-sm-8">
+            [#list blogs as blog]
+            <div class="mzt-category_blog relative">
+                <i class="mzt-icon mzt-wenjian"></i>
+                <div class="mzt-caption_info">
+                    <p>
+                            <span class="mzt-blog_time">
+                                <span></span>
+                                <a href="${skinSeoUrl(blog.id, 'blog')}">
+                                    <i class="mzt-icon mzt-calendar2"></i>
+                                    <span><time>${dateToStr(blog.addTime)}</time></span>
+                                </a>
+                            </span>
+                        [@cms_taxonomys articleId=blog.id]
+                        <span class="mzt-comments_link">
+                                <i class="mzt-icon mzt-wenjianjia"></i>
+                                <a href="${cxtPath}/blog?taxonomy=${taxonomy.id}">${taxonomy.title}</a>
+                            </span>
+                        [/@cms_taxonomys]
+                    </p>
+                    <h2 class="mzt-blog_title">
+                        <a href="${skinSeoUrl(blog.id, 'blog')}">${blog.title}</a>
+                    </h2>
+                </div>
+                <div class="mzt-blog_content">
+                    <a class="mzt-blog_img">
+                        <img src="${blog.thumbnail}"/>
+                    </a>
+                    <div class="mzt-content_box">
+                        <div>
+                            <p>
+                                ${skinSummaryWith(blog.content)}
+                            </p>
+                        </div>
+                        <p class="mzt-blog_more m-t30">
+                            <a href="${skinSeoUrl(blog.id, 'blog')}">${ i18n.get('other.more', 'View More')} <i class="mzt-icon mzt-jiantou-you"></i></a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            [/#list]
+            <!--分页-->
+            <form action="${cxtPath}/blog" class="mzt-form_blog text-center m-t20" target="_self" method="get">
+                <div class="M-box ib"
+                     data-mzt-pagination="{form:'.mzt-form_blog', loading: 'self', current:${commond.p}, pageCount: ${commond.pageCount}}">
+                </div>
+                ${ hideInputCommond(commond) }
+            </form>
+        </div>
+        <!--右边-->
+        <div class="fl col-md-4 col-sm-4">
+            <div class="mzt-custom_blog">
+                <div class="mzt-widget_search mzt-widget_categories">
+                    <h5>${ i18n.get('blog.catalog', 'catalog')}</h5>
+                    <ul>
+                        [@cms_taxonomys module="blog"]
+                        [#list taxonomys as taxonomy]
+                        <li class="mzt-bloglist-item"><a href="${cxtPath}/blog?taxonomy=${taxonomy.id}">${taxonomy.title}</a></li>
+                        [/#list]
+                        [/@cms_taxonomys]
+                    </ul>
+                </div>
+                <div class="mzt-widget_search mzt-widget_categories">
+                    <h5>${ i18n.get('blog.article', 'recent blog article')} </h5>
+                    <ul>
+                        [@cms_articles module="blog" limit=10]
+                        [#list articles as article]
+                        <li class="mzt-bloglist-item"><a href="${skinSeoUrl(article.id, 'article')}">${article.title}</a></li>
+                        [/#list]
+                        [/@cms_articles]
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+[/@layout]

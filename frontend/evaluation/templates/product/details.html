@@ -1,0 +1,195 @@
+[#include "/_inc/layout.html"/]
+[#macro importCss]
+<link rel="stylesheet" href="[@resPlu 'imageBox/inner.css' /]">
+[/#macro]
+[#macro importScript]
+<script src="[@resPlu 'imageBox/inner.min.js' /]" type="text/javascript"></script>
+<script src="[@resJS 'cart.js' /]" type="text/javascript"></script>
+<script type="text/javascript" async src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-608532245209293d"></script>
+[/#macro]
+[@layout page="details"]
+<div  class="item-detail">
+    <div  class="item-detail-content">
+        <section class="product pageMinWidth">
+            <div class="product-content" data-image-box="inner">
+                <div  class="product-content-left">
+                    [#include "${templatePath}product/lib/_inner.html" /]
+                </div>
+                <div  class="product-content-right">
+                    <div  class="product-content-right-part">
+                        <div  class="product-title">${product.productName}</div>
+                        <div  class="product-countdown clear">
+                            <div class="right clear">
+                                <div class="share-icons-right">
+                                    [#assign productId=product.id /]
+                                    [#include  "/web/pages/_inc/collection.html"/]
+                                </div>
+                            </div>
+                        </div>
+                        <div class="product-discount">
+                            <div class="product-discount-process">
+                                <div class="stock">
+                                    <div class="progressPage" data-total="${product.trialsTotalTimes}" id="progressPage" data-count="${product.trialsTimes}">
+                                        <el-progress :text-inside="true" :stroke-width="20" :percentage="${100-(product.trialsTimes/(product.trialsTotalTimes*0.01)) ? int }" :format="percentageFormat" status="exception" style="width: 250px;"></el-progress>
+                                    </div>
+                                </div>
+                                <div class="price-box">
+                                    <div class="price">${countryCurrency}${product.exten.price}</div>
+                                    <div class="original-price sell">
+                                        ${countryCurrency}${product.exten.originalPrice}
+                                    </div>
+                                    <div class="percent-box">
+                                        <!--<div class="percent">${(((product.exten.originalPrice - product.exten.price)/product.exten.originalPrice)*100) ? int }% Cash Back</div>-->
+                                        <div class="percent">$${product.exten.rebates} Cash Back</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="product-discount-btns">
+                                [#if User.isAuth()]
+                                    [#if product.buyingPatterns == "keyword"]
+                                        <button class="apply-btn" @click="openOrderDialog('${product.id}', 'keyword')">Apply Now</button>
+                                    [#else]
+                                        <button class="apply-btn" @click="handleAddOrder('${product.id}')">Apply Now</button>
+                                    [/#if]
+                                [#else]
+                                    <button class="apply-btn" @click="toLogin()">Apply Now</button>
+                                [/#if]
+                                <button class="share-btn text-center" @click="toRefer()">Refer to Earn $${product.exten.commissionRules.optionValue}</button>
+
+                            </div>
+                            <div class="product-discount-list">
+                                <div class="list-top">
+                                    <div class="top-text">
+                                        Simple Process to Get ${product.exten.rebatesRatio}% Cash Back
+                                    </div>
+                                    <div class="content">
+                                        <div class="watch"><span @click="learnMore">Learn More</span> </div>
+                                    </div>
+                                </div>
+                                <div class="list-img">
+                                    [#assign detailsImage = skinBlockFun('details-image') /]
+                                    <a href="${detailsImage.content[0].url}" target="${detailsImage.content[0].target}">
+                                        <img src="${detailsImage.content[0].pcImage.url}" alt="">
+                                    </a>
+                                </div>
+                            </div>
+                            [#if product.exten.tips?size > 0]
+                            <div class="product-discount-hint">
+                                <div class="content">
+                                    <div class="icon color-red">
+                                        <div class="text note-icon">i</div>
+                                    </div> <span class="note">Note</span>
+                                </div>
+                                <div class="content" style="display:block">
+                                    [#list product.exten.tips as tip]
+                                    <div>
+                                        <div class="icon">
+                                            <div class="text">${tip_index+1}</div>
+                                        </div>
+                                        <span>${tip.value}</span>
+                                    </div>
+                                    [/#list]
+                                </div>
+                            </div>
+                            [/#if]
+                            <div class="mzt-fullscreen-box">
+                                <div class="addthis_inline_share_toolbox" ></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            [#if product.productDescription ?length gt 1]
+                <div class="product-description">
+                    <h2>Product description</h2>
+                    <div>${product.productDescription}</div>
+                </div>
+            [/#if]
+            [@skin_product_might_like productId=product.id]
+            [#if relevant.list??&&relevant.list?size>0]
+            <div class="product-recommend" v-lock>
+                <h2 class="product-recommend-title">You May Like</h2>
+                <div class="new-content">
+                    [#list relevant.list as goods]
+                    <a href="${goods.exten.url}">
+                        <div class="productWrap">
+                            <div class="page">
+                                <div class="productBox itemBox-animate remonproductWidth">
+                                    <img src="${goods.productPicImageUrl}" class="img remonproducImg">
+                                    <img src="${countryFlag}" class="img-logo">
+                                    <p class="title">${goods.productName}</p>
+                                    <div class="priceBox">
+                                        <div class="price-left clear">
+                                            <span class="price">${countryCurrency}${goods.exten.price}</span>
+                                            <span class="original-price">${countryCurrency}${goods.exten.originalPrice}</span>
+                                        </div>
+                                        <div class="price-right clear">
+<!--                                            <div class="cash-back">$${goods.exten.rebates} Cash Back</div>-->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                    [/#list]
+                </div>
+            </div>
+            [/#if]
+            [/@skin_product_might_like]
+        </section>
+        <van-popup v-model="showEarn" closeable close-icon="close" :style="{ width: '800px' }">
+            <div v-if="showEarnType === 'share'" class="dialogBox">
+                <div class="dialogIconBox">
+                </div>
+                <div class="content" >
+                    <div class="box-wrap" style="padding: 40px;">
+                        <div class="share-dialog-content">
+                            <img src="${product.productPicImageUrl}" alt="">
+                        </div>
+                        <div class="share-dialog-desc">
+                            [#assign mobileEarn = skinBlockFun('mobile-earn') /]
+                            ${mobileEarn.content[0].content}
+                        </div>
+                        <a class="share-dialog-link" href="${cxtPath}/evaClient/share">Get My Referral Link</a>
+                        <div class="share-get-bonus">share to get Bonus</div>
+                        [#if User.isAuth()]
+                        <a class="share-icons" href="${facebookShareUrlFun(product.id)}" target="_blank">
+                            <img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pg0KPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDIyLjEuMCwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDYuMDAgQnVpbGQgMCkgIC0tPg0KPHN2ZyB2ZXJzaW9uPSIxLjEiIGlkPSImI3g1NkZFOyYjeDVDNDI7XzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCINCgkgeT0iMHB4IiB2aWV3Qm94PSIwIDAgNTAwIDUwMCIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgNTAwIDUwMDsiIHhtbDpzcGFjZT0icHJlc2VydmUiPg0KPGNpcmNsZSBzdHlsZT0iZmlsbDojM0M1QTlBOyIgY3g9IjI1MCIgY3k9IjI1MCIgcj0iMjUwIi8+DQo8cGF0aCBzdHlsZT0iZmlsbDojRkZGRkZGOyIgZD0iTTMzMS4yODksNzYuNzM3aC01NS4zODFjLTMyLjg2NSwwLTY5LjQyLDEzLjgyMy02OS40Miw2MS40NjJjMC4xNiwxNi41OTksMCwzMi40OTcsMCw1MC4zODhoLTM4LjAyDQoJdjYwLjUwMmgzOS4xOTd2MTc0LjE3NGg3Mi4wMjZWMjQ3LjkzOWg0Ny41NGw0LjMwMS01OS41MjJIMjc4LjQ1YzAsMCwwLjExOS0yNi40NzgsMC0zNC4xNjdjMC0xOC44MjYsMTkuNTg5LTE3Ljc0OCwyMC43NjctMTcuNzQ4DQoJYzkuMzIyLDAsMjcuNDQ3LDAuMDI3LDMyLjA5OSwwVjc2LjczN0gzMzEuMjg5TDMzMS4yODksNzYuNzM3eiIvPg0KPC9zdmc+DQo=" alt="">
+                        </a>
+                        [#else]
+                        <a class="share-icons" href="${cxtPath}/evaClient/share">
+                            <img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pg0KPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDIyLjEuMCwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDYuMDAgQnVpbGQgMCkgIC0tPg0KPHN2ZyB2ZXJzaW9uPSIxLjEiIGlkPSImI3g1NkZFOyYjeDVDNDI7XzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCINCgkgeT0iMHB4IiB2aWV3Qm94PSIwIDAgNTAwIDUwMCIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgNTAwIDUwMDsiIHhtbDpzcGFjZT0icHJlc2VydmUiPg0KPGNpcmNsZSBzdHlsZT0iZmlsbDojM0M1QTlBOyIgY3g9IjI1MCIgY3k9IjI1MCIgcj0iMjUwIi8+DQo8cGF0aCBzdHlsZT0iZmlsbDojRkZGRkZGOyIgZD0iTTMzMS4yODksNzYuNzM3aC01NS4zODFjLTMyLjg2NSwwLTY5LjQyLDEzLjgyMy02OS40Miw2MS40NjJjMC4xNiwxNi41OTksMCwzMi40OTcsMCw1MC4zODhoLTM4LjAyDQoJdjYwLjUwMmgzOS4xOTd2MTc0LjE3NGg3Mi4wMjZWMjQ3LjkzOWg0Ny41NGw0LjMwMS01OS41MjJIMjc4LjQ1YzAsMCwwLjExOS0yNi40NzgsMC0zNC4xNjdjMC0xOC44MjYsMTkuNTg5LTE3Ljc0OCwyMC43NjctMTcuNzQ4DQoJYzkuMzIyLDAsMjcuNDQ3LDAuMDI3LDMyLjA5OSwwVjc2LjczN0gzMzEuMjg5TDMzMS4yODksNzYuNzM3eiIvPg0KPC9zdmc+DQo=" alt="">
+                        </a>
+                        [/#if]
+                    </div>
+                </div>
+            </div>
+            <div v-if="showEarnType === 'order'" class="dialogBox">
+                <div class="dialogIconBox">
+                </div>
+                <div class="content" >
+                    <div class="box-wrap" style="padding: 40px;">
+                        <div class="share-dialog-content">
+                            <div>
+                                <img src="[@res 'ok.png' /]" alt="" style="height:80px" >
+                            </div>
+                            Successfully added to cart $${product.exten.rebates} has arrived at your account!
+                        </div>
+                        <div class="share-get-bonus">NOTE</div>
+                        <div class="share-dialog-desc">
+
+                            [#assign mobileEarn = skinBlockFun('mobile-link-note') /]
+                            ${mobileEarn.content[0].content}
+                        </div>
+                        <div style="text-align: center;">
+                            <a class="share-dialog-link" href="${product.amazonUrl}" target="_blank" >Buy on Amazon</a>
+                            <a style="display: block;text-decoration: underline" href="${cxtPath}/evaClient/order">Go to Cart</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </van-popup>
+    </div>
+</div>
+[#include  "${templatePath}_dialog/_order-dialog.html"/]
+[/@layout]

@@ -1,0 +1,102 @@
+
+<div class="mzt-detail_box " data-image-box="${product.imageDisplayMode}">
+    [#include "${templatePath}product/lib/_${product.imageDisplayMode}.html" /]
+    <!--产品详情-->
+    <div class="fr mzt-show_information">
+        <div class="mzt-product_mainTitle p-b20">${product.productName}</div>
+        <div class="mzt-product_sub p-b15">${product.productDescription}</div>
+        <div class="mzt-comment_icon p-b15">
+            [@skin_product_score productId=product.id]
+            [#if score??]
+            <div class="ib" data-score="${score.value}" data-mzt-raty></div>
+            <span class="mzt-comment_score"><span class="hint"></span><span style="font-weight: bold"> ${score.num} <span>Review(s)</span></span></span>
+            [#else]
+            <div class="ib" data-score="0" data-mzt-raty></div>
+            <span class="mzt-comment_score"><span class="hint"></span><span style="font-weight: bold">0 <span>Review(s)</span></span></span>
+            [/#if]
+            [/@skin_product_score]
+            <a href="#mzt-goods_detail">Add Your Review</a>
+        </div>
+        <div class="mzt-sale_end p-b10">
+            [@skin_actPromotion_activity productId = product.id]
+            [#if activityMap.endTime??]
+            <p class="mzt-sale_title">
+                Flash Sale Ends In
+            </p>
+            <div class="mzt-sale_time" data-mzt-countdown="{ end:'${activityMap.endTime}', lang: 'en'}" ></div>
+            [/#if]
+            [/@skin_actPromotion_activity]
+        </div>
+        <div class="mzt-sku_name p-b10">
+            <span class="mzt-name_item ib" style="font-size: 18px;font-weight: bold;line-height: 55px">Total Price：</span>
+            <span style="line-height: 55px">
+                <span class="original-price"><span data-mzt-ProductOldPrice>${product.marketPrice}</span></span>
+                <span class="price"><span data-mzt-ProductPrice>${product.mallPrice}</span></span>
+                <span class="pro_pri_save" style="display: none">
+                    <span>save</span>
+                    <span class="pri_save_value">$<span class="pri_save_value_text" data-mzt-spreadPrice>50.4</span></span>
+                </span>
+            </span>
+        </div>
+        <div data-mzt-ProductSku></div>
+        <div class="mzt-qty_name p-b20">
+            <span class="mzt-name_item ib">${ i18n.get('product.quality', 'Quality')}:</span>
+            <div class="control" data-mzt-wanspinner>
+                <div class="qty-minus">
+                    <a class="btn-qty minus" href="javascript:void(0)">
+                        -
+                    </a>
+                </div>
+                <div class="qty-input">
+                    <input type="text" class="input-text qty" value="1">
+                </div>
+                <div class="qty-plus">
+                    <a class="btn-qty plus" href="javascript:void(0)">
+                        +
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="mzt-Cart" style="overflow: hidden">
+            <div class="mzt-add_cart">
+                <a class="" onclick="addToCart()"><img src="[@res 'details-cart.png' /]">${ i18n.get('product.cart', 'Add to cart')}</a>
+            </div>
+            <div>
+                <div class="ib mzt-add_cart mzt-buy_now ">
+                    <a class="" onclick="jumpbuyNow()">${ i18n.get('product.buy', 'Buy Now')}</a>
+                </div>
+            </div>
+            <div class="ib mzt-product_favorites">
+                [#assign productId=product.id /]
+                [#include  "/web/pages/_inc/collection.html"/]
+            </div>
+        </div>
+        <div class="mzt-product_protection p-b20">
+            [@skin_service_description]
+            [#if description.explain?size > 0]
+            [#list description.explain as item]
+            <p>
+                <i class="mzt-icon mzt-ai53"></i>
+                ${item.value}
+            </p>
+            [/#list]
+            [/#if]
+            [/@skin_service_description]
+        </div>
+        <div class="mzt-product-shipping m-b20">
+            <div class="mzt-shopping"><img src="[@res '2020619-135610.png' /]" width="42" height="34">
+                <p>Free Shipping</p>
+            </div>
+            <div class="mzt-guarantee"><img src="[@res '2020619-135615.png' /]">
+                <p>30 Days Easy Returns</p>
+            </div>
+            <div class="mzt-warranty"><img src="[@res '2020619-135621.png' /]">
+                <p>Secure Payment</p>
+            </div>
+        </div>
+        <div class="mzt-fullscreen-box">
+            <lable class="mzt-share-title">Share It: </lable>
+            <div class="addthis_inline_share_toolbox" ></div>
+        </div>
+    </div>
+</div>

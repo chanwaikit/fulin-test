@@ -1,0 +1,41 @@
+[#if paymentRecordList.list[0]??]
+<table class="table">
+    <tr>
+        <th>Number</th>
+        <th>Payment Type</th>
+        <th>Total Price</th>
+        <th>Order Time</th>
+        <th>Payment Time</th>
+        <th>Operation</th>
+    </tr>
+    [#list paymentRecordList.list as item]
+    <tr>
+        <td>${item.balanceTheBooksNo }</td>
+        <td>${item.paymentTypeName}</td>
+        <td>${item.exten.paymentTotalPrice}</td>
+        <td>${dateToStr(item.paymentTime)}</td>
+        <td>${dateToStr(item.paymentTime)}</td>
+        <td>
+            <a href="#payment-window" data-toggle="modal" data-target="#payment-window">
+                <button type="button" class="btn btn-sm" onclick="queryPaymentRecordDetail('${item.id}')">View Detail</button>
+            </a>
+        </td>
+    </tr>
+    [/#list]
+</table>
+[#else]
+<div class="mzt-order_noData">
+    <div class="mzt-noData_icon">
+        <i class="mzt-icon mzt-zanwushuju"></i>
+    </div>
+    No Data
+</div>
+[/#if]
+<div class="flex-center mzt-order_pagination p-b30">
+    <form method="get" action="${ctxPath}/client/payment/paymentListData" class="mzt-form_orderList">
+        <div class="M-box"
+             data-mzt-pagination="{form:'.mzt-form_orderList',current:${commond.p!0}, pageCount: ${commond.pageCount!0}, scrollTop: 'div#main-content'}">
+        </div>
+        ${ hideInputCommond(commond) }
+    </form>
+</div>

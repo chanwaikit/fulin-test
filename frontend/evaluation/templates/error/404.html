@@ -1,0 +1,41 @@
+[#include "/_inc/layout.html"/]
+[#macro importCss]
+<style>
+    .mzt-empty_main{
+        display: block;
+        width: 990px;
+        height: 280px;
+        padding: 40px 0 10px;
+        color: #000;
+        font-size: 22px;
+        margin: 0 auto;
+        text-align: center;
+    }
+    .mzt-empty_404{
+        text-decoration: none;
+        color: #000;
+        text-align: center;
+        margin: 0 auto;
+        font-weight: 600;
+        line-height: 24px;
+        padding-bottom: 20px;
+    }
+</style>
+[/#macro]
+[#macro importScript]
+
+[/#macro]
+[@layout]
+<div class="mzt-empty_main">
+    <div>
+        <a href="${ctxPath}" class="mzt-empty_404">
+             <span >
+                 Sorry, The page you requested can not be found!:(
+             </span>
+        </a>
+        <div class="m-t30">
+            <img src="[@res '404-notice.png'/]"/>
+        </div>
+    </div>
+</div>
+[/@layout]

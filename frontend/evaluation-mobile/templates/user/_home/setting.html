@@ -1,0 +1,203 @@
+<div role="tabpanel" class="accountSetting">
+    <div class="title" style="display: flex">
+        <div style="flex: 1;display: flex">
+            My Profile
+        </div>
+        <div class="certification" v-if="accountForm.accountCertification ==='unauthorized'">
+            <el-tag type="info">Unauthorized</el-tag>
+        </div>
+        <div class="certification" v-else-if="accountForm.accountCertification ==='pendingUnauthorized'">
+            <el-tag>Pending Unauthorized</el-tag>
+        </div>
+        <div class="certification" v-else-if="accountForm.accountCertification ==='pendingUnauthorized'">
+            <el-tag>Pending Unauthorized</el-tag>
+        </div>
+        <div class="certification" v-else-if="accountForm.accountCertification ==='authentication'">
+            <el-tag type="success">Authentication</el-tag>
+        </div>
+        <div class="certification" v-else="accountForm.accountCertification ==='rejected'">
+            <el-tag type="danger">Authentication Rejected</el-tag>
+        </div>
+    </div>
+    <div class="accountInfoBox">
+        <div class="avatar">
+            <div style="flex: 1;display: flex;align-items: center">
+                <div style="height: 80px; width: 80px"> <img v-if="accountForm.iconImageUrl" :src="accountForm.iconImageUrl"></div>
+                <p class="hello">Hi, ${curUser.nickname}</p>
+            </div>
+            <div class="edit-icon">
+                <i class="el-icon-edit"  @click="handleEditProfile"></i>
+                <i class="el-icon-setting" style="margin-left: 6px" @click="handleEditPassword"></i>
+            </div>
+        </div>
+        <div class="item-info">
+            <div style="width: 100%">
+                <p class="label-title w-auto m-r15">Email</p>
+                <span v-text="accountForm.email"></span>
+            </div>
+        </div>
+        <div class="item-info">
+            <div style="width: 100%">
+                <p class="label-title w-auto m-r15">My PayPal Account</p>
+                <span v-text="accountForm.paypalAccount"></span>
+            </div>
+        </div>
+        <div class="item-info">
+            <div style="width: 100%">
+                <p class="label-title w-auto m-r15">Amazon Profile Url</p>
+                <span v-text="accountForm.amazonProfileUrl"></span>
+            </div>
+        </div>
+        <div class="item-info" v-if="accountForm.amazonProfileScreensho!==''">
+            <div style="width: 100%">
+                <a :href="accountForm.amazonProfileScreenshot" target="_blank">
+                    <img :src="accountForm.amazonProfileScreenshot" style="width: 100px;height: 100px;object-fit: contain"/>
+                </a>
+            </div>
+        </div>
+        <hr/>
+        <div class="item-info">
+            <div style="width: 100%">
+                <p class="label-title w-auto m-r15">Name</p> <span v-text="accountForm.clientSurname + ' ' + accountForm.clientName"></span>
+            </div>
+        </div>
+        <div class="item-info">
+            <div style="width: 100%">
+                <p class="label-title w-auto m-r15">Country</p><span v-text="countryName"></span>
+            </div>
+        </div>
+        <div class="item-info">
+            <div style="width: 100%">
+                <p class="label-title">Phone</p> <span v-text="accountForm.phone"></span>
+            </div>
+        </div>
+        <div class="item-info">
+            <div style="width: 100%">
+                <p class="label-title">WhatsApp</p> <span v-text="accountForm.whatsApp"></span>
+            </div>
+        </div>
+        <div class="item-info">
+            <div style="width: 100%">
+                <p class="label-title">Other</p> <span v-text="accountForm.otherContacts"></span>
+            </div>
+        </div>
+        <hr v-if="accountForm.accountCertification ==='rejected'" />
+        <div v-if="accountForm.accountCertification ==='rejected'">
+            <div class="authentication">
+                Authentication Rejected
+            </div>
+            <div>
+                <span v-text="accountForm.certificationRemark"></span>
+            </div>
+        </div>
+    </div>
+    <el-dialog
+            title="Edit Profile"
+            :visible.sync="editDialogVisible"
+            :close-on-click-modal="false"
+            class="mzt-dialog-scroll"
+            width="80%"
+    >
+        <div class="accountInfoBox">
+            <el-form :model="accountForm" ref="accountForm" size="medium"
+                     label-width="200px" class="account-ruleForm" label-position="left">
+                <el-form-item label="Avatar" prop="iconImageUrl">
+                    <el-upload
+                            class="avatar-uploader"
+                            :disabled="loading"
+                            :action="window.GLOBAL_CONFIG.mainUrl + '/webFinder/uploadNon'"
+                            :show-file-list="false"
+                            multiple="false"
+                            :on-exceed="handleAvatarExceed"
+                            :on-success="handleAvatarSuccess"
+                            :before-upload="beforeAvatarUpload"
+                    >
+                        <img v-if="accountForm.iconImageUrl" :src="accountForm.iconImageUrl" style="width: 100px;height: 100px;object-fit: contain">
+                        <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                    </el-upload>
+                </el-form-item>
+                <el-form-item label="Nickname" prop="clientSurname">
+                    <el-input v-model="accountForm.clientName" maxlength="100" show-word-limit></el-input>
+                </el-form-item>
+                <el-form-item label="Amazon Profile Url" prop="amazonProfileUrl" :rules="{required: true, message: 'This is required', trigger: 'blur'}">
+                    <el-input v-model="accountForm.amazonProfileUrl" maxlength="700" show-word-limit></el-input>
+                    <el-link href="${ctxPath}/faq?country=US" :underline="false" style="font-size: 12px;color:var(--themeColor)">How To Find Your Amazon Profile Url?</el-link>
+                </el-form-item>
+                <el-form-item label="Amazon Profile Screenshot" prop="amazonProfileScreenshot" :rules="{required: true, message: 'This is required', trigger: 'blur'}">
+                    <el-upload
+                            class="avatar-uploader"
+                            :disabled="amazonLoading"
+                            :action="window.GLOBAL_CONFIG.mainUrl + '/webFinder/uploadNon'"
+                            :show-file-list="false"
+                            multiple="false"
+                            :on-exceed="handleAvatarExceed"
+                            :on-success="handleAmazonSuccess"
+                            :before-upload="beforeAvatarUpload"
+                    >
+                        <img v-if="accountForm.amazonProfileScreenshot" :src="accountForm.amazonProfileScreenshot" style="width: 100px;height: 100px;object-fit: contain">
+                        <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                    </el-upload>
+                    <el-link href="${ctxPath}/faq?country=US" :underline="false" style="font-size: 12px;color:var(--themeColor)">How To Find Your Amazon Profile Screenshot?</el-link>
+                </el-form-item>
+                <el-form-item label="My PayPal Account" prop="paypalAccount" :rules="{required: true, message: 'This is required', trigger: 'blur'}">
+                    <el-input v-model="accountForm.paypalAccount" maxlength="400" show-word-limit></el-input>
+                </el-form-item>
+                <el-form-item label="Country" prop="country" >
+                    <el-select v-model="accountForm.country"  filterable style="width: 100%">
+                        <el-option
+                                v-for="item in countryList"
+                                :key="item.id"
+                                :label="item.nameCn"
+                                :value="item.id">
+                            <div style="display: flex;align-items: center">
+                                <el-image :src="item.flag" style="width: 25px;height: 20px;" fit="contain"></el-image>
+                                <span v-text="item.nameCn" style="margin-left: 10px"></span>
+                            </div>
+                        </el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item label="WhatsApp" prop="whatsApp" >
+                    <el-input v-model="accountForm.whatsApp" maxlength="400" show-word-limit></el-input>
+                </el-form-item>
+                <el-form-item label="Phone Number" prop="phone" >
+                    <el-input v-model="accountForm.phone" maxlength="50" show-word-limit></el-input>
+                </el-form-item>
+                <el-form-item label="Other Contacts" prop="otherContacts" >
+                    <el-input v-model="accountForm.otherContacts" maxlength="50" show-word-limit></el-input>
+                </el-form-item>
+            </el-form>
+        </div>
+        <span slot="footer" class="dialog-footer">
+            <el-button @click="editDialogVisible = false" size="medium">Cancel</el-button>
+            <el-button type="primary" :loading="btnLoading" @click="saveClientSetting" size="medium">Save</el-button>
+        </span>
+    </el-dialog>
+    <el-dialog
+            title="Edit Password"
+            :visible.sync="editPasswordDialogVisible"
+            :close-on-click-modal="false"
+            class="mzt-dialog-scroll"
+            @closed="resetForm('passwordForm')"
+            width="80%"
+    >
+        <div class="accountInfoBox" style="padding: 0 20px ">
+            <el-form :model="passwordForm" ref="passwordForm" size="medium"
+                     label-position="left" :rules="passwordFormRules">
+                <el-form-item label="Old password" prop="oldPassword">
+                    <el-input v-model="passwordForm.oldPassword" placeholder="Old password" show-password></el-input>
+                </el-form-item>
+                <el-form-item label="Password" prop="password" >
+                    <el-input v-model="passwordForm.password" placeholder="Password" show-password></el-input>
+                </el-form-item>
+                <el-form-item label="Repeat password" prop="confirmPassword">
+                    <el-input v-model="passwordForm.confirmPassword" placeholder="Repeat password" show-password></el-input>
+                </el-form-item>
+            </el-form>
+        </div>
+        <span slot="footer" class="dialog-footer">
+            <el-button @click="editPasswordDialogVisible = false" size="medium">Cancel</el-button>
+            <el-button type="primary" :loading="btnLoading" @click="saveClientPassword" size="medium">Save</el-button>
+        </span>
+    </el-dialog>
+</div>
+

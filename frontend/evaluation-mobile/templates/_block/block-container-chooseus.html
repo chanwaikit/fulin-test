@@ -1,0 +1,31 @@
+[@skin_block_data handle="home-hot"]
+<div class="right-overflow">
+    <div class="advertising-product">
+        <div class="page">
+            [#list blockData.list as item ]
+            [@skin_eva_block_special_goods id=item.dataId limit=10]
+            [#list goodsList as goods]
+            <a href="${goods.url}" target="_self">
+            <div class="productBox indexSideBarItemWidth">
+                <div class="img-box">
+                    <img src="${goods.coverUrl}"  class="img"/>
+                    <!--<img data-lazy data-original="${goods.coverUrl}" class="indexSideBarItemImgWidth">-->
+                </div>
+                <p class="title">
+                    ${goods.title}
+                </p>
+                <div class="priceBox">
+                    <div class="price-left clear">
+                        <span class="price">$${goods.minMarketPrice}</span></div>
+                    <div class="price-right clear"></div>
+                </div>
+                <div class="bottomBtn">Buy Now</div>
+            </div>
+            </a>
+            [/#list]
+            [/@skin_eva_block_special_goods]
+            [/#list]
+        </div>
+    </div>
+</div>
+[/@skin_block_data]
